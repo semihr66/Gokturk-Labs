@@ -10,6 +10,7 @@ Henüz yolun başındayız. Projemizi sürekli geliştiriyor, yeni özellikler e
 
 Amacımız; **kaliteli, güvenilir ve toplulukların ihtiyaçlarına gerçekten cevap veren bir teknoloji markası** oluşturmak.
 
+“Göktürk” adımız, Türk tarihindeki Göktürklerden ilham almaktadır.
 ## Projemizi İnceleyin
 
 **Discord Sunucumuz:**
