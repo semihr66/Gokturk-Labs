@@ -255,3 +255,18 @@
 - [x] AI entegrasyonu, Eğlence modülleri ve İnteraktif oyunlar kartlarını kaldır.
 - [x] Bu üç özelliği uygun paket içeriklerine ekle.
 - [ ] Build, içerik taraması ve GitHub aktarımını tamamla.
+
+## Son Paket Metni Kararı
+
+- [ ] Başlangıç/Free kartına 2 modül hakkı ekle.
+- [ ] Dengeli kartına 4 modül hakkı ekle.
+- [ ] Gelişmiş ve Pro kartlarına tüm modüller + custom bot seçeneği ekle.
+- [ ] Modüller bölüm başlığını “Custom ve modüllü seçenekler” olarak değiştir.
+
+## Onaylanan Paket Güncellemesi
+
+- [x] Başlangıç kartına “2 modül hakkı” ekle.
+- [x] Dengeli kartına “4 modül hakkı” ekle.
+- [x] Gelişmiş ve Pro kartlarına “Tüm modüller + custom bot seçeneği” ekle.
+- [x] Bölüm başlığını “Custom ve modüllü seçenekler” olarak güncelle.
+- [x] Build, görsel kontrol, checkpoint ve GitHub aktarımını tamamla.
