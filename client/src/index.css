@@ -23,7 +23,7 @@
 
 @layer base { * { @apply border-border outline-ring/50; } body { @apply bg-background text-foreground; font-family: "DM Sans", sans-serif; } a { transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms cubic-bezier(0.23,1,0.32,1); } button:not(:disabled), a[href] { cursor: pointer; } }
 
-/* Göktürk Labs / Signal Harbor: quiet dark hosting studio, amber signal, restrained depth. */
+/* Göktürk Labs / Signal Harbor: quiet dark Discord bot studio, amber signal, restrained depth. */
 .new-site { font-family: "DM Sans", sans-serif; }
 .font-display { font-family: "Space Grotesk", sans-serif; }
 .new-nav { position: absolute; inset: 0 0 auto; z-index: 30; padding: 0.75rem 1rem; }
@@ -183,7 +183,7 @@ html { scroll-behavior: smooth; }
 @media (max-width: 640px) { .customization-section { padding: 5.5rem 0; } .customization-grid { grid-template-columns: 1fr; margin-top: 2.3rem; } .customization-card { min-height: 190px; } .customization-note { align-items: flex-start; } .policy-nav { padding-inline: .8rem; } .policy-nav .policy-back { font-size: .7rem; } .policy-shell { padding-top: 4.8rem; } .policy-shell h1 { font-size: 3.25rem; } .policy-content { margin-top: 3.2rem; } .policy-footer { align-items: flex-start; flex-direction: column; } .not-found-content { padding-top: 9rem; } .not-found-orbit-one { width: 20rem; height: 20rem; } .not-found-orbit-two { width: 30rem; } .not-found-actions { align-items: stretch; flex-direction: column; width: 100%; max-width: 16rem; } .not-found-actions button, .not-found-actions a { justify-content: center; } .not-found-corner { display: none; } }
 @media (prefers-reduced-motion: reduce) { .click-burst-layer { display: none; } .customization-card { transition-delay: 0ms; } }
 
-/* Signal Harbor composition pass: asymmetric narrative + hosting station panel. */
+/* Signal Harbor composition pass: asymmetric narrative + bot station panel. */
 .motion-hero-copy { display: grid; grid-template-columns: minmax(0, 1fr) minmax(18rem, .72fr); column-gap: clamp(2rem, 7vw, 7rem); align-items: center; text-align: left; }
 .motion-hero-copy > .new-badge, .motion-hero-copy > h1, .motion-hero-copy > p, .motion-hero-copy > div:not(.hero-console) { grid-column: 1; }
 .motion-hero-copy > .new-badge { justify-self: start; }

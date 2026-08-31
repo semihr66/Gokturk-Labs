@@ -17,7 +17,7 @@ const privacySections: PolicySection[] = [
 ];
 
 const termsSections: PolicySection[] = [
-  { title: "1. Hizmetler", paragraphs: ["Göktürk Labs; Discord botları, bot hosting ve çeşitli yazılım hizmetleri sunmaktadır.", "Her hizmetin özellikleri, kaynakları, fiyatı ve süresi satın alma öncesinde kullanıcıya bildirilir."] },
+  { title: "1. Hizmetler", paragraphs: ["Göktürk Labs; Discord botları ve çeşitli yazılım hizmetleri sunmaktadır.", "Her hizmetin özellikleri, kaynakları, fiyatı ve süresi satın alma öncesinde kullanıcıya bildirilir."] },
   { title: "2. Kullanım Kuralları", paragraphs: ["Göktürk Labs hizmetleri aşağıdaki ve benzeri kötüye kullanım amaçlarıyla kullanılamaz:"], bullets: ["Yasa dışı faaliyetler", "Dolandırıcılık", "Spam", "Zararlı yazılım", "Yetkisiz erişim", "Başka sistemlere zarar verme"] },
   { title: "3. Hizmet Kesintileri", paragraphs: ["Sunucu bakımı, teknik problemler, altyapı sorunları veya Göktürk Labs'in kontrolü dışındaki nedenlerle geçici hizmet kesintileri yaşanabilir.", "Göktürk Labs, hizmetlerin mümkün olduğunca kesintisiz çalışması için gerekli özeni gösterir."] },
   { title: "4. Ödeme ve İade", paragraphs: ["Ödeme işlemleri, hizmete göre IBAN veya Google Play üzerinden gerçekleştirilebilir.", "Ödeme yöntemi ve hizmet ücreti satın alma öncesinde kullanıcıya açıkça bildirilir.", "Satın alınan hizmetlerde Göktürk Labs tarafından isteğe bağlı iade yapılmaz. Ancak yürürlükteki mevzuattan doğan ve tüketicinin vazgeçemeyeceği haklar saklıdır."] },

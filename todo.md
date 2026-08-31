@@ -278,3 +278,10 @@
 - [x] İnteraktif oyunlar ifadesini tüm kaynaklardan kaldır.
 - [x] Pro kartını daha belirgin ve dengeli görünecek şekilde güçlendir.
 - [x] İçerik taraması, build, responsive kontrol, checkpoint ve GitHub aktarımını tamamla.
+
+## Hero Metin Düzeltmesi
+
+- [x] “GÖKTÜRK LABS / BOT HOSTING” ifadesini Discord bot hizmeti metnine çevir.
+- [x] “Discord’dan başla” ifadesini “Fikrini anlat” olarak değiştir.
+- [x] Hosting metinlerinin hero rozetinde kalmadığını doğrula.
+- [x] Build, checkpoint ve GitHub aktarımını tamamla.
