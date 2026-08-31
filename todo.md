@@ -247,3 +247,11 @@
 - [x] Referans görseli kopyalamadan yeni görsel/kompozisyon oluştur.
 - [x] Masaüstü ve mobil görünümü test et.
 - [ ] Güncel checkpoint ve GitHub aktarımını tamamla.
+
+## Modüller ve Paket İçeriği Düzeltmesi
+
+- [x] Bölüm adını ve metinlerini “Modüller” olarak güncelle.
+- [x] Gelişmiş paket sonrasını custom bot seçeneği olarak belirt.
+- [x] AI entegrasyonu, Eğlence modülleri ve İnteraktif oyunlar kartlarını kaldır.
+- [x] Bu üç özelliği uygun paket içeriklerine ekle.
+- [ ] Build, içerik taraması ve GitHub aktarımını tamamla.
