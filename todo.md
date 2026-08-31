@@ -231,3 +231,10 @@
 - [x] Tıklama soru/işaret parçacığı ve premium görsel geliştirmeleri uygula.
 - [x] Build ve tüm rotaları test et; responsive görünümü doğrula.
 - [ ] Güncel kaynakları GitHub repo’suna gönder.
+
+## Vite Allowed Host Düzeltmesi
+
+- [x] Vite server yapılandırmasındaki host allowlist ayarını incele.
+- [x] Manus önizleme hostunu güvenli ve taşınabilir biçimde izinli hâle getir.
+- [x] TypeScript/build ve önizleme erişimini yeniden test et.
+- [ ] Düzeltmeyi GitHub repo’suna gönder.
