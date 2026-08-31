@@ -1,4 +1,4 @@
-# **Göktürk Labs **
+# **Göktürk Labs**
 
 **Göktürk Labs**, Discord toplulukları için özel Discord botları ve yazılım çözümleri geliştiren bir teknoloji oluşumudur.
 
