@@ -260,3 +260,54 @@ html { scroll-behavior: smooth; }
 @media (max-width: 900px) { .extra-systems-heading { align-items: start; flex-direction: column; gap: 1.2rem; } .extra-systems-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 640px) { .extra-systems-section { padding: 5.5rem 0; } .extra-systems-grid { grid-template-columns: 1fr; margin-top: 2.3rem; } .extra-system-card { min-height: 0; } .extra-system-cover { height: 8rem; } .extra-systems-cta { align-items: flex-start; flex-direction: column; } }
 @media (prefers-reduced-motion: reduce) { .extra-system-card { transition-delay: 0ms; } }
+
+
+/* Göktürk Labs / Pro kartı: Signal Harbor amber sinyali, eşit paket ritmi ve belirgin öncelik. */
+@media (min-width: 1100px) {
+  .new-plans-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+  }
+
+  .new-plan-card-warm {
+    position: relative;
+    overflow: hidden;
+    border-color: rgba(255, 181, 71, 0.62);
+    background: linear-gradient(145deg, rgba(255, 181, 71, 0.16), rgba(38, 28, 24, 0.92) 54%, #131319 100%);
+    box-shadow: 0 22px 60px rgba(255, 181, 71, 0.16), inset 0 1px 0 rgba(255, 218, 153, 0.16);
+    transform: translateY(-10px);
+  }
+
+  .new-plan-card-warm::before {
+    position: absolute;
+    top: 0;
+    right: 1.35rem;
+    left: 1.35rem;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffb547 24%, #ffe0a6 50%, #ffb547 76%, transparent);
+    content: "";
+    opacity: 0.95;
+  }
+
+  .new-plan-card-warm:hover {
+    border-color: rgba(255, 210, 139, 0.9);
+    box-shadow: 0 28px 72px rgba(255, 181, 71, 0.22), inset 0 1px 0 rgba(255, 232, 190, 0.22);
+    transform: translateY(-14px);
+  }
+
+  .new-plan-card-warm .new-plan-label {
+    color: #ffe0a6;
+    letter-spacing: 0.14em;
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1099px) {
+  .new-plans-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .new-plan-card-warm {
+    border-color: rgba(255, 181, 71, 0.62);
+    box-shadow: 0 18px 48px rgba(255, 181, 71, 0.14);
+  }
+}

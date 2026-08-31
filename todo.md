@@ -270,3 +270,11 @@
 - [x] Gelişmiş ve Pro kartlarına “Tüm modüller + custom bot seçeneği” ekle.
 - [x] Bölüm başlığını “Custom ve modüllü seçenekler” olarak güncelle.
 - [x] Build, görsel kontrol, checkpoint ve GitHub aktarımını tamamla.
+
+## İstenmeyen Özellikleri Temizleme ve Pro Vurgusu
+
+- [x] AI entegrasyonu ifadesini tüm kaynaklardan kaldır.
+- [x] Eğlence modülleri ifadesini tüm kaynaklardan kaldır.
+- [x] İnteraktif oyunlar ifadesini tüm kaynaklardan kaldır.
+- [x] Pro kartını daha belirgin ve dengeli görünecek şekilde güçlendir.
+- [x] İçerik taraması, build, responsive kontrol, checkpoint ve GitHub aktarımını tamamla.
