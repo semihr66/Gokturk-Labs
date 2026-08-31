@@ -238,3 +238,12 @@
 - [x] Manus önizleme hostunu güvenli ve taşınabilir biçimde izinli hâle getir.
 - [x] TypeScript/build ve önizleme erişimini yeniden test et.
 - [ ] Düzeltmeyi GitHub repo’suna gönder.
+
+## Referans Görsel ve Ek Sistemler
+
+- [x] Gönderilen Imgur referansını incele ve görsel dili not al.
+- [x] Gelişmiş sonrası ek sistemler seçeneklerini özgün içerik olarak planla.
+- [x] Ana sayfaya ek sistemler / yükseltilebilir özellikler alanı ekle.
+- [x] Referans görseli kopyalamadan yeni görsel/kompozisyon oluştur.
+- [x] Masaüstü ve mobil görünümü test et.
+- [ ] Güncel checkpoint ve GitHub aktarımını tamamla.

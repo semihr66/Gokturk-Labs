@@ -1,0 +1,5 @@
+# Referans Görsel Notları
+
+Gönderilen Imgur görseli, koyu arka plan üzerinde 3 sütunlu küçük kartlardan oluşan bir ek sistemler/özellikler vitrini gösteriyor. Kartlarda üstte farklı teknoloji veya ürün görselleri, altta küçük amber/cyan durum noktasıyla başlık ve tek satırlık açıklama var. Görsel dili; hafif yuvarlatılmış koyu kartlar, farklı kapak görselleri, 3x4 civarı ritmik düzen ve modüler katalog hissi taşıyor. Görselde görülen örnek konseptler arasında karşılama/uygulama, seviye ve XP, davet takip, çekiliş, eğlence modülleri, genel AI entegrasyonu, destek/talep, otomatik rol, güvenlik/moderasyon ve interaktif oyun sistemleri bulunuyor.
+
+Uygulama kararı: Görsel birebir kopyalanmayacak. Göktürk Labs için aynı modüler katalog hissi; özgün amber-sinyal etiketleri, CSS tabanlı küçük kapak görselleri ve "ek sistemler" diliyle kullanılacak. Kullanıcının istemediği iş modeline dair ifade site metnine eklenmeyecek. Gelişmiş paket sonrası bu alan, yükseltilebilir ek sistemler olarak konumlandırılacak.

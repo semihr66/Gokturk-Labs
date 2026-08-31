@@ -86,3 +86,10 @@ Logoda metin yerine, üç yatay amber sinyal çizgisinin ortasında lacivert bir
 - Hero ve paket dili bot geliştirme ajansından çok güvenilir hosting vitrini gibi konuşacak; botun çalışması, paket seçimi ve Discord üzerinden netleştirme öne çıkacak.
 - Amber sinyal noktaları, kısa çizgiler ve ince harbor-line dokusu bölümler arasında tekrar eden görsel alfabe olarak kullanılacak.
 - Animasyonlar bu sinyal dilini destekleyecek; 180–700 ms aralığında, fiziksel ve kontrollü geçişler kullanılacak.
+
+## Style Decisions
+
+- Göktürk Labs görünür marka adı olarak korunur; sinyal dili amber ışık, koyu lacivert düğüm ve teknik istasyon etiketleriyle sürdürülür.
+- Ana sayfanın birincil vaadi Discord bot hosting, çalışma sürekliliği, paket seviyesi ve teknik destektir. Özelleştirme ve ek sistemler bu hosting teklifini destekleyen ikincil katman olarak anlatılır.
+- Ek sistemler bölümü, referans görselin kart ritminden ilham alan fakat birebir kopyalamayan özgün bir modül kataloğudur; CSS kapakları, amber durum noktaları ve farklı atmosferik yüzeyler kullanır.
+- Amber, sipariş ve destek gibi eylemlerin ana sinyal rengidir; ikincil gezinme ve açıklama katmanları daha sakin tutulur.
