@@ -331,3 +331,12 @@
 - [ ] Diğer paketlerdeki düzenleme var ve Powered by satırlarındaki emoji tikleri amber çizgi ikonlarına çevir.
 - [ ] Genel feature ikonundaki çift işaret görünümünü kaldır.
 - [ ] Build, masaüstü/mobil kontrol, checkpoint ve GitHub senkronizasyonunu tamamla.
+
+## Discord DM Manuel Ödeme Akışı
+
+- [ ] Paket siparişi öncesi zorunlu politika onay kutusunu kontrol et.
+- [ ] Seçilen paketi hazır Discord mesajına ekle.
+- [ ] Ödemenin web sitesinde değil, Discord görüşmesinde netleştirildiğini açıkça belirt.
+- [ ] Sipariş butonunu Discord’dan sipariş ver akışına uygun hâle getir.
+- [ ] Masaüstü ve mobilde sipariş akışını doğrula.
+- [ ] Build, checkpoint ve GitHub senkronizasyonunu tamamla.

@@ -311,3 +311,24 @@ html { scroll-behavior: smooth; }
     box-shadow: 0 18px 48px rgba(255, 181, 71, 0.14);
   }
 }
+
+
+/* Göktürk Labs / Signal Harbor: package consent and manual Discord payment handoff. */
+.plan-order-block { display: flex; flex-direction: column; gap: .8rem; margin-top: auto; padding-top: 1.7rem; }
+.plan-consent { display: grid; grid-template-columns: 1rem 1fr; align-items: start; gap: .65rem; color: #9d9ba9; font-size: .68rem; line-height: 1.55; }
+.plan-consent input { appearance: none; width: 1rem; height: 1rem; margin: .1rem 0 0; border: 1px solid rgba(255,181,71,.5); border-radius: .3rem; background: rgba(255,181,71,.04); cursor: pointer; transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.plan-consent input:checked { border-color: #ffb547; background: #ffb547; box-shadow: 0 0 0 3px rgba(255,181,71,.1); }
+.plan-consent input:checked::after { content: "✓"; display: block; color: #17120a; font: 700 .72rem/1rem "DM Sans", sans-serif; text-align: center; }
+.plan-consent input:focus-visible { outline: 2px solid #ffb547; outline-offset: 3px; }
+.plan-consent label { display: block; color: #b9b8c4; cursor: pointer; }
+.plan-consent-link { display: inline-block; margin-top: .26rem; color: #ffd28b; font-size: .64rem; text-decoration: underline; text-decoration-color: rgba(255,181,71,.36); text-underline-offset: 3px; }
+.plan-consent-link:hover { color: white; text-decoration-color: #ffb547; }
+.plan-consent-links span { color: #5f5d69; }
+.plan-order-button { display: inline-flex; min-height: 2.8rem; align-items: center; justify-content: center; gap: .5rem; border: 0; border-radius: .75rem; padding: .72rem 1rem; background: #ffb547; color: #17120a; font: 700 .78rem "DM Sans", sans-serif; box-shadow: 0 12px 30px rgba(255,181,71,.16); transition: transform 180ms cubic-bezier(.23,1,.32,1), background-color 180ms ease, opacity 180ms ease, box-shadow 180ms ease; }
+.plan-order-button:hover:not(:disabled) { transform: translateY(-2px); background: #ffd18a; box-shadow: 0 16px 32px rgba(255,181,71,.22); }
+.plan-order-button:active:not(:disabled) { transform: scale(.98); }
+.plan-order-button:disabled { cursor: not-allowed; opacity: .36; box-shadow: none; }
+.plan-payment-note { color: #777682; font-size: .66rem; line-height: 1.55; }
+.plan-copy-status { display: inline-flex; align-items: center; gap: .38rem; color: #ffd28b; font-size: .66rem; line-height: 1.4; }
+.legal-order-note { max-width: 48rem; margin: 1.5rem auto 0; color: #777682; text-align: center; font-size: .72rem; line-height: 1.65; }
+@media (max-width: 640px) { .plan-order-block { padding-top: 1.5rem; } .plan-order-button { width: 100%; } .legal-order-note { text-align: left; } }
