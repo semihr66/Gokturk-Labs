@@ -285,3 +285,49 @@
 - [x] “Discord’dan başla” ifadesini “Fikrini anlat” olarak değiştir.
 - [x] Hosting metinlerinin hero rozetinde kalmadığını doğrula.
 - [x] Build, checkpoint ve GitHub aktarımını tamamla.
+
+## Netlify Güncellemesi
+
+- [x] Bağlı Netlify sitesini ve GitHub repo bağlantısını doğrula.
+- [x] Netlify build ayarlarının güncel GitHub kaynak yapısıyla eşleştiğini kontrol et.
+- [!] Güncel GitHub commit’ini Netlify’da deploy et. Netlify hesabının kredi kullanımı aşıldığı için deploy atlandı.
+- [!] Deploy durumunu ve canlı URL’yi doğrula. Deploy durumu: skipped / error; mevcut canlı sürüm korunuyor.
+
+## Vercel Güncellemesi
+
+- [x] Bağlı Vercel projesini ve GitHub repo bağlantısını doğrula.
+- [x] Vercel build ayarlarını GitHub’daki güncel kaynakla eşleştir.
+- [x] Güncel commit’i Vercel’e deploy et.
+- [x] Deployment durumunu ve canlı URL’yi doğrula.
+
+## Vercel Yanlış Çıktı Düzeltmesi
+
+- [x] Vercel projesinin gerçek build ve output ayarlarını doğrula.
+- [x] GitHub repo kökünü ve frontend build çıktısını eşleştir.
+- [x] Server/index.ts yerine Vite frontend index.html’in yayınlandığını sağla.
+- [x] Tüm dosyalarla yeniden deploy edip canlı siteyi test et.
+
+## Domaini Netlify’dan Vercel’e Taşıma
+
+- [ ] Vercel projesindeki domainleri ve mevcut aliasları kontrol et.
+- [ ] Eski Netlify yönlendirmesinin kaynak domainini belirle.
+- [ ] Domain için Vercel DNS hedeflerini doğrula.
+- [ ] Canlı domain erişimini Vercel’e yönlenmiş olarak test et.
+
+## Kesin Paket İçerikleri
+
+- [x] Başlangıç paketini ₺0 ve 2 modül hakkı ile güncelle.
+- [x] Dengeli paketini ₺50 ve 4 modül hakkı ile güncelle.
+- [x] Gelişmiş paketini ₺180 ve tüm modüller + custom bot ile güncelle.
+- [x] Pro paketini ₺350, web paneli ve öncelikli destek ile güncelle.
+- [x] Zorunlu By/Powered by şartlarını ilgili paket kartlarına ekle.
+- [x] Paketlerde isim/logo/kapak düzenleme izinlerini doğru gösterecek şekilde güncelle.
+- [x] Build, responsive kontrol, checkpoint, GitHub ve yayın senkronizasyonunu tamamla.
+
+## Paket İkon Düzeltmesi
+
+- [ ] Free paketteki düzenleme yok satırında emoji çarpıyı amber çizgi ikonuna çevir.
+- [ ] Zorunlu marka şartındaki kilit emojisini amber çizgi kilit ikonuna çevir.
+- [ ] Diğer paketlerdeki düzenleme var ve Powered by satırlarındaki emoji tikleri amber çizgi ikonlarına çevir.
+- [ ] Genel feature ikonundaki çift işaret görünümünü kaldır.
+- [ ] Build, masaüstü/mobil kontrol, checkpoint ve GitHub senkronizasyonunu tamamla.
