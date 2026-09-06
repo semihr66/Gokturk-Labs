@@ -48,12 +48,25 @@
             "url": "https://gokturklabs.dev.tc/",
             "name": "Göktürk Labs",
             "inLanguage": "tr-TR",
-            "publisher": { "@id": "https://gokturklabs.dev.tc/#organization" }
+            "publisher": { "@id": "https://gokturklabs.dev.tc/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://gokturklabs.dev.tc/?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              { "@type": "ListItem", "position": 1, "name": "Ana Sayfa", "item": "https://gokturklabs.dev.tc/" },
+              { "@type": "ListItem", "position": 2, "name": "Paketler", "item": "https://gokturklabs.dev.tc/#paketler" },
+              { "@type": "ListItem", "position": 3, "name": "SSS", "item": "https://gokturklabs.dev.tc/#sss" }
+            ]
           },
           {
             "@type": "Service",
             "@id": "https://gokturklabs.dev.tc/#discord-bot-service",
-            "name": "Discord bot geliştirme hizmeti",
+            "name": "Discord Bot Geliştirme Hizmeti",
             "serviceType": "Discord bot geliştirme ve özel modül hizmetleri",
             "description": "Moderasyon, loglama, ticket, otomasyon, özel komutlar ve Discord bot modülleri.",
             "provider": { "@id": "https://gokturklabs.dev.tc/#organization" },
@@ -63,6 +76,13 @@
               { "@type": "Offer", "name": "Dengeli", "price": "50", "priceCurrency": "TRY", "url": "https://gokturklabs.dev.tc/#paketler" },
               { "@type": "Offer", "name": "Gelişmiş", "price": "150", "priceCurrency": "TRY", "url": "https://gokturklabs.dev.tc/#paketler" },
               { "@type": "Offer", "name": "Pro", "price": "350", "priceCurrency": "TRY", "url": "https://gokturklabs.dev.tc/#paketler" }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              { "@type": "Question", "name": "Sipariş nasıl veriliyor?", "acceptedAnswer": { "@type": "Answer", "text": "Bir paketin butonuna bastığında doğrudan Discord DM kutuma yönlenirsin. Ne istediğini anlatırsın; botu ve süreci ben hazırlarım." } },
+              { "@type": "Question", "name": "Bot nasıl özelleştiriliyor?", "acceptedAnswer": { "@type": "Answer", "text": "Botu hazır modüller üzerinden kuruyoruz. İhtiyacına göre modülleri seçiyor; botun ismini, logosunu, kapak görselini ve gerekli ayarlarını değiştiriyoruz." } }
             ]
           }
         ]
