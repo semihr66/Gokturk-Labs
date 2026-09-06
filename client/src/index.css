@@ -332,3 +332,9 @@ html { scroll-behavior: smooth; }
 .plan-copy-status { display: inline-flex; align-items: center; gap: .38rem; color: #ffd28b; font-size: .66rem; line-height: 1.4; }
 .legal-order-note { max-width: 48rem; margin: 1.5rem auto 0; color: #777682; text-align: center; font-size: .72rem; line-height: 1.65; }
 @media (max-width: 640px) { .plan-order-block { padding-top: 1.5rem; } .plan-order-button { width: 100%; } .legal-order-note { text-align: left; } }
+
+/* Göktürk Labs / Signal Harbor: factual Free-plan attribution notice, never a fabricated testimonial. */
+.plan-mandatory-notice { display: flex; align-items: flex-start; gap: .65rem; margin-top: 1.15rem; border: 1px solid rgba(255,181,71,.28); border-radius: .9rem; padding: .8rem .85rem; background: linear-gradient(135deg, rgba(255,181,71,.1), rgba(255,181,71,.035)); color: #d7d0c3; box-shadow: inset 0 1px 0 rgba(255,255,255,.04); }
+.plan-mandatory-notice strong { display: block; color: #ffe0a6; font: 700 .68rem/1.3 "DM Sans", sans-serif; letter-spacing: .04em; text-transform: uppercase; }
+.plan-mandatory-notice p { margin-top: .28rem; color: #aaa5a0; font-size: .67rem; line-height: 1.55; }
+@media (max-width: 640px) { .plan-mandatory-notice { padding: .75rem; } }

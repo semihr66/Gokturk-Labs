@@ -349,3 +349,15 @@
 - [ ] Discord bot hizmeti için JSON-LD yapılandırılmış verisini ekle.
 - [ ] `gokturklabs.dev.tc` SSL sertifikası ve domain erişimini kontrol et.
 - [ ] Build, checkpoint ve GitHub senkronizasyonunu tamamla.
+
+## Paket ve Google Güncellemesi
+
+- [ ] Modüllü seçeneklerde kod paylaşılmadığını, custom seçenekte kod paylaşımının bulunduğunu belirt.
+- [ ] Modüllü seçenekleri Göktürk Labs sunucusunda çalışma olarak ayarla; custom seçenekte sunucu seçimini açık bırak.
+- [ ] Free/Başlangıç paketini 3 modül + KAMPANYA! ve 0 TL olarak güncelle.
+- [ ] 50 TL pakette custom seçeneğini kaldır; modül sınırını ve marka koşullarını güncelle.
+- [ ] 180 TL paket fiyatını 150 TL yap ve modül sınırını güncelle.
+- [ ] 350 TL Pro paket kurallarını yeni modül sınırlarıyla güncelle.
+- [ ] Free kartına sahte referans yerine doğrulanabilir zorunlu Göktürk Labs duyuru metni paneli ekle.
+- [ ] Google SEO metadata, robots.txt ve sitemap.xml çıktısını mevcut domain düzeniyle doğrula.
+- [ ] Build, görsel kontrol, checkpoint ve GitHub senkronizasyonunu tamamla.
