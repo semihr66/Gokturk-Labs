@@ -340,3 +340,12 @@
 - [ ] Sipariş butonunu Discord’dan sipariş ver akışına uygun hâle getir.
 - [ ] Masaüstü ve mobilde sipariş akışını doğrula.
 - [ ] Build, checkpoint ve GitHub senkronizasyonunu tamamla.
+
+## Google SEO ve SSL Alan Adı
+
+- [ ] Asıl alan adı ve mevcut index metadata ayarlarını incele.
+- [ ] Google uyumlu title, description, canonical ve sosyal paylaşım metadata’sını ekle.
+- [ ] `robots.txt` ve `sitemap.xml` dosyalarını ekle.
+- [ ] Discord bot hizmeti için JSON-LD yapılandırılmış verisini ekle.
+- [ ] `gokturklabs.dev.tc` SSL sertifikası ve domain erişimini kontrol et.
+- [ ] Build, checkpoint ve GitHub senkronizasyonunu tamamla.
