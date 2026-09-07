@@ -40,6 +40,176 @@ const customizationSteps = [
   { icon: Layers3, title: "Teslim ve destek", text: "Kurulum sonrası seçtiğin pakete göre çalışma düzeni, destek ve Pro web panel sürecini sürdürüyoruz." },
 ];
 
+function ModuleCover({ index }: { index: number }) {
+  switch (index) {
+    case 0: // 01 Karşılama akışı
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1.5">
+            <div className="flex items-center gap-1.5">
+              <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-[10px] font-bold text-white shadow-sm">
+                U
+                <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400 ring-2 ring-[#121218]" />
+              </div>
+              <span className="text-[11px] font-semibold text-white">Yeni Üye</span>
+              <span className="rounded bg-[#5865F2] px-1 py-0.2 text-[8px] font-black text-white">BOT</span>
+            </div>
+            <span className="text-[9px] text-[#777682]">şimdi</span>
+          </div>
+          <div className="my-auto text-[10px] font-medium text-cyan-200/90 leading-tight">
+            👋 Sunucuya katıldı! Hoş geldin.
+          </div>
+          <div className="inline-flex items-center gap-1 self-start rounded-md border border-cyan-400/30 bg-cyan-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-cyan-300">
+            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
+            Rol Verildi: @Üye
+          </div>
+        </div>
+      );
+
+    case 1: // 02 Seviye & XP
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between">
+            <div className="inline-flex items-center gap-1 rounded-md border border-purple-500/40 bg-purple-500/20 px-2 py-0.5 text-[10px] font-extrabold text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.3)]">
+              <Zap className="h-3 w-3 text-purple-300 fill-purple-300" /> LVL 24
+            </div>
+            <span className="text-[10px] font-bold text-amber-300">🏆 TOP #1</span>
+          </div>
+          <div className="my-auto">
+            <div className="flex items-center justify-between text-[9px] text-[#9795a3] mb-1 font-mono">
+              <span>İlerleme (XP)</span>
+              <span className="text-purple-300 font-bold">4,850 / 5,000</span>
+            </div>
+            <div className="h-2 w-full overflow-hidden rounded-full bg-white/10 p-0.5">
+              <div className="h-full w-[86%] rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-amber-400 shadow-[0_0_12px_rgba(192,132,252,0.8)] animate-pulse" />
+            </div>
+          </div>
+          <div className="flex items-center justify-between text-[8px] text-purple-300/90 font-mono">
+            <span>+250 XP Mesaj Bonusu</span>
+            <span className="text-emerald-400 font-bold">%97</span>
+          </div>
+        </div>
+      );
+
+    case 2: // 03 Davet takibi
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <span className="text-[10px] font-semibold text-white/80">🔗 Davet İstatistiği</span>
+            <span className="inline-flex items-center text-[9px] font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 rounded">
+              ↗ %24 Artış
+            </span>
+          </div>
+          <div className="my-auto flex items-baseline gap-2">
+            <span className="font-display text-2xl font-bold text-white tracking-tight">48</span>
+            <span className="text-[10px] text-blue-300/90 font-semibold">Toplam Davet</span>
+          </div>
+          <div className="flex items-center gap-1.5 text-[9px]">
+            <span className="rounded bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 text-emerald-300 font-bold">✓ 42 Aktif</span>
+            <span className="rounded bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.5 text-rose-300 font-bold">✕ 6 Ayrıldı</span>
+          </div>
+        </div>
+      );
+
+    case 3: // 04 Çekiliş sistemi
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between">
+            <span className="inline-flex items-center gap-1 rounded bg-fuchsia-500/20 border border-fuchsia-500/40 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-fuchsia-300">
+              🎉 ÇEKİLİŞ
+            </span>
+            <span className="font-mono text-[10px] font-bold text-amber-300 animate-pulse">⏱ 01:24:18</span>
+          </div>
+          <div className="my-auto text-[11px] font-bold text-white truncate">
+            1 Aylık Discord Nitro
+          </div>
+          <div className="flex items-center justify-between">
+            <span className="text-[9px] text-[#9795a3]">👥 142 Katılımcı</span>
+            <span className="inline-flex items-center gap-1 rounded bg-gradient-to-r from-purple-600 to-fuchsia-600 px-2 py-0.5 text-[9px] font-bold text-white shadow-md">
+              Katıl 🎉
+            </span>
+          </div>
+        </div>
+      );
+
+    case 4: // 05 Destek & talep
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <span className="font-mono text-[10px] font-bold text-violet-300">🎫 #talep-0284</span>
+            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 text-[8px] font-bold text-emerald-400">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" /> AÇIK
+            </span>
+          </div>
+          <div className="my-auto text-[10px] text-white/90 font-medium leading-tight">
+            Yetkili ekibi talebe bağlandı.
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="rounded bg-rose-500/20 border border-rose-500/30 px-1.5 py-0.5 text-[9px] font-bold text-rose-300">
+              🔒 Talebi Kapat
+            </span>
+            <span className="rounded bg-violet-500/20 border border-violet-500/30 px-1.5 py-0.5 text-[9px] font-bold text-violet-300">
+              📄 TXT Log
+            </span>
+          </div>
+        </div>
+      );
+
+    case 5: // 06 Otomatik rol
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <span className="text-[10px] font-semibold text-white/80">⚡ Oto-Rol Sistemi</span>
+            <span className="text-[8px] font-extrabold text-purple-300 bg-purple-500/20 border border-purple-500/40 px-1.5 py-0.2 rounded">0.1s ANINDA</span>
+          </div>
+          <div className="my-auto flex items-center justify-between gap-1 text-[10px]">
+            <div className="rounded bg-white/5 border border-white/10 px-2 py-1 text-white/80 font-medium">
+              👤 Katılan
+            </div>
+            <span className="text-purple-400 font-bold">➔</span>
+            <div className="rounded border border-purple-500/40 bg-purple-500/20 px-2 py-1 text-purple-200 font-bold shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+              🏷️ @Oyuncu
+            </div>
+          </div>
+          <div className="text-[8px] text-emerald-400 flex items-center gap-1 font-medium">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Sessizce otomatik tanımlanır
+          </div>
+        </div>
+      );
+
+    case 6: // 07 Güvenlik & moderasyon
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <div className="flex items-center gap-1 text-[10px] font-bold text-cyan-300">
+              <ShieldCheck className="h-3.5 w-3.5 text-cyan-400" />
+              <span>GÖKTÜRK DEFENSE</span>
+            </div>
+            <span className="rounded bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 text-[8px] font-bold text-emerald-400">
+              KORUMADA
+            </span>
+          </div>
+          <div className="my-auto grid grid-cols-2 gap-1.5 text-[9px]">
+            <div className="rounded bg-black/40 border border-white/5 p-1 text-center">
+              <span className="text-white/50 block text-[8px]">Anti-Raid</span>
+              <strong className="text-emerald-400 font-bold">✓ Aktif</strong>
+            </div>
+            <div className="rounded bg-black/40 border border-white/5 p-1 text-center">
+              <span className="text-white/50 block text-[8px]">Spam Koruması</span>
+              <strong className="text-cyan-300 font-bold">✓ Devrede</strong>
+            </div>
+          </div>
+          <div className="text-[8px] text-cyan-300/80 font-mono">
+            7/24 Filtre ve Kayıt devrede
+          </div>
+        </div>
+      );
+
+    default:
+      return null;
+  }
+}
+
 function DiscordButton({ label = "Discord’dan sipariş ver", plan = "Genel talep", outline = false }: { label?: string; plan?: string; outline?: boolean }) {
   return <a href={DISCORD_ORDER_URL} target="_blank" rel="noreferrer" aria-label={`${plan} için Discord üzerinden sipariş ver`} className={`group inline-flex min-h-12 items-center justify-center gap-2 rounded-xl px-5 text-sm font-semibold transition-all duration-200 active:scale-[0.98] ${outline ? "border border-white/15 bg-white/[0.03] text-white hover:border-[#9333ea]/60 hover:bg-white/[0.07]" : "bg-[#9333ea] text-[#17120a] shadow-[0_12px_34px_rgba(255,181,71,0.2)] hover:-translate-y-0.5 hover:bg-[#c084fc]"}`}><MessageCircle className="h-4 w-4" />{label}<ArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></a>;
 }
@@ -303,7 +473,7 @@ export default function Home() {
     <section id="top" className="new-hero"><div className="hero-glow hero-glow-violet" /><div className="hero-glow hero-glow-blue" /><div className="hero-grid" /><div className="motion-hero-copy relative z-10 mx-auto max-w-7xl px-5 pb-24 pt-32 sm:pt-40"><div className="new-badge"><span className="new-badge-dot" /> GÖKTÜRK LABS / DISCORD BOT <span className="new-badge-divider" /> <span className="new-badge-link">Fikrini anlat <ArrowRight className="h-3.5 w-3.5" /></span></div><h1 className="mt-8 font-display text-5xl font-medium leading-[1.02] tracking-[-0.075em] text-white sm:text-7xl lg:text-[88px]">Botun sürekli<br /><span className="hero-gradient-text">çalışsın.</span></h1><p className="mx-auto mt-7 max-w-2xl text-base leading-7 text-[#a5a4b0] sm:text-lg">Botunu güvenilir bir çalışma düzenine al. İhtiyacını Discord’da anlat; paketi seçelim, botun seçtiğin sunucuda gece gündüz çalışsın ve desteği yanında olsun.</p><div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row"><a href="#paketler" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#9333ea] px-5 text-sm font-semibold text-[#17120a] shadow-[0_12px_34px_rgba(255,181,71,0.2)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#c084fc]"><span>Paketini seç</span><ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" /></a><a href="#nasil" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-white/12 px-5 text-sm font-semibold text-white hover:bg-white/[0.05]"><Play className="h-4 w-4 fill-current" /> Nasıl çalışır?</a></div><div className="mt-6 flex justify-center"><CommunityButton label="Topluluk & destek sunucusuna kat" /></div><div className="mt-14 flex flex-wrap items-center justify-center gap-x-7 gap-y-3 text-[11px] font-medium uppercase tracking-[0.12em] text-[#777682]"><span className="inline-flex items-center gap-2"><ShieldCheck className="h-4 w-4 text-[#9333ea]" /> Fikrin sende</span><span className="inline-flex items-center gap-2"><Code2 className="h-4 w-4 text-[#9333ea]" /> Üretim bizde</span><span className="inline-flex items-center gap-2"><Headphones className="h-4 w-4 text-[#9333ea]" /> Destek yanında</span></div><aside className="hero-console" aria-label="Bot çalışma durumu"><div className="hero-console-top"><span><i /> ÇALIŞMA İSTASYONU</span><small>LIVE / 24—7</small></div><div className="hero-console-main"><div className="hero-console-orbit"><div className="hero-console-core"><span>GL</span></div></div><div className="hero-console-copy"><strong>Göktürk Labs</strong><span>Bot çalışma hattı</span></div></div><div className="hero-console-stats"><div><small>Durum</small><strong><i /> Çevrimiçi</strong></div><div><small>İşlem</small><strong>Hazır modüller</strong></div><div><small>Destek</small><strong>Discord DM</strong></div></div><div className="hero-console-line"><span /><span /></div></aside></div></section>
     <section id="nasil" className="new-section"><div className="mx-auto max-w-7xl px-5"><div className="section-kicker motion-reveal">NASIL ÇALIŞIR?</div><div className="new-section-heading motion-reveal"><h2>Paketini seç.<br /><span>Botun çalışsın.</span></h2><p>Uzun formlar ve karmaşık paneller yok. Discord’dan ne istediğini anlat; doğru paketi seçip botunun çalışma düzenini birlikte netleştirelim.</p></div><div className="step-grid motion-reveal"><div className="step-card"><span>01</span><h3>Fikrini anlat</h3><p>Botunun ne yapmasını istediğini, komutlarını ve özel beklentilerini Discord DM’de paylaş.</p><div className="step-foot"><MessageCircle className="h-4 w-4" /><small>İhtiyacını dinleyelim</small></div></div><div className="step-card"><span>02</span><h3>Biz hazırlayalım</h3><p>Hazır modülleri birleştirir, botunun kimliğini ve ayarlarını senin fikrine göre düzenleriz.</p><div className="step-foot"><Code2 className="h-4 w-4" /><small>İhtiyacına göre üretelim</small></div></div><div className="step-card"><span>03</span><h3>Birlikte ilerleyelim</h3><p>Kurulum sonrası teknik destek ve Pro pakette web panel süreci için yine aynı DM akışındayız.</p><div className="step-foot"><Headphones className="h-4 w-4" /><small>Yanında kalalım</small></div></div></div></div></section>
     <section className="customization-section"><div className="mx-auto max-w-7xl px-5"><div className="customization-heading motion-reveal"><div><div className="section-kicker flex items-center gap-2"><Settings2 className="h-4 w-4" /> BOT ATÖLYESİ</div><h2>Çalışma alanını kur.<br /><span>Kimliğini sen belirle.</span></h2></div><p>Botunun çalışma düzenini, görünümünü ve sunucu akışını tek bir sakin sistemde birleştiriyoruz.</p></div><div className="customization-grid">{customizationSteps.map(({ icon: Icon, title, text }, index) => <article className="customization-card motion-reveal" style={{ "--stagger": `${index * 70}ms` } as CSSProperties} key={title}><div className="customization-icon"><Icon className="h-5 w-5" /></div><span>0{index + 1}</span><h3>{title}</h3><p>{text}</p></article>)}</div><div className="customization-note motion-reveal"><div className="customization-note-icon"><ImageIcon className="h-5 w-5" /></div><p><strong>İsim, logo ve kapak görseli değişir.</strong> Botun yalnızca çalışan bir araç değil, sunucunun kendi yüzü gibi hissetsin.</p><Settings2 className="hidden h-5 w-5 text-[#9333ea] sm:block" /></div></div></section>
-    <section id="moduller" className="extra-systems-section"><div className="mx-auto max-w-7xl px-5"><div className="extra-systems-heading motion-reveal"><div><div className="section-kicker flex items-center gap-2"><BlocksIcon className="h-4 w-4" /> MODÜLLER</div><h2>Custom ve<br /><span>modüllü seçenekler.</span></h2></div><p>Gelişmiş paketinden sonra custom bot ile daha özel bir çalışma düzenine geçebilirsin. İhtiyacına göre modülleri, akışları ve sunucu araçlarını birlikte netleştiririz.</p></div><div className="extra-systems-grid">{extraSystems.map(({ title, detail, icon: Icon, cover }, index) => <article className={`extra-system-card motion-reveal ${cover}`} style={{ "--stagger": `${index * 45}ms` } as CSSProperties} key={title}><div className="extra-system-cover"><div className="extra-system-cover-noise" /><Icon className="h-7 w-7" /></div><div className="extra-system-meta"><span><i /> 0{index + 1}</span><span>EK MODÜL</span></div><h3>{title}</h3><p>{detail}</p></article>)}</div><div className="extra-systems-cta motion-reveal"><div><strong>İhtiyacın olan modül listede yok mu?</strong><span>Discord’da anlat, birlikte yeni bir modül akışı tasarlayalım.</span></div><DiscordButton label="Modül sor" plan="Modül talebi" outline /></div></div></section>
+    <section id="moduller" className="extra-systems-section"><div className="mx-auto max-w-7xl px-5"><div className="extra-systems-heading motion-reveal"><div><div className="section-kicker flex items-center gap-2"><BlocksIcon className="h-4 w-4" /> MODÜLLER</div><h2>Custom ve<br /><span>modüllü seçenekler.</span></h2></div><p>Gelişmiş paketinden sonra custom bot ile daha özel bir çalışma düzenine geçebilirsin. İhtiyacına göre modülleri, akışları ve sunucu araçlarını birlikte netleştiririz.</p></div><div className="extra-systems-grid">{extraSystems.map(({ title, detail, cover }, index) => <article className={`extra-system-card motion-reveal ${cover}`} style={{ "--stagger": `${index * 45}ms` } as CSSProperties} key={title}><div className="extra-system-cover"><ModuleCover index={index} /></div><div className="extra-system-meta"><span><i /> 0{index + 1}</span><span>EK MODÜL</span></div><h3>{title}</h3><p>{detail}</p></article>)}</div><div className="extra-systems-cta motion-reveal"><div><strong>İhtiyacın olan modül listede yok mu?</strong><span>Discord’da anlat, birlikte yeni bir modül akışı tasarlayalım.</span></div><DiscordButton label="Modül sor" plan="Modül talebi" outline /></div></div></section>
     <section id="paketler" className="new-section new-section-pricing"><div className="mx-auto max-w-7xl px-5"><div className="section-kicker motion-reveal flex items-center gap-2"><Package className="h-4 w-4" /> PAKETLER</div><div className="new-section-heading motion-reveal"><h2>Botuna uygun<br /><span>bir çalışma seviyesi.</span></h2><p>Başlangıç’tan Pro’ya doğru kapsam, performans ve destek seviyesi yükselir. İhtiyacını anlat; paketini ve çalışma yerini birlikte netleştirelim.</p></div><div className="new-plans-grid motion-reveal">{plans.map(plan => <PlanCard key={plan.name} plan={plan} />)}</div><p className="legal-order-note">Sipariş başlatmak için ilgili paketin altındaki onay kutusunu işaretlemen gerekir. Ödeme ve son kapsam Discord DM’de netleştirilir.</p></div></section>
     <section id="sss" className="new-section new-faq"><div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24"><div className="motion-reveal"><div className="section-kicker flex items-center gap-2"><HelpCircle className="h-4 w-4" /> SSS</div><h2 className="mt-5 font-display text-4xl font-medium tracking-[-0.06em] text-white sm:text-5xl">Aklındaki sorulara<br /><span className="hero-gradient-text">net cevaplar.</span></h2><p className="mt-6 max-w-sm text-sm leading-7 text-[#9897a4]">Bulamadığın bir detay varsa, doğrudan Discord’dan yaz. En doğru cevabı birlikte buluruz.</p><div className="mt-8"><DiscordButton label="Discord’dan sor" plan="SSS destek" outline /></div></div><div className="faq-list motion-reveal">{faqs.map(([question, answer]) => <details className="new-faq-item" key={question}><summary>{question}<ChevronDown className="h-4 w-4 text-[#9333ea]" /></summary><p>{answer}</p></details>)}</div></div></section>
     <section id="destek" className="new-support"><div className="support-inner motion-reveal"><div><div className="section-kicker flex items-center gap-2"><LifeBuoy className="h-4 w-4" /> TEKNİK DESTEK</div><h2>Botun hazırsa,<br /><span>ilk mesajı atalım.</span></h2><p>Bot fikrini anlatman yeterli. Paket seçemiyorsan da sorun değil; Discord’da birlikte netleştiririz.</p></div><div className="support-action"><img src={LOGO_URL} alt="" className="h-12 w-12 object-contain" /><div><strong>Göktürk Labs</strong><small>Discord DM kanalı açık</small></div><DiscordButton label="Teknik destek al" plan="Teknik destek" /></div></div></section>

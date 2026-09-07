@@ -232,27 +232,20 @@ html { scroll-behavior: smooth; }
 .extra-systems-grid { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(4, 1fr); gap: .8rem; margin-top: 3.5rem; }
 .extra-system-card { min-height: 230px; padding: .6rem .6rem 1.1rem; border: 1px solid rgba(255,255,255,.095); border-radius: .95rem; background: #111117; transition: transform 260ms cubic-bezier(.23,1,.32,1), border-color 260ms ease, box-shadow 260ms ease; transition-delay: var(--stagger, 0ms); }
 .extra-system-card:hover { transform: translateY(-7px); border-color: rgba(147,51,234,.5); box-shadow: 0 22px 48px rgba(0,0,0,.3), 0 0 22px rgba(147,51,234,.06); }
-.extra-system-cover { position: relative; display: grid; place-items: center; height: 6.8rem; overflow: hidden; border: 1px solid rgba(255,255,255,.07); border-radius: .65rem; color: rgba(255,255,255,.9); background: #151520; }
-.extra-system-cover::before, .extra-system-cover::after { content: ""; position: absolute; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; }
-.extra-system-cover::before { width: 7rem; height: 2.2rem; transform: rotate(-22deg); }
-.extra-system-cover::after { width: 4rem; height: 4rem; border-color: rgba(147,51,234,.35); box-shadow: 0 0 26px rgba(147,51,234,.2); }
-.extra-system-cover svg { position: relative; z-index: 1; filter: drop-shadow(0 0 13px currentColor); }
-.extra-system-cover-noise { position: absolute; inset: 0; opacity: .22; background-image: radial-gradient(rgba(255,255,255,.45) .6px, transparent .6px); background-size: 5px 5px; mix-blend-mode: soft-light; }
+.extra-system-cover { position: relative; display: flex; flex-direction: column; height: 7.4rem; padding: 0.75rem 0.85rem; overflow: hidden; border: 1px solid rgba(255,255,255,.08); border-radius: .8rem; background: #12121a; box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 8px 24px rgba(0,0,0,.4); transition: transform 260ms cubic-bezier(.23,1,.32,1), border-color 260ms ease, box-shadow 260ms ease; }
+.extra-system-card:hover .extra-system-cover { border-color: rgba(147,51,234,.55); box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 25px rgba(147,51,234,.18); transform: translateY(-3px); }
+.cover-cyan .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(6,182,212,.18), transparent 70%), #10141c; border-color: rgba(6,182,212,.18); }
+.cover-violet .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(168,85,247,.22), transparent 70%), #14111d; border-color: rgba(168,85,247,.2); }
+.cover-grid .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(59,130,246,.18), transparent 70%), #10131d; border-color: rgba(59,130,246,.18); }
+.cover-purple .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(217,70,239,.2), transparent 70%), #16111b; border-color: rgba(217,70,239,.18); }
+.cover-magenta .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(139,92,246,.2), transparent 70%), #13111b; border-color: rgba(139,92,246,.2); }
+.cover-lines .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(168,85,247,.18), transparent 70%), #14111c; border-color: rgba(168,85,247,.18); }
+.cover-signal .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(14,165,233,.18), transparent 70%), #10151c; border-color: rgba(14,165,233,.18); }
 .extra-system-meta { display: flex; align-items: center; justify-content: space-between; margin-top: .85rem; color: #777682; font: 700 .58rem monospace; letter-spacing: .1em; }
 .extra-system-meta span:first-child { display: inline-flex; align-items: center; gap: .35rem; color: #c084fc; }
 .extra-system-meta i { width: .35rem; height: .35rem; border-radius: 50%; background: #9333ea; box-shadow: 0 0 9px rgba(147,51,234,.7); }
 .extra-system-card h3 { margin-top: .55rem; padding-inline: .1rem; color: #f0eef6; font: 600 1rem "Space Grotesk", sans-serif; }
 .extra-system-card p { margin-top: .35rem; padding-inline: .1rem; color: #8f8e9c; font-size: .72rem; line-height: 1.55; }
-.cover-cyan { background: radial-gradient(circle at 25% 25%, rgba(63,206,213,.22), transparent 33%), linear-gradient(135deg, #10252a, #142035 58%, #0e111a); color: #a5f1e4; }
-.cover-violet { background: radial-gradient(circle at 68% 35%, rgba(131,111,255,.32), transparent 31%), linear-gradient(135deg, #20203b, #131625 58%, #19121e); color: #c6baff; }
-.cover-grid { background: linear-gradient(rgba(108,136,255,.15) 1px, transparent 1px), linear-gradient(90deg, rgba(108,136,255,.15) 1px, transparent 1px), #11172a; background-size: 16px 16px; color: #a7c3ff; }
-.cover-purple { background: radial-gradient(circle at 50% 70%, rgba(147,51,234,.3), transparent 34%), linear-gradient(145deg, #34220e, #171513 62%, #19121a); color: #c084fc; }
-.cover-orbit { background: radial-gradient(circle at 50% 50%, rgba(52,119,201,.34), transparent 33%), linear-gradient(145deg, #101f34, #11131e); color: #9ed6ff; }
-.cover-blue { background: radial-gradient(circle at 76% 28%, rgba(64,157,255,.35), transparent 29%), linear-gradient(145deg, #10243e, #12151f); color: #a8d4ff; }
-.cover-magenta { background: linear-gradient(135deg, rgba(147,51,234,.22), transparent 45%), linear-gradient(145deg, #2c1715, #171316); color: #e9d5ff; }
-.cover-lines { background: repeating-linear-gradient(135deg, rgba(147,51,234,.13) 0 1px, transparent 1px 12px), #18151c; color: #e9d5ff; }
-.cover-signal { background: radial-gradient(circle at 40% 60%, rgba(85,116,222,.27), transparent 30%), linear-gradient(145deg, #101c2c, #111217); color: #b4c8ff; }
-.cover-neon { background: radial-gradient(circle at 45% 40%, rgba(147,51,234,.28), transparent 26%), linear-gradient(145deg, #251715, #15121b); color: #c084fc; }
 .extra-systems-cta { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 1rem; padding: 1.15rem 1.3rem; border: 1px solid rgba(255,255,255,.1); border-radius: .9rem; background: rgba(255,255,255,.035); }
 .extra-systems-cta > div { display: flex; flex-direction: column; gap: .3rem; }
 .extra-systems-cta strong { color: #f5f1e9; font: 600 1rem "Space Grotesk", sans-serif; }
