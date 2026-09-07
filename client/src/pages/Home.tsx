@@ -1,16 +1,16 @@
 /* Göktürk Labs / Signal Harbor: amber signal, quiet dark Discord bot studio, crafted motion and direct Discord flow. */
 import { useEffect, useId, useState, type CSSProperties } from "react";
-import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap } from "lucide-react";
+import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Crown, Flame, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap } from "lucide-react";
 
 const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
 const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
 const LOGO_URL = "/gokturk-labs-logo.png";
 
 const plans = [
-  { name: "Başlangıç (Free)", price: "₺0", note: "başlangıç", label: "FREE PLAN · KAMPANYA!", detail: "Temel komutlar ve hazır modüllerle sade bir bot başlangıcı.", performance: "Temel", score: 1, tone: "plain", icon: Terminal, notice: "Zorunlu: Sunucumuzda hakkımızda bir duyuru geçmeniz gerekmektedir (Örn: 'Göktürk Labs Discord botunu kullanıyorum, çok iyi, size de tavsiye ederim' tarzında destekleyici bir mesaj).", features: ["Temel komutlar", "Temel otomasyon özellikleri", "Hazır modüllerle kurulum", "3 + 1 modül hakkı · KAMPANYA!", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "İsim/logo/kapak düzenleme yok", "Zorunlu: Sunucu adı/açıklamasında \"— By Göktürk Labs\" + link, ayrıca banner'da da \"Powered by Göktürk Labs\" + link (ikisi de kaldırılamaz)"] },
-  { name: "Dengeli", price: "₺50", note: "tek sefer", label: "DENGELİ · SINIRSIZ MODÜL", detail: "Başlangıç kapsamını moderasyon, loglama ve sınırsız modül çalışma alanıyla büyütür.", performance: "Dengeli", score: 2, tone: "plain", icon: Code2, features: ["Başlangıç paketindeki tüm özellikler", "Moderasyon ve loglama", "Gelişmiş otomasyon sistemleri", "Sınırsız modül hakkı", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "Custom bot seçeneği yok (Sadece modüllü)", "İsim, logo, kapak görseli düzenleme var", "Açıklama + banner'da zorunlu: \"Powered by Göktürk Labs\" + link (kaldırılamaz)"] },
-  { name: "Gelişmiş", price: "₺150", note: "tek sefer", label: "GELİŞMİŞ · SINIRSIZ MODÜL", detail: "Dengeli paketinin üzerine özel komutlar, sınırsız modül desteği ve custom seçeneği eklenir.", performance: "Yüksek", score: 3, tone: "featured", icon: Sparkles, features: ["Dengeli paketindeki tüm özellikler", "Ticket ve özel komutlar", "Gelişmiş sunucu sistemleri", "Sınırsız modül hakkı", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "Custom seçenek: Kod paylaşılır, sizin veya Göktürk Labs sunucusunda çalışır", "İsim, logo, kapak görseli düzenleme", "\"Powered by\" ibaresi sorunsuz kaldırılabilir"] },
-  { name: "Pro", price: "₺350", note: "tek sefer", label: "PRO / ÖNCELİKLİ · SINIRSIZ MODÜL", detail: "Gelişmiş kapsamına sınırsız modül, web paneli ve öncelikli destek eklenir.", performance: "Öncelikli", score: 4, tone: "warm", icon: WandSparkles, features: ["Gelişmiş paketindeki tüm özellikler", "Sınırsız modül hakkı", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "Custom seçenek: Kod paylaşılır, sizin veya Göktürk Labs sunucusunda çalışır", "İleri seviye özel sistemler", "Web panel desteği ve öncelikli teknik destek", "İsim, logo, kapak görseli düzenleme", "\"Powered by\" ibaresi sorunsuz kaldırılabilir"] },
+  { name: "Başlangıç (Free)", price: "₺0", note: "başlangıç", badge: "🎁 Ücretsiz Başlangıç", badgeType: "free", label: "FREE PLAN · KAMPANYA!", detail: "Temel komutlar ve hazır modüllerle sade bir bot başlangıcı.", performance: "Temel", score: 1, tone: "plain", icon: Terminal, notice: "Zorunlu: Sunucumuzda hakkımızda bir duyuru geçmeniz gerekmektedir (Örn: 'Göktürk Labs Discord botunu kullanıyorum, çok iyi, size de tavsiye ederim' tarzında destekleyici bir mesaj).", features: ["Temel komutlar", "Temel otomasyon özellikleri", "Hazır modüllerle kurulum", "3 + 1 modül hakkı · KAMPANYA!", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "İsim/logo/kapak düzenleme yok", "Zorunlu: Sunucu adı/açıklamasında \"— By Göktürk Labs\" + link, ayrıca banner'da da \"Powered by Göktürk Labs\" + link (ikisi de kaldırılamaz)"] },
+  { name: "Dengeli", price: "₺50", note: "tek sefer", badge: "⚡ En İyi Fiyat / Performans", badgeType: "fp", label: "DENGELİ · SINIRSIZ MODÜL", detail: "Başlangıç kapsamını moderasyon, loglama ve sınırsız modül çalışma alanıyla büyütür.", performance: "Dengeli", score: 2, tone: "plain", icon: Code2, features: ["Başlangıç paketindeki tüm özellikler", "Sınırsız modül hakkı", "Moderasyon ve loglama", "Gelişmiş otomasyon sistemleri", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "Custom bot seçeneği yok (Sadece modüllü)", "İsim, logo, kapak görseli düzenleme var", "Açıklama + banner'da zorunlu: \"Powered by Göktürk Labs\" + link (kaldırılamaz)"] },
+  { name: "Gelişmiş", price: "₺150", note: "tek sefer", badge: "🔥 En Çok Tercih Edilen", badgeType: "popular", label: "GELİŞMİŞ · SINIRSIZ MODÜL", detail: "Dengeli paketinin üzerine özel komutlar, sınırsız modül desteği ve custom seçeneği eklenir.", performance: "Yüksek", score: 3, tone: "featured", icon: Sparkles, features: ["Dengeli paketindeki tüm özellikler", "Sınırsız modül hakkı", "Ticket ve özel komutlar", "Custom seçenek: Kod paylaşılır, sizin veya Göktürk Labs sunucusunda çalışır", "Gelişmiş sunucu sistemleri", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "İsim, logo, kapak görseli düzenleme", "\"Powered by\" ibaresi sorunsuz kaldırılabilir"] },
+  { name: "Pro", price: "₺350", note: "tek sefer", badge: "👑 Maksimum VIP Seviye", badgeType: "vip", label: "PRO / ÖNCELİKLİ · SINIRSIZ MODÜL", detail: "Gelişmiş kapsamına sınırsız modül, web paneli ve öncelikli destek eklenir.", performance: "Öncelikli", score: 4, tone: "warm", icon: WandSparkles, features: ["Web panel desteği ve öncelikli teknik destek", "Sınırsız modül hakkı", "Gelişmiş paketindeki tüm özellikler", "Custom seçenek: Kod paylaşılır, sizin veya Göktürk Labs sunucusunda çalışır", "Modüllü seçenek: Kod paylaşılmaz, Göktürk Labs sunucusunda çalışır", "İleri seviye özel sistemler", "İsim, logo, kapak görseli düzenleme", "\"Powered by\" ibaresi sorunsuz kaldırılabilir"] },
 ];
 
 const faqs = [
@@ -52,10 +52,70 @@ function CommunityButton({ label = "Topluluk & destek sunucusu" }: { label?: str
   return <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-[#c084fc] hover:text-white"><DiscordMark className="h-4 w-4" />{label}<ArrowUpRight className="h-4 w-4" /></a>;
 }
 
-function FeatureIcon({ feature }: { feature: string }) {
-  if (feature === "İsim/logo/kapak düzenleme yok" || feature === "Kod paylaşımı yok" || feature === "Custom bot seçeneği yok") return <X className="mt-0.5 h-4 w-4 shrink-0 text-[#9333ea]" aria-hidden="true" />;
-  if (feature.startsWith("Zorunlu:") || feature.startsWith("Açıklama + banner'da zorunlu:")) return <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-[#9333ea]" aria-hidden="true" />;
-  return <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#9333ea]" aria-hidden="true" />;
+function FeatureItem({ feature }: { feature: string }) {
+  const isExcluded = feature === "İsim/logo/kapak düzenleme yok" || feature === "Kod paylaşımı yok" || feature === "Custom bot seçeneği yok";
+  const isMandatory = feature.startsWith("Zorunlu:") || feature.startsWith("Açıklama + banner'da zorunlu:");
+  const isWebPanel = feature.includes("Web panel");
+  const isUnlimitedModule = feature === "Sınırsız modül hakkı";
+  const isCampaign = feature.includes("3 + 1 modül");
+  const isCustomCode = feature.includes("Custom seçenek: Kod paylaşılır");
+  const isTicket = feature.includes("Ticket ve özel komutlar");
+
+  return (
+    <div className={`flex items-start gap-2.5 text-sm transition-all duration-200 ${
+      isWebPanel
+        ? "rounded-xl border border-amber-400/40 bg-gradient-to-r from-amber-500/15 via-purple-900/20 to-transparent p-2.5 shadow-[0_0_20px_rgba(251,191,36,0.15)]"
+        : isUnlimitedModule
+        ? "rounded-lg border border-purple-500/20 bg-purple-500/[0.06] p-1.5 text-purple-100"
+        : isExcluded
+        ? "text-[#6b6a78]"
+        : "text-[#b9b8c4]"
+    }`}>
+      {isWebPanel ? (
+        <Crown className="mt-0.5 h-4 w-4 shrink-0 text-amber-400 fill-amber-400 drop-shadow-[0_0_10px_rgba(251,191,36,0.8)] animate-pulse" aria-hidden="true" />
+      ) : isUnlimitedModule ? (
+        <Zap className="mt-0.5 h-4 w-4 shrink-0 text-purple-300 fill-purple-300 drop-shadow-[0_0_8px_rgba(192,132,252,0.7)]" aria-hidden="true" />
+      ) : isCampaign ? (
+        <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
+      ) : isCustomCode ? (
+        <Code2 className="mt-0.5 h-4 w-4 shrink-0 text-cyan-400" aria-hidden="true" />
+      ) : isTicket ? (
+        <Sparkles className="mt-0.5 h-4 w-4 shrink-0 text-purple-400" aria-hidden="true" />
+      ) : isExcluded ? (
+        <X className="mt-0.5 h-4 w-4 shrink-0 text-[#6d6c7b]" aria-hidden="true" />
+      ) : isMandatory ? (
+        <LockKeyhole className="mt-0.5 h-4 w-4 shrink-0 text-[#9333ea]" aria-hidden="true" />
+      ) : (
+        <Check className="mt-0.5 h-4 w-4 shrink-0 text-[#9333ea]" aria-hidden="true" />
+      )}
+
+      <div className="flex flex-1 flex-wrap items-center gap-1.5 leading-snug">
+        <span className={isWebPanel ? "font-bold text-amber-200" : isUnlimitedModule ? "font-semibold text-white" : ""}>
+          {feature}
+        </span>
+        {isWebPanel && (
+          <span className="inline-flex items-center gap-1 rounded-full border border-amber-400/50 bg-amber-400/25 px-2 py-0.5 text-[10px] font-black uppercase tracking-wider text-amber-300 shadow-[0_0_12px_rgba(251,191,36,0.4)]">
+            <Crown className="h-3 w-3 text-amber-300 fill-amber-300" /> KRAL ÖZELLİĞİ
+          </span>
+        )}
+        {isUnlimitedModule && (
+          <span className="inline-flex items-center gap-0.5 rounded-full border border-purple-400/40 bg-purple-500/20 px-1.5 py-0.5 text-[9px] font-extrabold uppercase tracking-wider text-purple-200">
+            ⚡ SINIRSIZ
+          </span>
+        )}
+        {isCustomCode && (
+          <span className="inline-flex items-center rounded-full border border-cyan-400/40 bg-cyan-400/15 px-1.5 py-0.5 text-[9px] font-bold text-cyan-300">
+            AÇIK KAYNAK
+          </span>
+        )}
+        {isCampaign && (
+          <span className="inline-flex items-center rounded-full border border-emerald-400/40 bg-emerald-400/15 px-1.5 py-0.5 text-[9px] font-bold text-emerald-300">
+            HEDİYE
+          </span>
+        )}
+      </div>
+    </div>
+  );
 }
 
 function PlanOrder({ plan }: { plan: (typeof plans)[number] }) {
@@ -90,7 +150,70 @@ function PlanOrder({ plan }: { plan: (typeof plans)[number] }) {
 
 function PlanCard({ plan }: { plan: (typeof plans)[number] }) {
   const Icon = plan.icon;
-  return <article className={`new-plan-card ${plan.tone === "featured" ? "new-plan-card-featured" : ""} ${plan.tone === "warm" ? "new-plan-card-warm" : ""}`}><div className="flex items-center justify-between"><span className="new-plan-label">{plan.label}</span><Icon className="h-5 w-5 text-[#9333ea]" /></div><h3>{plan.name}</h3><p className="new-plan-detail">{plan.detail}</p><div className="new-plan-price"><strong>{plan.price}</strong><span>/ {plan.note}</span></div><div className="plan-performance"><div><span>Performans</span><strong>{plan.performance}</strong></div><div className="performance-meter">{[1, 2, 3, 4].map(level => <span key={level} className={level <= plan.score ? "is-on" : ""} />)}</div></div><div className="new-plan-line" /><div className="space-y-3">{plan.features.map(feature => <div className="flex items-start gap-2.5 text-sm text-[#b9b8c4]" key={feature}><FeatureIcon feature={feature} /><span>{feature}</span></div>)}</div>{plan.notice && <div className="plan-mandatory-notice"><Megaphone className="h-4 w-4 shrink-0 text-[#9333ea]" /><div><strong>Zorunlu sunucu duyurusu</strong><p>{plan.notice}</p></div></div>}<PlanOrder plan={plan} /></article>;
+  const isVip = plan.badgeType === "vip";
+  const isPopular = plan.badgeType === "popular";
+  const isFp = plan.badgeType === "fp";
+  const isFree = plan.badgeType === "free";
+
+  return (
+    <article className={`new-plan-card relative flex flex-col ${isPopular ? "new-plan-card-featured" : ""} ${isVip ? "new-plan-card-warm" : ""}`}>
+      {plan.badge && (
+        <div className={`plan-badge-tag ${
+          isVip 
+            ? "plan-badge-vip" 
+            : isPopular 
+            ? "plan-badge-popular" 
+            : isFp 
+            ? "plan-badge-fp" 
+            : "plan-badge-free"
+        }`}>
+          {isVip && <Crown className="h-3.5 w-3.5 text-amber-300 fill-amber-300 animate-bounce" />}
+          {isPopular && <Flame className="h-3.5 w-3.5 text-amber-400 fill-amber-400 animate-pulse" />}
+          {isFp && <Zap className="h-3.5 w-3.5 text-purple-300 fill-purple-300" />}
+          {isFree && <Sparkles className="h-3.5 w-3.5 text-emerald-300" />}
+          <span>{plan.badge}</span>
+        </div>
+      )}
+
+      <div className="flex items-center justify-between">
+        <span className="new-plan-label">{plan.label}</span>
+        <Icon className={`h-5 w-5 ${isVip ? "text-amber-400" : "text-[#9333ea]"}`} />
+      </div>
+      <h3>{plan.name}</h3>
+      <p className="new-plan-detail">{plan.detail}</p>
+      <div className="new-plan-price">
+        <strong>{plan.price}</strong>
+        <span>/ {plan.note}</span>
+      </div>
+      <div className="plan-performance">
+        <div>
+          <span>Performans</span>
+          <strong>{plan.performance}</strong>
+        </div>
+        <div className="performance-meter">
+          {[1, 2, 3, 4].map(level => (
+            <span key={level} className={level <= plan.score ? "is-on" : ""} />
+          ))}
+        </div>
+      </div>
+      <div className="new-plan-line" />
+      <div className="space-y-2.5">
+        {plan.features.map(feature => (
+          <FeatureItem feature={feature} key={feature} />
+        ))}
+      </div>
+      {plan.notice && (
+        <div className="plan-mandatory-notice">
+          <Megaphone className="h-4 w-4 shrink-0 text-[#9333ea]" />
+          <div>
+            <strong>Zorunlu sunucu duyurusu</strong>
+            <p>{plan.notice}</p>
+          </div>
+        </div>
+      )}
+      <PlanOrder plan={plan} />
+    </article>
+  );
 }
 
 type Burst = { id: number; x: number; y: number; symbol: string; angle: number; distance: number; delay: number };

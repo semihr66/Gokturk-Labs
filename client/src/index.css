@@ -262,6 +262,47 @@ html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { .extra-system-card { transition-delay: 0ms; } }
 
 
+/* Marketing badges for pricing cards */
+.plan-badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  align-self: flex-start;
+  margin-bottom: 0.95rem;
+  padding: 0.32rem 0.72rem;
+  border-radius: 999px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.plan-badge-vip {
+  border: 1px solid rgba(251, 191, 36, 0.6);
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.22), rgba(147, 51, 234, 0.28));
+  color: #fef08a;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.plan-badge-popular {
+  border: 1px solid rgba(192, 132, 252, 0.65);
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.32), rgba(244, 63, 94, 0.22));
+  color: #f3e8ff;
+  box-shadow: 0 0 20px rgba(147, 51, 234, 0.35);
+}
+
+.plan-badge-fp {
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  background: rgba(147, 51, 234, 0.15);
+  color: #e9d5ff;
+}
+
+.plan-badge-free {
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  background: rgba(16, 185, 129, 0.15);
+  color: #a7f3d0;
+}
+
 /* Göktürk Labs / Pro kartı: Signal Harbor amber sinyali, eşit paket ritmi ve belirgin öncelik. */
 @media (min-width: 1100px) {
   .new-plans-grid {
@@ -272,10 +313,10 @@ html { scroll-behavior: smooth; }
   .new-plan-card-warm {
     position: relative;
     overflow: hidden;
-    border-color: rgba(147, 51, 234, 0.62);
-    background: linear-gradient(145deg, rgba(147, 51, 234, 0.16), rgba(38, 28, 24, 0.92) 54%, #131319 100%);
-    box-shadow: 0 22px 60px rgba(147, 51, 234, 0.16), inset 0 1px 0 rgba(192, 132, 252, 0.16);
-    transform: translateY(-10px);
+    border-color: rgba(251, 191, 36, 0.55);
+    background: linear-gradient(145deg, rgba(251, 191, 36, 0.12), rgba(42, 28, 62, 0.94) 54%, #131319 100%);
+    box-shadow: 0 24px 64px rgba(251, 191, 36, 0.16), 0 0 45px rgba(147, 51, 234, 0.2), inset 0 1px 0 rgba(251, 191, 36, 0.3);
+    transform: translateY(-12px);
   }
 
   .new-plan-card-warm::before {
@@ -283,21 +324,23 @@ html { scroll-behavior: smooth; }
     top: 0;
     right: 1.35rem;
     left: 1.35rem;
-    height: 2px;
-    background: linear-gradient(90deg, transparent, #9333ea 24%, #e9d5ff 50%, #9333ea 76%, transparent);
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #fbbf24 24%, #fef08a 50%, #9333ea 76%, transparent);
     content: "";
-    opacity: 0.95;
+    opacity: 1;
+    box-shadow: 0 0 12px #fbbf24;
   }
 
   .new-plan-card-warm:hover {
-    border-color: rgba(192, 132, 252, 0.9);
-    box-shadow: 0 28px 72px rgba(147, 51, 234, 0.22), inset 0 1px 0 rgba(233, 213, 255, 0.22);
-    transform: translateY(-14px);
+    border-color: rgba(251, 191, 36, 0.9);
+    box-shadow: 0 32px 80px rgba(251, 191, 36, 0.28), 0 0 60px rgba(147, 51, 234, 0.3), inset 0 1px 0 rgba(254, 240, 138, 0.4);
+    transform: translateY(-16px) scale(1.02);
   }
 
   .new-plan-card-warm .new-plan-label {
-    color: #e9d5ff;
+    color: #fef08a;
     letter-spacing: 0.14em;
+    text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
   }
 }
 
