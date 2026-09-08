@@ -477,6 +477,30 @@ export default function Home() {
     <section id="paketler" className="new-section new-section-pricing"><div className="mx-auto max-w-7xl px-5"><div className="section-kicker motion-reveal flex items-center gap-2"><Package className="h-4 w-4" /> PAKETLER</div><div className="new-section-heading motion-reveal"><h2>Botuna uygun<br /><span>bir çalışma seviyesi.</span></h2><p>Başlangıç’tan Pro’ya doğru kapsam, performans ve destek seviyesi yükselir. İhtiyacını anlat; paketini ve çalışma yerini birlikte netleştirelim.</p></div><div className="new-plans-grid motion-reveal">{plans.map(plan => <PlanCard key={plan.name} plan={plan} />)}</div><p className="legal-order-note">Sipariş başlatmak için ilgili paketin altındaki onay kutusunu işaretlemen gerekir. Ödeme ve son kapsam Discord DM’de netleştirilir.</p></div></section>
     <section id="sss" className="new-section new-faq"><div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.8fr_1.2fr] lg:gap-24"><div className="motion-reveal"><div className="section-kicker flex items-center gap-2"><HelpCircle className="h-4 w-4" /> SSS</div><h2 className="mt-5 font-display text-4xl font-medium tracking-[-0.06em] text-white sm:text-5xl">Aklındaki sorulara<br /><span className="hero-gradient-text">net cevaplar.</span></h2><p className="mt-6 max-w-sm text-sm leading-7 text-[#9897a4]">Bulamadığın bir detay varsa, doğrudan Discord’dan yaz. En doğru cevabı birlikte buluruz.</p><div className="mt-8"><DiscordButton label="Discord’dan sor" plan="SSS destek" outline /></div></div><div className="faq-list motion-reveal">{faqs.map(([question, answer]) => <details className="new-faq-item" key={question}><summary>{question}<ChevronDown className="h-4 w-4 text-[#9333ea]" /></summary><p>{answer}</p></details>)}</div></div></section>
     <section id="destek" className="new-support"><div className="support-inner motion-reveal"><div><div className="section-kicker flex items-center gap-2"><LifeBuoy className="h-4 w-4" /> TEKNİK DESTEK</div><h2>Botun hazırsa,<br /><span>ilk mesajı atalım.</span></h2><p>Bot fikrini anlatman yeterli. Paket seçemiyorsan da sorun değil; Discord’da birlikte netleştiririz.</p></div><div className="support-action"><img src={LOGO_URL} alt="" className="h-12 w-12 object-contain" /><div><strong>Göktürk Labs</strong><small>Discord DM kanalı açık</small></div><DiscordButton label="Teknik destek al" plan="Teknik destek" /></div></div></section>
-    <footer className="border-t border-white/5 bg-[#08080b] py-12 mt-20"><div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-5 text-center"><a href="#top" className="flex items-center gap-3 text-[#f0eef6] transition-colors hover:text-white"><img src={LOGO_URL} alt="Göktürk Labs" className="h-8 w-8 object-contain" /><span className="font-display text-[15px] font-semibold tracking-[-0.01em]">Göktürk Labs - Discord Yazılım Çözümleri</span></a><div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-[#8f8e9c]"><a href="#nasil" className="transition-colors hover:text-white">Hakkımızda</a><a href={DISCORD_ORDER_URL} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">Bize Ulaşın</a><a href="/gizlilik-politikasi" className="transition-colors hover:text-white">Gizlilik Politikası</a><a href="/hizmet-sartlari" className="transition-colors hover:text-white">Şartlar &amp; Koşullar</a><a href="/sitemap.xml" target="_blank" className="transition-colors hover:text-white">XML Sitemap</a></div><a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#5865F2]/10 px-5 py-2 text-[13px] font-medium text-[#5865F2] transition-colors hover:bg-[#5865F2]/20"><DiscordMark className="h-4 w-4" /> Resmi Discord Sunucumuza Katılın</a><div className="mt-4 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 text-[12px] text-[#777682] sm:flex-row"><p>© 2026 Göktürk Labs. Tüm hakları saklıdır. Geliştirici: <span className="text-[#9333ea] font-medium">semihr66</span></p></div></div></footer>
+    <footer className="border-t border-white/5 bg-[#08080b] py-12 mt-20">
+      <div className="mx-auto flex max-w-4xl flex-col items-center gap-6 px-5 text-center">
+        <a href="#top" className="flex items-center gap-3 text-[#f0eef6] transition-colors hover:text-white">
+          <img src={LOGO_URL} alt="Göktürk Labs" className="h-8 w-8 object-contain" />
+          <span className="font-display text-[15px] font-semibold tracking-[-0.01em]">Göktürk Labs - Discord Yazılım Çözümleri</span>
+        </a>
+        <div className="flex flex-wrap justify-center gap-x-6 gap-y-3 text-[13px] text-[#8f8e9c]">
+          <a href="#nasil" className="transition-colors hover:text-white">Hakkımızda</a>
+          <a href={DISCORD_ORDER_URL} target="_blank" rel="noreferrer" className="transition-colors hover:text-white">Bize Ulaşın</a>
+          <a href="/gizlilik-politikasi" className="transition-colors hover:text-white">Gizlilik Politikası</a>
+          <a href="/hizmet-sartlari" className="transition-colors hover:text-white">Şartlar &amp; Koşullar</a>
+          <a href="/sitemap.xml" target="_blank" className="transition-colors hover:text-white">XML Sitemap</a>
+        </div>
+        <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full bg-[#5865F2]/10 px-5 py-2 text-[13px] font-medium text-[#5865F2] transition-colors hover:bg-[#5865F2]/20">
+          <DiscordMark className="h-4 w-4" /> Resmi Discord Sunucumuza Katılın
+        </a>
+        <div className="my-1 flex flex-col items-center justify-center gap-1 text-center select-none" aria-label="Mustafa Kemal Atatürk'ü anma" title="Mustafa Kemal Atatürk (1881-193∞)">
+          <span className="font-display text-[16px] font-semibold tracking-[0.25em] text-[#e2e8f0]">1881-193∞</span>
+          <span className="text-[12px] font-medium tracking-[0.08em] text-[#8f8e9c]">Saygı ve minnetle...</span>
+        </div>
+        <div className="mt-4 flex w-full flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 text-[12px] text-[#777682] sm:flex-row">
+          <p>© 2026 Göktürk Labs. Tüm hakları saklıdır. Geliştirici: <span className="text-[#9333ea] font-medium">semihr66</span></p>
+        </div>
+      </div>
+    </footer>
   </main>;
 }
