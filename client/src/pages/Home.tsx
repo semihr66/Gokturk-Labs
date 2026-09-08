@@ -293,9 +293,11 @@ function PlanOrder({ plan }: { plan: (typeof plans)[number] }) {
   const consentId = useId();
   const [termsAccepted, setTermsAccepted] = useState(false);
   const [privacyAcknowledged, setPrivacyAcknowledged] = useState(false);
+  const [copied, setCopied] = useState(false);
   const orderMessage = plan.price === "₺0" 
     ? `Merhaba, ${plan.name} ücretsiz paketi için başvurmak istiyorum.` 
     : `Merhaba, ${plan.name} (${plan.price}/ay) paketi için sipariş vermek istiyorum.`;
+  const canOrder = termsAccepted && privacyAcknowledged;
 
   const handleOrder = () => {
     if (navigator.clipboard) {
