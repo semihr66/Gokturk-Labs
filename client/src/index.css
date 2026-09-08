@@ -241,6 +241,7 @@ html { scroll-behavior: smooth; }
 .cover-magenta .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(139,92,246,.2), transparent 70%), #13111b; border-color: rgba(139,92,246,.2); }
 .cover-lines .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(168,85,247,.18), transparent 70%), #14111c; border-color: rgba(168,85,247,.18); }
 .cover-signal .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(14,165,233,.18), transparent 70%), #10151c; border-color: rgba(14,165,233,.18); }
+.cover-ai .extra-system-cover { background: radial-gradient(circle at 50% 0%, rgba(245,158,11,.2), transparent 70%), #14121a; border-color: rgba(245,158,11,.25); }
 .extra-system-meta { display: flex; align-items: center; justify-content: space-between; margin-top: .85rem; color: #777682; font: 700 .58rem monospace; letter-spacing: .1em; }
 .extra-system-meta span:first-child { display: inline-flex; align-items: center; gap: .35rem; color: #c084fc; }
 .extra-system-meta i { width: .35rem; height: .35rem; border-radius: 50%; background: #9333ea; box-shadow: 0 0 9px rgba(147,51,234,.7); }
