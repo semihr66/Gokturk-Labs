@@ -49,10 +49,10 @@ const extraSystems: Array<{
   },
   { 
     title: "Ses & Müzik", 
-    detail: "Spotify entegrasyonu, 128 kbps kristal netliğinde ses kalitesi ve /play müzik çalar sistemi.", 
-    icon: Music, 
+    detail: "Tıkla-oluştur geçici özel ses odaları, oda kilit & yönetim paneli ve Spotify entegreli 128 kbps HD müzik çalar.", 
+    icon: Headphones, 
     cover: "cover-music", 
-    badge: "128 KBPS HD" 
+    badge: "ÖZEL ODA & 128K HD" 
   },
 ];
 
@@ -258,36 +258,61 @@ function ModuleCover({ index }: { index: number }) {
         </div>
       );
 
-    case 8: // 09 Ses & Müzik
+    case 8: // 09 Ses & Müzik (Özel Ses Odası + Spotify Müzik)
       return (
         <div className="relative z-10 flex flex-col justify-between h-full select-none">
           <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400">
-              <Music className="h-3.5 w-3.5 text-[#1DB954]" />
+            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-emerald-400">
+              <Headphones className="h-3.5 w-3.5 text-emerald-400" />
               <span>GÖKTÜRK SES &amp; MÜZİK</span>
             </div>
-            <span className="rounded bg-[#1DB954]/20 border border-[#1DB954]/40 px-1.5 py-0.2 text-[8px] font-black text-[#1DB954]">
-              128 KBPS
-            </span>
+            <div className="flex items-center gap-1">
+              <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-1 py-0.2 text-[7.5px] font-bold text-emerald-300">
+                ÖZEL ODA
+              </span>
+              <span className="rounded bg-[#1DB954]/20 border border-[#1DB954]/40 px-1 py-0.2 text-[7.5px] font-bold text-[#1DB954]">
+                128K HD
+              </span>
+            </div>
           </div>
-          <div className="my-auto flex items-center justify-between gap-2 rounded bg-black/40 border border-white/5 p-1.5 text-[8.5px]">
-            <div className="flex items-center gap-1.5 min-w-0">
-              <span className="h-5 w-5 rounded bg-[#1DB954]/20 text-[#1DB954] flex items-center justify-center font-bold text-[10px] shrink-0">🎵</span>
-              <div className="min-w-0">
-                <span className="text-white font-bold block truncate">/play &lt;şarkı|link&gt;</span>
-                <span className="text-zinc-400 text-[7.5px] block truncate">Spotify arama &amp; link alıcı</span>
+
+          <div className="my-auto flex flex-col gap-1">
+            {/* 1. Özel Ses Odası */}
+            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="h-4 w-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[9px] shrink-0">🔊</span>
+                <div className="min-w-0">
+                  <span className="text-white font-semibold block truncate leading-tight">Özel Oda Oluştur</span>
+                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Kişiye özel kanal &amp; panel</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 text-[7px] text-emerald-300/90 font-mono bg-emerald-950/60 border border-emerald-500/30 px-1 rounded shrink-0">
+                <span>🔒 Kilit</span>
+                <span>👥 Limit</span>
               </div>
             </div>
-            <div className="flex items-end gap-0.5 h-3 px-1 shrink-0">
-              <span className="w-0.5 h-2 bg-[#1DB954] rounded-full animate-pulse" />
-              <span className="w-0.5 h-3 bg-emerald-400 rounded-full animate-bounce" />
-              <span className="w-0.5 h-1.5 bg-[#1DB954] rounded-full animate-pulse" />
-              <span className="w-0.5 h-3 bg-emerald-300 rounded-full animate-bounce" />
+
+            {/* 2. Müzik Çalar */}
+            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="h-4 w-4 rounded bg-[#1DB954]/20 text-[#1DB954] flex items-center justify-center font-bold text-[9px] shrink-0">🎵</span>
+                <div className="min-w-0">
+                  <span className="text-white font-semibold block truncate leading-tight">/play &lt;şarkı|link&gt;</span>
+                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Spotify entegreli 128 kbps</span>
+                </div>
+              </div>
+              <div className="flex items-end gap-0.5 h-2.5 px-0.5 shrink-0">
+                <span className="w-0.5 h-1.5 bg-[#1DB954] rounded-full animate-pulse" />
+                <span className="w-0.5 h-2.5 bg-emerald-400 rounded-full animate-bounce" />
+                <span className="w-0.5 h-1 bg-[#1DB954] rounded-full animate-pulse" />
+                <span className="w-0.5 h-2.5 bg-emerald-300 rounded-full animate-bounce" />
+              </div>
             </div>
           </div>
-          <div className="text-[8px] flex items-center justify-between text-[#8f8e9c]">
-            <span className="text-[#1DB954] font-mono">🟢 Spotify Entegre</span>
-            <span className="text-emerald-400 font-semibold font-mono">Ultra HD Ses</span>
+
+          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
+            <span className="text-emerald-400 font-mono">✓ Tıkla-Oluşsun Oda</span>
+            <span className="text-[#1DB954] font-semibold font-mono">🟢 Spotify Ultra HD</span>
           </div>
         </div>
       );
