@@ -1,6 +1,6 @@
 /* Göktürk Labs / Signal Harbor: amber signal, quiet dark Discord bot studio, crafted motion and direct Discord flow. */
 import { useEffect, useId, useState, type CSSProperties } from "react";
-import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Crown, Flame, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap, Bot } from "lucide-react";
+import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Crown, Flame, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap, Bot, Music } from "lucide-react";
 
 const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
 const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
@@ -46,6 +46,13 @@ const extraSystems: Array<{
     cover: "cover-ai", 
     badge: "YAKINDA",
     poweredBy: { label: "ALBE TEKNOLOJİ", url: "https://aliberketeknoloji.com.tr/" } 
+  },
+  { 
+    title: "Ses & Müzik", 
+    detail: "Spotify entegrasyonu, 128 kbps kristal netliğinde ses kalitesi ve /play müzik çalar sistemi.", 
+    icon: Music, 
+    cover: "cover-music", 
+    badge: "128 KBPS HD" 
   },
 ];
 
@@ -247,6 +254,40 @@ function ModuleCover({ index }: { index: number }) {
           <div className="text-[8px] flex items-center justify-between text-[#8f8e9c]">
             <span className="text-purple-300 font-mono">!ai &amp; /sor komutu</span>
             <span className="text-emerald-400 font-semibold font-mono">✓ Doğal Yanıt</span>
+          </div>
+        </div>
+      );
+
+    case 8: // 09 Ses & Müzik
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <div className="flex items-center gap-1.5 text-[10px] font-bold text-emerald-400">
+              <Music className="h-3.5 w-3.5 text-[#1DB954]" />
+              <span>GÖKTÜRK SES &amp; MÜZİK</span>
+            </div>
+            <span className="rounded bg-[#1DB954]/20 border border-[#1DB954]/40 px-1.5 py-0.2 text-[8px] font-black text-[#1DB954]">
+              128 KBPS
+            </span>
+          </div>
+          <div className="my-auto flex items-center justify-between gap-2 rounded bg-black/40 border border-white/5 p-1.5 text-[8.5px]">
+            <div className="flex items-center gap-1.5 min-w-0">
+              <span className="h-5 w-5 rounded bg-[#1DB954]/20 text-[#1DB954] flex items-center justify-center font-bold text-[10px] shrink-0">🎵</span>
+              <div className="min-w-0">
+                <span className="text-white font-bold block truncate">/play &lt;şarkı|link&gt;</span>
+                <span className="text-zinc-400 text-[7.5px] block truncate">Spotify arama &amp; link alıcı</span>
+              </div>
+            </div>
+            <div className="flex items-end gap-0.5 h-3 px-1 shrink-0">
+              <span className="w-0.5 h-2 bg-[#1DB954] rounded-full animate-pulse" />
+              <span className="w-0.5 h-3 bg-emerald-400 rounded-full animate-bounce" />
+              <span className="w-0.5 h-1.5 bg-[#1DB954] rounded-full animate-pulse" />
+              <span className="w-0.5 h-3 bg-emerald-300 rounded-full animate-bounce" />
+            </div>
+          </div>
+          <div className="text-[8px] flex items-center justify-between text-[#8f8e9c]">
+            <span className="text-[#1DB954] font-mono">🟢 Spotify Entegre</span>
+            <span className="text-emerald-400 font-semibold font-mono">Ultra HD Ses</span>
           </div>
         </div>
       );
