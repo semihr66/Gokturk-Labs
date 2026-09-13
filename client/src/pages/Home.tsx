@@ -1,6 +1,6 @@
 /* Göktürk Labs / Signal Harbor: amber signal, quiet dark Discord bot studio, crafted motion and direct Discord flow. */
-import { useEffect, useId, useState, useRef, type CSSProperties } from "react";
-import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Crown, Flame, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap, Bot, Music, Volume2, Pause, SkipForward, SkipBack, Radio, Search, ExternalLink, RefreshCw, Disc3 } from "lucide-react";
+import { useEffect, useId, useState, type CSSProperties } from "react";
+import { ArrowRight, HelpCircle, Package, Blocks as BlocksIcon, LifeBuoy, ArrowUpRight, Blocks, Check, ChevronDown, ClipboardCopy, Code2, Crown, Flame, Headphones, Image as ImageIcon, Layers3, LockKeyhole, Megaphone, MessageCircle, Palette, Play, Settings2, ShieldCheck, Sparkles, SlidersHorizontal, Terminal, WandSparkles, X, Zap, Bot, Music, Volume2, Pause, SkipForward, SkipBack, Radio } from "lucide-react";
 
 const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
 const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
@@ -530,618 +530,247 @@ const playSound = (type: 'hover' | 'click') => {
   } catch (e) {}
 };
 
-interface TrackInfo {
-  title: string;
-  artist: string;
-  cover: string;
-  duration: string;
-  previewUrl?: string;
-  spotifyUrl?: string;
-  embedUrl?: string;
-  source: 'spotify' | 'search' | 'preset';
-}
-
-const DEFAULT_TRACK: TrackInfo = {
-  title: "Senden Daha Güzel",
-  artist: "Duman",
-  cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/e3/6a/03/e36a0347-7191-da04-7d53-32569e5904fd/884977122039.jpg/600x600bb.jpg",
-  duration: "03:59",
-  previewUrl: "https://audio-ssl.itunes.apple.com/itunes-assets/AudioPreview125/v4/b1/33/a6/b133a662-71c1-621d-1c7a-d901c8f9e26d/mzaf_1136964652432708059.plus.aac.p.m4a",
-  spotifyUrl: "https://open.spotify.com/search/Duman%20Senden%20Daha%20G%C3%BCzel",
-  embedUrl: "https://open.spotify.com/embed/track/3ZftkvIE7kyPt6Nu3PE07V",
-  source: "preset"
-};
-
-const SUGGESTIONS = [
-  { label: "Duman - Senden Daha Güzel", query: "Duman Senden Daha Güzel" },
-  { label: "The Weeknd - Blinding Lights", query: "The Weeknd Blinding Lights" },
-  { label: "Ezhel - Geceler", query: "Ezhel Geceler" },
-  { label: "Lofi Girl - Study Beats", query: "Lofi Girl Study Beats" },
-  { label: "Lvbel C5 - Baba", query: "Lvbel C5 Baba" },
-];
-
-const DEMO_SPOTIFY_LINKS = [
-  { label: "Rick Astley - Never Gonna Give You Up", url: "https://open.spotify.com/track/4cOdK2wGLETKBW3PvgPWqT" },
-  { label: "The Weeknd - Blinding Lights", url: "https://open.spotify.com/track/0VjIjW4GlUZAMYd2vXMi3b" },
-  { label: "Queen - Bohemian Rhapsody", url: "https://open.spotify.com/track/7tFiyTwD0nx5a1eklYtX2J" },
-];
-
 function VoiceMusicStudio() {
-  const [activeTab, setActiveTab] = useState<'search' | 'link' | 'voice'>('search');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [linkQuery, setLinkQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<TrackInfo[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState<TrackInfo>(DEFAULT_TRACK);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-  const [duration, setDuration] = useState(239);
-  const [showEmbed, setShowEmbed] = useState(false);
-  const [simulatedStatus, setSimulatedStatus] = useState<string | null>(null);
-
-  // Voice room creator states
-  const [roomName, setRoomName] = useState('🎵・Lofi & Spotify Lounge');
+  const [roomType, setRoomType] = useState<'voice' | 'music'>('music');
+  const [roomName, setRoomName] = useState('🎵・Lofi Chill Lounge');
   const [bitrate, setBitrate] = useState('128');
   const [userLimit, setUserLimit] = useState(0);
+  const [currentTrack, setCurrentTrack] = useState('Lofi Girl — Study & Chill Beats');
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [playInput, setPlayInput] = useState('');
+  const [simulatedStatus, setSimulatedStatus] = useState<string | null>(null);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  // Initialize and handle audio playback
-  useEffect(() => {
-    if (!audioRef.current && typeof Audio !== 'undefined') {
-      audioRef.current = new Audio();
-    }
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    if (currentTrack.previewUrl) {
-      audio.src = currentTrack.previewUrl;
-      audio.currentTime = 0;
-      if (isPlaying) {
-        audio.play().catch(() => {});
-      }
+  const handleTypeSelect = (type: 'voice' | 'music') => {
+    playSound('click');
+    setRoomType(type);
+    if (type === 'music') {
+      setRoomName('🎵・Lofi Chill Lounge');
+      setBitrate('128');
     } else {
-      audio.pause();
-    }
-
-    const handleTimeUpdate = () => {
-      if (audio) {
-        setCurrentTime(Math.floor(audio.currentTime));
-      }
-    };
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setCurrentTime(0);
-    };
-
-    audio.addEventListener('timeupdate', handleTimeUpdate);
-    audio.addEventListener('ended', handleEnded);
-
-    return () => {
-      audio.removeEventListener('timeupdate', handleTimeUpdate);
-      audio.removeEventListener('ended', handleEnded);
-      audio.pause();
-    };
-  }, [currentTrack]);
-
-  // Sync play/pause
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (isPlaying && currentTrack.previewUrl) {
-      audio.play().catch(() => {});
-    } else {
-      audio.pause();
-    }
-  }, [isPlaying]);
-
-  // Fallback timer if no previewUrl
-  useEffect(() => {
-    let interval: any;
-    if (isPlaying && !currentTrack.previewUrl) {
-      interval = setInterval(() => {
-        setCurrentTime(t => (t >= duration ? 0 : t + 1));
-      }, 1000);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, currentTrack.previewUrl, duration]);
-
-  const selectTrack = (track: TrackInfo) => {
-    setCurrentTrack(track);
-    setIsPlaying(true);
-    setCurrentTime(0);
-    if (track.duration && track.duration.includes(':')) {
-      const [m, s] = track.duration.split(':').map(Number);
-      setDuration((m || 3) * 60 + (s || 30));
-    } else {
-      setDuration(210);
+      setRoomName('🔊・Sohbet & Oyun Odası');
+      setBitrate('64');
     }
   };
 
-  const handleSearchSong = async (query: string) => {
-    if (!query.trim()) return;
+  const handleCreateRoom = () => {
     playSound('click');
-    setIsLoading(true);
-    setSimulatedStatus(`🔍 "${query}" Spotify ve müzik kütüphanesinde aranıyor...`);
-    try {
-      const res = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query.trim())}&entity=song&limit=4`);
-      const data = await res.json();
-      if (data.results && data.results.length > 0) {
-        const items: TrackInfo[] = data.results.map((item: any) => {
-          const durSeconds = Math.floor((item.trackTimeMillis || 210000) / 1000);
-          const mins = Math.floor(durSeconds / 60);
-          const secs = durSeconds % 60;
-          const durFormatted = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-          const artwork = item.artworkUrl100 ? item.artworkUrl100.replace('100x100bb', '600x600bb') : '';
-          return {
-            title: item.trackName || query,
-            artist: item.artistName || 'Sanatçı',
-            cover: artwork || 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80',
-            duration: durFormatted,
-            previewUrl: item.previewUrl,
-            spotifyUrl: `https://open.spotify.com/search/${encodeURIComponent(item.trackName + ' ' + item.artistName)}`,
-            source: 'search'
-          };
-        });
-        setSearchResults(items);
-        selectTrack(items[0]);
-        setSimulatedStatus(`🎶 Spotify'dan bulundu: "${items[0].title}" (${items[0].artist}) kuyruğa alındı!`);
-      } else {
-        const fallback: TrackInfo = {
-          title: query.trim(),
-          artist: 'Spotify Arama Sonucu',
-          cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80',
-          duration: '03:45',
-          spotifyUrl: `https://open.spotify.com/search/${encodeURIComponent(query.trim())}`,
-          source: 'search'
-        };
-        setSearchResults([fallback]);
-        selectTrack(fallback);
-        setSimulatedStatus(`🎶 "${fallback.title}" arandı ve 128 kbps ile çalınıyor!`);
-      }
-    } catch {
-      const fallback: TrackInfo = {
-        title: query.trim(),
-        artist: 'Popüler Parça',
-        cover: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=600&auto=format&fit=crop&q=80',
-        duration: '03:30',
-        spotifyUrl: `https://open.spotify.com/search/${encodeURIComponent(query.trim())}`,
-        source: 'search'
-      };
-      setSearchResults([fallback]);
-      selectTrack(fallback);
-      setSimulatedStatus(`🎶 "${fallback.title}" kuyruğa eklendi!`);
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => setSimulatedStatus(null), 5000);
-    }
-  };
-
-  const handleLinkFetch = async (link: string) => {
-    if (!link.trim()) return;
-    playSound('click');
-    setIsLoading(true);
-    setSimulatedStatus(`🔗 Spotify bağlantısı çekiliyor...`);
-    try {
-      const cleanUrl = link.trim();
-      const res = await fetch(`https://open.spotify.com/oembed?url=${encodeURIComponent(cleanUrl)}`);
-      if (!res.ok) throw new Error('oEmbed failed');
-      const data = await res.json();
-
-      let title = data.title || "Spotify Parçası";
-      let artist = "Spotify Doğrulanmış Sanatçı";
-      if (title.includes(" - ")) {
-        const parts = title.split(" - ");
-        artist = parts[0];
-        title = parts.slice(1).join(" - ");
-      } else if (title.includes(" by ")) {
-        const parts = title.split(" by ");
-        title = parts[0];
-        artist = parts[1];
-      }
-
-      const trackMatch = cleanUrl.match(/spotify\.com\/(track|album|playlist)\/([a-zA-Z0-9]+)/);
-      let embed = data.iframe_url || "";
-      if (!embed && trackMatch) {
-        embed = `https://open.spotify.com/embed/${trackMatch[1]}/${trackMatch[2]}`;
-      }
-
-      const newTrack: TrackInfo = {
-        title,
-        artist,
-        cover: data.thumbnail_url || "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
-        duration: "03:35",
-        spotifyUrl: cleanUrl,
-        embedUrl: embed,
-        source: 'spotify'
-      };
-      selectTrack(newTrack);
-      setShowEmbed(true);
-      setSimulatedStatus(`🟢 Spotify bağlantısı alındı: "${title}" başarıyla kuyruğa çekildi!`);
-    } catch {
-      const fallback: TrackInfo = {
-        title: "Spotify Akışı",
-        artist: "Spotify Direct Stream",
-        cover: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&auto=format&fit=crop&q=80",
-        duration: "03:45",
-        spotifyUrl: link.trim(),
-        source: 'spotify'
-      };
-      selectTrack(fallback);
-      setSimulatedStatus(`🟢 Spotify bağlantısı kuyruğa alındı!`);
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => setSimulatedStatus(null), 5000);
-    }
-  };
-
-  const handleCreateVoiceRoom = () => {
-    playSound('click');
-    setSimulatedStatus(`🎉 "${roomName}" (${bitrate} kbps) Özel Ses Odası başarıyla oluşturuldu!`);
+    setSimulatedStatus(
+      roomType === 'music'
+        ? `🎉 "${roomName}" 128 kbps Ultra HD Müzik Odası oluşturuldu ve /play sistemi hazır!`
+        : `🎉 "${roomName}" Özel Ses Odası başarıyla oluşturuldu!`
+    );
     setTimeout(() => setSimulatedStatus(null), 5000);
   };
 
-  const formatTime = (seconds: number) => {
-    const m = Math.floor(seconds / 60);
-    const s = Math.floor(seconds % 60);
-    return `${m < 10 ? '0' : ''}${m}:${s < 10 ? '0' : ''}${s}`;
+  const handlePlaySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!playInput.trim()) return;
+    playSound('click');
+    setCurrentTrack(playInput.trim());
+    setIsPlaying(true);
+    setPlayInput('');
+    setSimulatedStatus(`▶ "${playInput.trim()}" parçası sıraya alındı ve çalınıyor!`);
+    setTimeout(() => setSimulatedStatus(null), 4000);
   };
-
-  const progressPercent = Math.min(100, Math.max(0, (currentTime / (duration || 1)) * 100));
 
   return (
     <section id="ses-muzik" className="new-section relative overflow-hidden bg-[#09090d]">
-      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-[#1DB954]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 -left-32 w-96 h-96 bg-pink-500/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-10 -right-32 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="mx-auto max-w-7xl px-5">
         <div className="section-kicker motion-reveal flex items-center gap-2">
-          <Music className="h-4 w-4 text-[#1DB954]" />
-          <span>CANLI STÜDYO • MÜZİK PLAY &amp; SES ODALARI</span>
+          <Music className="h-4 w-4 text-pink-400" />
+          <span>CANLI STÜDYO • SES VE MÜZİK</span>
         </div>
 
         <div className="new-section-heading motion-reveal">
           <div>
             <h2>
-              Müzik Play &amp; Ses Odaları.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#1DB954] via-emerald-400 to-pink-400">
-                Şarkı yaz Spotify’dan bul, link at anında çalsın.
-              </span>
+              Ses &amp; Müzik Odası Oluştur.<br />
+              <span>Tek tıkla Discord’da başlat.</span>
             </h2>
           </div>
           <p>
-            Sunucun için ister şarkı adını yazıp Spotify&apos;dan arat, ister Spotify linki yapıştır; Göktürk Labs 128 kbps kristal netliğinde Ultra HD ses kalitesiyle Discord kanalında anında yayına başlasın.
+            Sunucun için ister sohbet ve oyun odaklı ses odası, ister 128 kbps kristal netliğinde /play komutlu müzik odası yapılandır.
           </p>
         </div>
 
         {simulatedStatus && (
-          <div className="mt-6 p-3.5 rounded-xl bg-gradient-to-r from-[#1DB954]/20 via-purple-500/20 to-pink-500/20 border border-[#1DB954]/50 text-[#e7f9ee] text-xs font-semibold flex items-center gap-2.5 shadow-[0_0_25px_rgba(29,185,84,0.25)] animate-in fade-in duration-200">
-            <Sparkles className="h-4 w-4 text-[#1DB954] animate-pulse shrink-0" />
+          <div className="mt-6 p-3.5 rounded-xl bg-gradient-to-r from-pink-500/20 via-purple-500/20 to-emerald-500/20 border border-pink-400/40 text-pink-200 text-xs font-semibold flex items-center gap-2.5 shadow-[0_0_20px_rgba(236,72,153,0.25)]">
+            <Sparkles className="h-4 w-4 text-pink-400 animate-pulse shrink-0" />
             <span>{simulatedStatus}</span>
           </div>
         )}
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Sol Kolon (5 Grid): Müzik Play & Oda Denetim Masası */}
+          {/* Sol Kolon (5 Grid): Oda Oluşturucu Kontrol Formu */}
           <div className="lg:col-span-5 rounded-2xl border border-white/10 bg-[#121218] p-6 flex flex-col justify-between shadow-2xl relative">
             <div className="space-y-5">
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-4">
                 <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 rounded-xl bg-[#1DB954]/15 border border-[#1DB954]/30 flex items-center justify-center text-[#1DB954]">
-                    <Disc3 className={`h-5 w-5 ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '4s' }} />
+                  <div className="h-10 w-10 rounded-xl bg-pink-500/15 border border-pink-500/30 flex items-center justify-center text-pink-400">
+                    <Music className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-base font-bold text-white flex items-center gap-1.5">
-                      <span>Müzik Play Stüdyosu</span>
-                    </h3>
-                    <p className="text-xs text-[#8f8e9c]">Spotify Şarkı Arama &amp; Link Alma</p>
+                    <h3 className="text-base font-bold text-white">Oda Oluşturucu</h3>
+                    <p className="text-xs text-[#8f8e9c]">Ses veya Müzik odanı yapılandır</p>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono px-2.5 py-1 rounded-full bg-[#1DB954]/15 border border-[#1DB954]/40 text-[#1DB954] font-bold flex items-center gap-1.5">
-                  <span className="h-1.5 w-1.5 rounded-full bg-[#1DB954] animate-pulse" />
-                  MÜZİK PLAY
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-pink-500/15 border border-pink-500/30 text-pink-300 font-bold">
+                  PLAY READY
                 </span>
               </div>
 
-              {/* 3 Mod Seçimi Sekmeleri */}
+              {/* Oda Türü Butonları */}
               <div>
-                <label className="block text-[11px] font-semibold text-[#8f8e9c] mb-2 uppercase tracking-wider">
-                  Çalışma Modu
+                <label className="block text-xs font-semibold text-[#8f8e9c] mb-2 uppercase tracking-wider">
+                  Oda Türü
                 </label>
-                <div className="grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-2 gap-3">
                   <button
                     type="button"
-                    onClick={() => { playSound('click'); setActiveTab('search'); }}
-                    className={`p-2.5 rounded-xl text-center border transition-all relative ${
-                      activeTab === 'search'
-                        ? 'border-[#1DB954] bg-[#1DB954]/15 text-white shadow-[0_0_15px_rgba(29,185,84,0.25)]'
+                    onClick={() => handleTypeSelect('voice')}
+                    className={`p-3.5 rounded-xl text-left border transition-all relative ${
+                      roomType === 'voice'
+                        ? 'border-purple-500/60 bg-purple-500/15 text-white shadow-[0_0_15px_rgba(168,85,247,0.2)]'
                         : 'border-white/10 bg-white/[0.02] text-[#8f8e9c] hover:border-white/20 hover:text-white'
                     }`}
                   >
-                    <Search className="h-4 w-4 mx-auto mb-1 text-[#1DB954]" />
-                    <span className="text-[11px] font-bold block leading-tight">Şarkı Yaz</span>
-                    <span className="text-[9px] text-[#8f8e9c] block mt-0.5">Spotify Ara</span>
+                    <div className="flex items-center gap-2">
+                      <Headphones className="h-4 w-4 text-purple-400" />
+                      <span className="text-xs font-bold text-white">Ses Odası</span>
+                    </div>
+                    <span className="text-[10px] text-[#777682] block mt-1">Sohbet &amp; Oyun</span>
+                    {roomType === 'voice' && (
+                      <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-purple-400" />
+                    )}
                   </button>
 
                   <button
                     type="button"
-                    onClick={() => { playSound('click'); setActiveTab('link'); }}
-                    className={`p-2.5 rounded-xl text-center border transition-all relative ${
-                      activeTab === 'link'
-                        ? 'border-pink-500 bg-pink-500/15 text-white shadow-[0_0_15px_rgba(236,72,153,0.25)]'
+                    onClick={() => handleTypeSelect('music')}
+                    className={`p-3.5 rounded-xl text-left border transition-all relative ${
+                      roomType === 'music'
+                        ? 'border-pink-500/60 bg-pink-500/15 text-white shadow-[0_0_15px_rgba(236,72,153,0.2)]'
                         : 'border-white/10 bg-white/[0.02] text-[#8f8e9c] hover:border-white/20 hover:text-white'
                     }`}
                   >
-                    <ExternalLink className="h-4 w-4 mx-auto mb-1 text-pink-400" />
-                    <span className="text-[11px] font-bold block leading-tight">Link At</span>
-                    <span className="text-[9px] text-[#8f8e9c] block mt-0.5">Spotify Çek</span>
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => { playSound('click'); setActiveTab('voice'); }}
-                    className={`p-2.5 rounded-xl text-center border transition-all relative ${
-                      activeTab === 'voice'
-                        ? 'border-purple-500 bg-purple-500/15 text-white shadow-[0_0_15px_rgba(168,85,247,0.25)]'
-                        : 'border-white/10 bg-white/[0.02] text-[#8f8e9c] hover:border-white/20 hover:text-white'
-                    }`}
-                  >
-                    <Headphones className="h-4 w-4 mx-auto mb-1 text-purple-400" />
-                    <span className="text-[11px] font-bold block leading-tight">Ses Odası</span>
-                    <span className="text-[9px] text-[#8f8e9c] block mt-0.5">JTC Kanalı</span>
+                    <div className="flex items-center gap-2">
+                      <Music className="h-4 w-4 text-pink-400" />
+                      <span className="text-xs font-bold text-white">Müzik Odası</span>
+                    </div>
+                    <span className="text-[10px] text-pink-300/80 block mt-1">128 kbps HD • Play</span>
+                    {roomType === 'music' && (
+                      <span className="absolute top-2.5 right-2.5 h-2 w-2 rounded-full bg-pink-400 animate-pulse" />
+                    )}
                   </button>
                 </div>
               </div>
 
-              {/* SEKME 1: Şarkı Yaz & Spotify'da Ara */}
-              {activeTab === 'search' && (
-                <div className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-1.5 flex items-center justify-between">
-                      <span>🎵 Şarkı Adı Yazın</span>
-                      <span className="text-[10px] text-[#1DB954] font-mono font-bold">/play &lt;şarkı&gt;</span>
-                    </label>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleSearchSong(searchQuery);
-                      }}
-                      className="flex items-center gap-2"
-                    >
-                      <div className="relative flex-1">
-                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-zinc-500" />
-                        <input
-                          type="text"
-                          value={searchQuery}
-                          onChange={(e) => setSearchQuery(e.target.value)}
-                          placeholder="Örn: Duman, The Weeknd, Ezhel..."
-                          className="w-full rounded-xl border border-white/10 bg-[#0d0d12] pl-9 pr-3 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-[#1DB954] focus:outline-none transition-colors font-medium"
-                        />
-                      </div>
-                      <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="rounded-xl bg-[#1DB954] hover:bg-[#1aa34a] text-black font-bold text-xs px-3.5 py-2.5 transition-all shrink-0 active:scale-95 disabled:opacity-50 flex items-center gap-1.5 shadow-[0_0_15px_rgba(29,185,84,0.3)]"
-                      >
-                        {isLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Search className="h-3.5 w-3.5" />}
-                        <span>Ara</span>
-                      </button>
-                    </form>
-                  </div>
+              {/* Oda Adı Girişi */}
+              <div>
+                <label className="block text-xs font-semibold text-[#8f8e9c] mb-1.5">Oda Adı</label>
+                <input
+                  type="text"
+                  value={roomName}
+                  onChange={e => setRoomName(e.target.value)}
+                  className="w-full rounded-xl border border-white/10 bg-[#0d0d12] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-pink-500 focus:outline-none transition-colors font-medium"
+                  placeholder="Kanal ismi girin..."
+                />
+              </div>
 
-                  {/* Hızlı Öneri Etiketleri */}
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#8f8e9c] font-semibold block mb-1.5">
-                      Hızlı Öneriler (Tıkla &amp; Dinle):
-                    </span>
-                    <div className="flex flex-wrap gap-1.5">
-                      {SUGGESTIONS.map((item) => (
-                        <button
-                          key={item.label}
-                          type="button"
-                          onClick={() => {
-                            setSearchQuery(item.query);
-                            handleSearchSong(item.query);
-                          }}
-                          className="text-[10px] px-2.5 py-1 rounded-lg bg-white/5 hover:bg-[#1DB954]/20 hover:border-[#1DB954]/50 border border-white/10 text-zinc-300 hover:text-white transition-all font-medium"
-                        >
-                          {item.label}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Arama Sonuç Listesi */}
-                  {searchResults.length > 0 && (
-                    <div className="pt-2">
-                      <span className="text-[10px] uppercase tracking-wider text-[#1DB954] font-semibold block mb-1.5">
-                        Bulunan Spotify Parçaları ({searchResults.length}):
-                      </span>
-                      <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
-                        {searchResults.map((track) => (
-                          <div
-                            key={track.title + track.artist}
-                            onClick={() => selectTrack(track)}
-                            className={`p-2 rounded-xl border flex items-center justify-between gap-3 cursor-pointer transition-all ${
-                              currentTrack.title === track.title
-                                ? 'border-[#1DB954] bg-[#1DB954]/10 text-white'
-                                : 'border-white/5 bg-black/30 hover:border-white/20 text-zinc-300 hover:text-white'
-                            }`}
-                          >
-                            <div className="flex items-center gap-2.5 min-w-0">
-                              <img
-                                src={track.cover}
-                                alt={track.title}
-                                className="h-9 w-9 rounded-lg object-cover border border-white/10 shrink-0"
-                              />
-                              <div className="min-w-0">
-                                <span className="text-xs font-bold text-white block truncate">{track.title}</span>
-                                <span className="text-[10px] text-zinc-400 block truncate">{track.artist}</span>
-                              </div>
-                            </div>
-                            <div className="flex items-center gap-2 shrink-0">
-                              <span className="text-[10px] font-mono text-zinc-400">{track.duration}</span>
-                              <span className="h-6 w-6 rounded-lg bg-[#1DB954] text-black flex items-center justify-center text-[10px] font-bold">
-                                ▶
-                              </span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+              {/* Bitrate & Kullanıcı Limiti */}
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-semibold text-[#8f8e9c] mb-1.5">Ses Kalitesi</label>
+                  <select
+                    value={bitrate}
+                    onChange={e => setBitrate(e.target.value)}
+                    className="w-full rounded-xl border border-white/10 bg-[#0d0d12] px-3 py-2 text-xs text-white focus:border-pink-500 focus:outline-none font-mono"
+                  >
+                    <option value="64">64 kbps (Standart)</option>
+                    <option value="96">96 kbps (Yüksek)</option>
+                    <option value="128">128 kbps (Ultra HD Müzik)</option>
+                  </select>
                 </div>
-              )}
 
-              {/* SEKME 2: Spotify Linki Yapıştır */}
-              {activeTab === 'link' && (
-                <div className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-1.5 flex items-center justify-between">
-                      <span>🔗 Spotify Bağlantısı Yapıştır</span>
-                      <span className="text-[10px] text-pink-400 font-mono font-bold">/play &lt;link&gt;</span>
-                    </label>
-                    <form
-                      onSubmit={(e) => {
-                        e.preventDefault();
-                        handleLinkFetch(linkQuery);
-                      }}
-                      className="space-y-2"
-                    >
-                      <input
-                        type="url"
-                        value={linkQuery}
-                        onChange={(e) => setLinkQuery(e.target.value)}
-                        placeholder="https://open.spotify.com/track/... veya playlist linki"
-                        className="w-full rounded-xl border border-white/10 bg-[#0d0d12] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-pink-500 focus:outline-none transition-colors font-mono"
-                      />
-                      <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="w-full rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white font-bold text-xs py-2.5 transition-all active:scale-98 disabled:opacity-50 flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(236,72,153,0.3)]"
-                      >
-                        {isLoading ? <RefreshCw className="h-3.5 w-3.5 animate-spin" /> : <Play className="h-3.5 w-3.5" />}
-                        <span>Şarkıyı Al &amp; Discord&apos;da Çal</span>
-                      </button>
-                    </form>
-                  </div>
-
-                  {/* Demo Link Butonları */}
-                  <div>
-                    <span className="text-[10px] uppercase tracking-wider text-[#8f8e9c] font-semibold block mb-1.5">
-                      Hazır Spotify Demo Linkleri (Test Et):
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-semibold text-[#8f8e9c]">Limit</label>
+                    <span className="text-xs font-mono text-pink-400 font-bold">
+                      {userLimit === 0 ? 'Sınırsız' : `${userLimit} Kişi`}
                     </span>
-                    <div className="space-y-1.5">
-                      {DEMO_SPOTIFY_LINKS.map((demo) => (
-                        <button
-                          key={demo.label}
-                          type="button"
-                          onClick={() => {
-                            setLinkQuery(demo.url);
-                            handleLinkFetch(demo.url);
-                          }}
-                          className="w-full p-2 text-left rounded-lg bg-white/5 hover:bg-pink-500/15 border border-white/10 hover:border-pink-500/40 text-zinc-300 hover:text-white transition-all text-[11px] flex items-center justify-between"
-                        >
-                          <span className="truncate">{demo.label}</span>
-                          <span className="text-[10px] text-pink-400 font-mono shrink-0 ml-2">Al &gt;</span>
-                        </button>
-                      ))}
-                    </div>
                   </div>
-
-                  <div className="p-3 rounded-xl bg-[#1DB954]/10 border border-[#1DB954]/30 text-[11px] text-[#a5e9b8] leading-relaxed">
-                    💡 <strong>Spotify oEmbed Desteği:</strong> Parça linkini yapıştırdığında bot şarkı adını, sanatçısını ve albüm kapağını anında çözümler, Discord kanalında yüksek kaliteli 128 kbps yayını başlatır.
-                  </div>
+                  <input
+                    type="range"
+                    min="0"
+                    max="50"
+                    value={userLimit}
+                    onChange={e => setUserLimit(Number(e.target.value))}
+                    className="w-full accent-pink-500 cursor-pointer"
+                  />
                 </div>
-              )}
+              </div>
 
-              {/* SEKME 3: Özel Ses Odası Oluşturucu (JTC) */}
-              {activeTab === 'voice' && (
-                <div className="space-y-3.5">
-                  <div>
-                    <label className="block text-xs font-semibold text-white mb-1.5">Ses Kanalı İsmi</label>
+              {/* Müzik Odası ise /play komut girişi */}
+              {roomType === 'music' && (
+                <form onSubmit={handlePlaySubmit} className="space-y-1.5 pt-1">
+                  <label className="block text-xs font-semibold text-pink-300">
+                    🎵 /play Şarkı Çal
+                  </label>
+                  <div className="flex items-center gap-2">
                     <input
                       type="text"
-                      value={roomName}
-                      onChange={(e) => setRoomName(e.target.value)}
-                      className="w-full rounded-xl border border-white/10 bg-[#0d0d12] px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 focus:border-purple-500 focus:outline-none transition-colors font-medium"
-                      placeholder="Örn: 🔊・Sohbet & Oyun Odası"
+                      value={playInput}
+                      onChange={e => setPlayInput(e.target.value)}
+                      placeholder="/play şarkı adı veya bağlantı..."
+                      className="flex-1 rounded-xl border border-pink-500/30 bg-[#0d0d12] px-3 py-2 text-xs text-white placeholder-zinc-500 focus:border-pink-500 focus:outline-none font-mono"
                     />
+                    <button
+                      type="submit"
+                      className="rounded-xl bg-pink-600 hover:bg-pink-500 text-white text-xs font-bold px-3 py-2 transition-all shrink-0 active:scale-95"
+                    >
+                      Çal ▶
+                    </button>
                   </div>
-
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-xs font-semibold text-[#8f8e9c] mb-1.5">Ses Kalitesi</label>
-                      <select
-                        value={bitrate}
-                        onChange={(e) => setBitrate(e.target.value)}
-                        className="w-full rounded-xl border border-white/10 bg-[#0d0d12] px-3 py-2 text-xs text-white focus:border-purple-500 focus:outline-none font-mono"
-                      >
-                        <option value="64">64 kbps (Standart)</option>
-                        <option value="96">96 kbps (Yüksek)</option>
-                        <option value="128">128 kbps (Ultra HD)</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <label className="text-xs font-semibold text-[#8f8e9c]">Limit</label>
-                        <span className="text-xs font-mono text-purple-400 font-bold">
-                          {userLimit === 0 ? 'Sınırsız' : `${userLimit} Kişi`}
-                        </span>
-                      </div>
-                      <input
-                        type="range"
-                        min="0"
-                        max="50"
-                        value={userLimit}
-                        onChange={(e) => setUserLimit(Number(e.target.value))}
-                        className="w-full accent-purple-500 cursor-pointer"
-                      />
-                    </div>
-                  </div>
-
-                  <button
-                    type="button"
-                    onClick={handleCreateVoiceRoom}
-                    className="w-full rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-xs py-2.5 transition-all shadow-[0_0_15px_rgba(168,85,247,0.3)]"
-                  >
-                    Özel Ses Odamı Oluştur
-                  </button>
-                </div>
+                </form>
               )}
             </div>
 
-            <div className="pt-5 border-t border-white/[0.08] mt-4 flex items-center justify-between text-[11px] text-[#777682]">
-              <span>💡 Komut: <code className="text-[#1DB954] font-mono">/play &lt;şarkı|link&gt;</code></span>
-              <span className="text-zinc-400 font-mono">128 kbps HD Ses</span>
+            <div className="pt-6">
+              <button
+                type="button"
+                onClick={handleCreateRoom}
+                className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 text-white text-sm font-bold py-3 transition-all active:scale-[0.98] shadow-[0_0_20px_rgba(236,72,153,0.3)]"
+              >
+                {roomType === 'music' ? <Music className="h-4 w-4" /> : <Headphones className="h-4 w-4" />}
+                <span>{roomType === 'music' ? 'Müzik Odamı Oluştur & Başlat' : 'Ses Odamı Oluştur'}</span>
+              </button>
+              <p className="text-[11px] text-[#777682] text-center mt-2">
+                Göktürk Labs botu sunucuna eklendiğinde bu odalar otomatik yönetilir.
+              </p>
             </div>
           </div>
 
-          {/* Sağ Kolon (7 Grid): Canlı Discord Görünümü & Spotify Music Player Mockup'ı */}
+          {/* Sağ Kolon (7 Grid): Canlı Discord Görünümü & /play Müzik Çalar Mockup'ı */}
           <div className="lg:col-span-7 rounded-2xl border border-white/10 bg-[#0d0d12] p-6 flex flex-col justify-between shadow-2xl relative overflow-hidden">
             <div>
               <div className="flex items-center justify-between border-b border-white/[0.08] pb-3 text-xs text-[#8f8e9c]">
                 <div className="flex items-center gap-2 font-mono">
-                  <span className="h-2 w-2 rounded-full bg-[#1DB954] animate-pulse" />
-                  <span className="text-white font-bold"># ses-ve-muzik-odasi</span>
+                  <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="text-white font-bold"># GÖKTÜRK LABS DISCORD</span>
                 </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] text-[#1DB954] font-mono px-2 py-0.5 rounded bg-[#1DB954]/15 border border-[#1DB954]/30 font-semibold flex items-center gap-1">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#1DB954]" />
-                    SPOTIFY CONNECT
-                  </span>
-                  <span className="text-[11px] text-pink-300 font-mono">
-                    128 kbps Ultra HD
-                  </span>
-                </div>
+                <span className="text-[11px] text-pink-300 font-mono">
+                  {bitrate} kbps Ultra HD
+                </span>
               </div>
 
               {/* Discord Voice Channel Header */}
-              <div className="mt-4 p-3.5 rounded-xl border border-white/[0.08] bg-[#14141c] flex items-center justify-between">
+              <div className="mt-4 p-4 rounded-xl border border-white/[0.08] bg-[#14141c] flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="h-9 w-9 rounded-lg bg-[#1DB954]/20 border border-[#1DB954]/30 flex items-center justify-center text-[#1DB954] font-bold">
-                    🎵
+                  <div className="h-9 w-9 rounded-lg bg-pink-500/20 border border-pink-500/30 flex items-center justify-center text-pink-400 font-bold">
+                    {roomType === 'music' ? '🎵' : '🔊'}
                   </div>
                   <div>
                     <h4 className="text-sm font-bold text-white flex items-center gap-2">
@@ -1151,7 +780,7 @@ function VoiceMusicStudio() {
                       </span>
                     </h4>
                     <p className="text-xs text-[#8f8e9c] mt-0.5">
-                      Spotify 128 kbps Müzik Yayını &amp; Özel Ses Alanı
+                      {roomType === 'music' ? 'Müzik Dinleme & Şarkı Yayını' : 'Genel Sohbet & Oyun Kanalı'}
                     </p>
                   </div>
                 </div>
@@ -1165,15 +794,15 @@ function VoiceMusicStudio() {
               </div>
 
               {/* Katılımcı Listesi */}
-              <div className="mt-3 grid grid-cols-3 gap-2">
+              <div className="mt-4 grid grid-cols-3 gap-2">
                 <div className="p-2 rounded-lg bg-black/40 border border-white/5 flex items-center gap-2 text-xs">
                   <div className="relative">
-                    <img src={LOGO_URL} alt="Bot" className="h-6 w-6 rounded-full ring-2 ring-[#1DB954]" />
-                    <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-[#1DB954]" />
+                    <img src={LOGO_URL} alt="Bot" className="h-6 w-6 rounded-full ring-2 ring-emerald-400" />
+                    <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   </div>
                   <div className="truncate">
                     <span className="font-semibold text-white block text-[11px] truncate">Göktürk Bot</span>
-                    <span className="text-[9px] text-[#1DB954] font-mono">🔊 Müzik Çalıyor</span>
+                    <span className="text-[9px] text-emerald-400 font-mono">🔊 Konuşuyor</span>
                   </div>
                 </div>
 
@@ -1204,100 +833,55 @@ function VoiceMusicStudio() {
                 </div>
               </div>
 
-              {/* Discord Komut & Sohbet Mesajı Simülasyonu */}
-              <div className="mt-3.5 p-2.5 rounded-xl bg-black/40 border border-white/5 text-xs space-y-1">
-                <div className="flex items-center gap-1.5 text-zinc-400 text-[11px]">
-                  <span className="text-purple-400 font-bold">@Yönetici:</span>
-                  <code className="text-[#1DB954] bg-[#1DB954]/10 px-1.5 py-0.5 rounded font-mono">
-                    /play {currentTrack.title}
-                  </code>
-                </div>
-                <div className="text-[11px] text-zinc-300 flex items-center gap-1 pl-2 border-l-2 border-[#1DB954]">
-                  <span>🟢 Göktürk Bot: <strong>{currentTrack.title}</strong> Spotify üzerinden kuyruğa eklendi ve 128 kbps ile başlatıldı.</span>
-                </div>
-              </div>
-
-              {/* Discord Kanal İçi Spotify Music Player Embedi */}
-              <div className="mt-3.5 p-4 rounded-xl border border-[#1DB954]/40 bg-gradient-to-br from-[#1DB954]/15 via-[#14121a] to-[#0e0d14] relative shadow-[0_0_30px_rgba(29,185,84,0.15)]">
+              {/* Discord Kanal İçi Müzik Çaler Embedi */}
+              <div className="mt-5 p-4 rounded-xl border border-pink-500/30 bg-gradient-to-br from-pink-950/20 via-[#16111e] to-[#121218] relative">
                 <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
                   <div className="flex items-center gap-2">
-                    <Disc3 className={`h-4 w-4 text-[#1DB954] ${isPlaying ? 'animate-spin' : ''}`} style={{ animationDuration: '3s' }} />
+                    <span className="text-pink-400 text-sm">🎵</span>
                     <span className="text-xs font-bold text-white uppercase tracking-wider">
-                      Göktürk Spotify Player
+                      Göktürk Music Player
                     </span>
-                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-[#1DB954]/20 text-[#1DB954] font-semibold">
-                      v2.0 HD
+                    <span className="text-[9px] font-mono px-1.5 py-0.5 rounded bg-pink-500/20 text-pink-300 font-semibold">
+                      v2.0
                     </span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    {currentTrack.spotifyUrl && (
-                      <a
-                        href={currentTrack.spotifyUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-[10px] text-[#1DB954] hover:underline flex items-center gap-1 font-semibold"
-                      >
-                        <span>Spotify&apos;da Dinle</span>
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
-                    )}
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[10px] text-pink-300 font-mono">🔊 128 kbps</span>
                   </div>
                 </div>
 
-                {/* Parça Kartı: Albüm Kapağı + Şarkı Bilgisi + Dalgalar */}
+                {/* Parça Başlığı & Ses Dalgaları */}
                 <div className="py-3 flex items-center justify-between gap-4">
-                  <div className="flex items-center gap-3.5 min-w-0 flex-1">
-                    <div className="relative shrink-0">
-                      <img
-                        src={currentTrack.cover}
-                        alt={currentTrack.title}
-                        className="h-16 w-16 rounded-xl object-cover border border-white/10 shadow-lg"
-                      />
-                      {isPlaying && (
-                        <span className="absolute -top-1 -right-1 h-3.5 w-3.5 rounded-full bg-[#1DB954] ring-2 ring-black flex items-center justify-center text-[8px] text-black font-black">
-                          ▶
-                        </span>
-                      )}
-                    </div>
-
-                    <div className="min-w-0 flex-1">
-                      <span className="text-[10px] uppercase font-mono text-[#1DB954] font-bold block">
-                        {isPlaying ? '▶ Şimdi Çalıyor' : '⏸ Duraklatıldı'}
-                      </span>
-                      <h5 className="text-sm font-bold text-white truncate mt-0.5" title={currentTrack.title}>
-                        {currentTrack.title}
-                      </h5>
-                      <p className="text-xs text-zinc-300 font-medium truncate mt-0.5">
-                        {currentTrack.artist}
-                      </p>
-                      <span className="text-[10px] text-[#8f8e9c] block mt-0.5">
-                        İsteyen: @Yönetici • Ses: 128 kbps Spotify Ultra HD
-                      </span>
-                    </div>
+                  <div className="min-w-0 flex-1">
+                    <span className="text-[10px] uppercase font-mono text-zinc-400 block font-semibold">
+                      {isPlaying ? '▶ Şimdi Çalıyor' : '⏸ Duraklatıldı'}
+                    </span>
+                    <h5 className="text-sm font-bold text-white truncate mt-0.5">
+                      {currentTrack}
+                    </h5>
+                    <span className="text-[11px] text-[#8f8e9c] block mt-0.5">
+                      İsteyen: @Yönetici • Kaynak: YouTube HD
+                    </span>
                   </div>
 
                   {/* Ses Frekans Dalgaları */}
-                  <div className="flex items-end gap-1 h-8 px-2 shrink-0">
-                    <span className={`w-1 bg-[#1DB954] rounded-full transition-all ${isPlaying ? 'h-3 animate-pulse' : 'h-1'}`} />
-                    <span className={`w-1 bg-emerald-400 rounded-full transition-all ${isPlaying ? 'h-7 animate-bounce' : 'h-1'}`} />
-                    <span className={`w-1 bg-pink-400 rounded-full transition-all ${isPlaying ? 'h-4 animate-pulse' : 'h-1'}`} />
-                    <span className={`w-1 bg-[#1DB954] rounded-full transition-all ${isPlaying ? 'h-8 animate-bounce' : 'h-1'}`} />
-                    <span className={`w-1 bg-emerald-300 rounded-full transition-all ${isPlaying ? 'h-5 animate-pulse' : 'h-1'}`} />
+                  <div className="flex items-end gap-1 h-7 px-2 shrink-0">
+                    <span className={`w-1 bg-pink-500 rounded-full transition-all ${isPlaying ? 'h-3 animate-pulse' : 'h-1'}`} />
+                    <span className={`w-1 bg-pink-400 rounded-full transition-all ${isPlaying ? 'h-6 animate-bounce' : 'h-1'}`} />
+                    <span className={`w-1 bg-purple-400 rounded-full transition-all ${isPlaying ? 'h-4 animate-pulse' : 'h-1'}`} />
+                    <span className={`w-1 bg-pink-300 rounded-full transition-all ${isPlaying ? 'h-7 animate-bounce' : 'h-1'}`} />
+                    <span className={`w-1 bg-pink-500 rounded-full transition-all ${isPlaying ? 'h-5 animate-pulse' : 'h-1'}`} />
                   </div>
                 </div>
 
                 {/* İlerleme Çubuğu */}
                 <div className="space-y-1">
                   <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-                    <div
-                      className="h-full bg-gradient-to-r from-[#1DB954] via-emerald-400 to-pink-500 rounded-full transition-all duration-300 shadow-[0_0_10px_rgba(29,185,84,0.8)]"
-                      style={{ width: `${progressPercent}%` }}
-                    />
+                    <div className="h-full w-[45%] bg-gradient-to-r from-pink-500 to-purple-500 rounded-full shadow-[0_0_8px_rgba(236,72,153,0.8)]" />
                   </div>
                   <div className="flex items-center justify-between text-[10px] font-mono text-zinc-400">
-                    <span>{formatTime(currentTime)}</span>
-                    <span className="text-[#1DB954] font-semibold">{currentTrack.previewUrl ? '30s HD Önizleme' : '128 kbps HD'}</span>
-                    <span>{currentTrack.duration || formatTime(duration)}</span>
+                    <span>01:34</span>
+                    <span>03:45</span>
                   </div>
                 </div>
 
@@ -1306,10 +890,7 @@ function VoiceMusicStudio() {
                   <div className="flex items-center gap-2">
                     <button
                       type="button"
-                      onClick={() => {
-                        playSound('click');
-                        handleSearchSong('Duman Haberin Yok');
-                      }}
+                      onClick={() => { playSound('click'); setCurrentTrack('Lofi Girl — Synthwave Chill'); setIsPlaying(true); }}
                       className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-all text-xs"
                       title="Önceki Şarkı"
                     >
@@ -1318,67 +899,35 @@ function VoiceMusicStudio() {
 
                     <button
                       type="button"
-                      onClick={() => {
-                        playSound('click');
-                        setIsPlaying(!isPlaying);
-                      }}
-                      className="px-3.5 py-1.5 rounded-lg bg-[#1DB954] hover:bg-[#1aa34a] text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95"
+                      onClick={() => { playSound('click'); setIsPlaying(!isPlaying); }}
+                      className="px-3 py-1.5 rounded-lg bg-pink-600 hover:bg-pink-500 text-white font-bold text-xs flex items-center gap-1.5 transition-all shadow-md active:scale-95"
                     >
-                      {isPlaying ? <Pause className="h-3.5 w-3.5 fill-current" /> : <Play className="h-3.5 w-3.5 fill-current" />}
-                      <span>{isPlaying ? 'Duraklat' : 'Çal'}</span>
+                      {isPlaying ? <Pause className="h-3.5 w-3.5" /> : <Play className="h-3.5 w-3.5" />}
+                      <span>{isPlaying ? 'Duraklat' : 'Oynat'}</span>
                     </button>
 
                     <button
                       type="button"
-                      onClick={() => {
-                        playSound('click');
-                        handleSearchSong('The Weeknd Blinding');
-                      }}
+                      onClick={() => { playSound('click'); setCurrentTrack('Aesthetic Lofi Beats — Deep Night'); setIsPlaying(true); }}
                       className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-zinc-300 hover:text-white transition-all text-xs"
                       title="Sonraki Şarkı"
                     >
                       <SkipForward className="h-3.5 w-3.5" />
                     </button>
-
-                    {currentTrack.embedUrl && (
-                      <button
-                        type="button"
-                        onClick={() => setShowEmbed(!showEmbed)}
-                        className="text-[10px] px-2 py-1 rounded bg-white/5 hover:bg-white/10 text-zinc-300 transition-all font-mono ml-1"
-                      >
-                        {showEmbed ? 'Mini Player Gizle ▲' : 'Spotify Mini Player Göster ▼'}
-                      </button>
-                    )}
                   </div>
 
                   <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-                    <Volume2 className="h-3.5 w-3.5 text-[#1DB954]" />
+                    <Volume2 className="h-3.5 w-3.5 text-pink-400" />
                     <span>%100 HD</span>
                   </div>
                 </div>
-
-                {/* Spotify Resmi Mini Player Iframe Embed (İsteğe bağlı açılır) */}
-                {showEmbed && currentTrack.embedUrl && (
-                  <div className="mt-3 pt-3 border-t border-white/[0.06] animate-in fade-in duration-200">
-                    <iframe
-                      src={currentTrack.embedUrl}
-                      width="100%"
-                      height="80"
-                      frameBorder="0"
-                      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                      loading="lazy"
-                      className="rounded-xl border border-white/10"
-                      title="Spotify Mini Player"
-                    />
-                  </div>
-                )}
               </div>
             </div>
 
             {/* Alt Bilgi */}
-            <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#777682]">
-              <span>💡 İpucu: Bot sunucunda <code className="text-[#1DB954]">/play</code> komutuyla Spotify üzerinden şarkı açar.</span>
-              <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="text-[#1DB954] hover:text-emerald-300 font-semibold flex items-center gap-1">
+            <div className="mt-5 pt-3 border-t border-white/[0.06] flex items-center justify-between text-[11px] text-[#777682]">
+              <span>💡 İpucu: Bot sunucunuzda <code className="text-pink-300">/play</code> komutuyla çalışır.</span>
+              <a href={COMMUNITY_URL} target="_blank" rel="noreferrer" className="text-pink-400 hover:text-pink-300 font-semibold flex items-center gap-1">
                 Sunucuda Test Et <ArrowUpRight className="h-3 w-3" />
               </a>
             </div>
