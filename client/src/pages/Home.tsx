@@ -40,19 +40,18 @@ const extraSystems: Array<{
   { title: "Otomatik rol", detail: "Rolleri belirlediğin kurallara göre otomatik yönlendir.", icon: Settings2, cover: "cover-lines" },
   { title: "Güvenlik & moderasyon", detail: "Sunucunun düzenini koruyan filtre ve kayıt katmanı.", icon: ShieldCheck, cover: "cover-signal" },
   { 
-    title: "AI asistan", 
-    detail: "Sunucun için akıllı Türkçe yapay zeka asistanı, otomatik yanıtlar ve sohbet otomasyonu.", 
-    icon: Bot, 
-    cover: "cover-ai", 
-    badge: "YAKINDA",
-    poweredBy: { label: "ALBE TEKNOLOJİ", url: "https://aliberketeknoloji.com.tr/" } 
-  },
-  { 
     title: "Ses & Müzik", 
     detail: "Tıkla-oluştur geçici özel ses odaları, oda kilit & yönetim paneli ve Spotify entegreli 128 kbps HD müzik çalar.", 
     icon: Headphones, 
     cover: "cover-music", 
     badge: "ÖZEL ODA & 128K HD" 
+  },
+  { 
+    title: "Yedek & Şablon", 
+    detail: "Sunucu kanallarını, rollerini ve izinlerini tek tıkla yedekle; emojili hazır topluluk şablonunu anında kur.", 
+    icon: Layers3, 
+    cover: "cover-backup", 
+    badge: "1. SINIF ŞABLON" 
   },
 ];
 
@@ -228,37 +227,7 @@ function ModuleCover({ index }: { index: number }) {
         </div>
       );
 
-    case 7: // 08 AI asistan
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1.5 text-[10px] font-bold text-amber-300">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-              <span>ALBE AI ASİSTAN</span>
-            </div>
-            <span className="rounded bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-400/40 px-1.5 py-0.2 text-[8px] font-black text-amber-300 animate-pulse">
-              YAKINDA
-            </span>
-          </div>
-          <div className="my-auto flex flex-col gap-1 rounded bg-black/40 border border-white/5 p-1.5 text-[8.5px]">
-            <div className="flex items-center gap-1.5 text-white/90 font-mono">
-              <span className="rounded bg-purple-500/25 px-1 py-0.2 text-[8px] font-black text-purple-300">USER</span>
-              <span className="text-cyan-300 font-bold">!ai</span>
-              <span className="text-white/80 truncate">sunucumu nasıl korurum?</span>
-            </div>
-            <div className="flex items-start gap-1.5 rounded bg-amber-500/10 border border-amber-500/20 p-1 text-[8px] text-amber-200">
-              <span className="font-bold text-amber-400 shrink-0">🤖 AI:</span>
-              <span className="leading-tight text-white/90">Anti-Raid ve Göktürk Defense 7/24 devrede, sunucun güvende!</span>
-            </div>
-          </div>
-          <div className="text-[8px] flex items-center justify-between text-[#8f8e9c]">
-            <span className="text-purple-300 font-mono">!ai &amp; /sor komutu</span>
-            <span className="text-emerald-400 font-semibold font-mono">✓ Doğal Yanıt</span>
-          </div>
-        </div>
-      );
-
-    case 8: // 09 Ses & Müzik (Özel Ses Odası + Spotify Müzik)
+    case 7: // 08 Ses & Müzik (Özel Ses Odası + Spotify Müzik)
       return (
         <div className="relative z-10 flex flex-col justify-between h-full select-none">
           <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
@@ -313,6 +282,56 @@ function ModuleCover({ index }: { index: number }) {
           <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
             <span className="text-emerald-400 font-mono">✓ Tıkla-Oluşsun Oda</span>
             <span className="text-[#1DB954] font-semibold font-mono">🟢 Spotify Ultra HD</span>
+          </div>
+        </div>
+      );
+
+    case 8: // 09 Yedek & Şablon
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-violet-300">
+              <Layers3 className="h-3.5 w-3.5 text-violet-400" />
+              <span>GÖKTÜRK YEDEK &amp; ŞABLON</span>
+            </div>
+            <span className="rounded bg-violet-500/20 border border-violet-500/40 px-1 py-0.2 text-[7.5px] font-bold text-violet-300">
+              EMOJİLİ ŞABLON
+            </span>
+          </div>
+
+          <div className="my-auto flex flex-col gap-1">
+            {/* 1. Tam Yedek */}
+            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="h-4 w-4 rounded bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold text-[9px] shrink-0">🛡️</span>
+                <div className="min-w-0">
+                  <span className="text-white font-semibold block truncate leading-tight">Anlık Tam Yedek</span>
+                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Rol, kanal &amp; izinler</span>
+                </div>
+              </div>
+              <span className="text-[7px] text-violet-300 font-mono bg-violet-950/60 border border-violet-500/30 px-1 rounded shrink-0">
+                GL-BK-JSON
+              </span>
+            </div>
+
+            {/* 2. Emojili Şablon Kurulumu */}
+            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
+              <div className="flex items-center gap-1.5 min-w-0">
+                <span className="h-4 w-4 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-[9px] shrink-0">👑</span>
+                <div className="min-w-0">
+                  <span className="text-white font-semibold block truncate leading-tight">/sablon kur</span>
+                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">17 Kanal, 7 Rol (Onaylı)</span>
+                </div>
+              </div>
+              <span className="text-[7px] text-cyan-300 font-mono bg-cyan-950/60 border border-cyan-500/30 px-1 rounded shrink-0">
+                1. Sınıf Kurumsal
+              </span>
+            </div>
+          </div>
+
+          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
+            <span className="text-violet-300 font-mono">✓ Güvenli Onay Butonları</span>
+            <span className="text-emerald-400 font-semibold font-mono">✓ Sıfır Veri Kaybı</span>
           </div>
         </div>
       );
