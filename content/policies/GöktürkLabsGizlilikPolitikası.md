@@ -14,7 +14,7 @@ Göktürk Labs kullanıcıların **kart bilgilerini toplamaz veya saklamaz.**
 
 ## 2. Ödeme Bilgileri
 
-Ödemeler hizmete göre **IBAN veya Google Play** üzerinden gerçekleştirilebilir.
+Ödemeler hizmete göre **Shopier veya Google Play** üzerinden gerçekleştirilebilir.
 
 Göktürk Labs, banka kartı veya kredi kartı bilgilerinin kendisine iletilmesini veya saklanmasını talep etmez.
 

@@ -31,7 +31,7 @@ Göktürk Labs, hizmetlerin mümkün olduğunca kesintisiz çalışması için g
 
 ## 4. Ödeme ve İade
 
-Ödeme işlemleri, hizmete göre **IBAN veya Google Play** üzerinden gerçekleştirilebilir.
+Ödeme işlemleri, hizmete göre **Shopier veya Google Play** üzerinden gerçekleştirilebilir.
 
 Ödeme yöntemi ve hizmet ücreti satın alma öncesinde kullanıcıya açıkça bildirilir.
 
