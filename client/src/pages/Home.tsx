@@ -36,7 +36,13 @@ const extraSystems: Array<{
   { title: "Seviye & XP", detail: "Aktif üyeleri ödüllendiren seviye ve ilerleme düzeni.", icon: Zap, cover: "cover-violet" },
   { title: "Davet takibi", detail: "Sunucuna gelen davetleri ve kaynaklarını takip eden sistem.", icon: ArrowUpRight, cover: "cover-grid" },
   { title: "Çekiliş sistemi", detail: "Katılım, süre ve kazanan akışını kolaylaştıran modül.", icon: Sparkles, cover: "cover-purple" },
-  { title: "Destek & talep", detail: "Kullanıcı taleplerini düzenli kanallara ve akışlara ayır.", icon: Headphones, cover: "cover-magenta" },
+  { 
+    title: "Gelişmiş Destek & Bilet", 
+    detail: "Butonlu ve menülü bilet (ticket) sistemi, yetkili talep kanalları, transkript ve otomatik arşivleme.", 
+    icon: Headphones, 
+    cover: "cover-magenta",
+    badge: "BUTONLU TICKET" 
+  },
   { title: "Otomatik rol", detail: "Rolleri belirlediğin kurallara göre otomatik yönlendir.", icon: Settings2, cover: "cover-lines" },
   { title: "Güvenlik & moderasyon", detail: "Sunucunun düzenini koruyan filtre ve kayıt katmanı.", icon: ShieldCheck, cover: "cover-signal" },
   { 
@@ -52,6 +58,13 @@ const extraSystems: Array<{
     icon: Layers3, 
     cover: "cover-backup", 
     badge: "1. SINIF ŞABLON" 
+  },
+  { 
+    title: "Google Gemini AI Sohbet", 
+    detail: "Google Gemini AI destekli akıllı Türkçe sohbet, soru-cevap, moderasyon asistanı ve 7/24 sunucu rehberi.", 
+    icon: Bot, 
+    cover: "cover-gemini", 
+    badge: "YAKINDA!" 
   },
 ];
 
@@ -332,6 +345,39 @@ function ModuleCover({ index }: { index: number }) {
           <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
             <span className="text-violet-300 font-mono">✓ Güvenli Onay Butonları</span>
             <span className="text-emerald-400 font-semibold font-mono">✓ Sıfır Veri Kaybı</span>
+          </div>
+        </div>
+      );
+
+    case 9: // 10 Google Gemini AI Sohbet
+      return (
+        <div className="relative z-10 flex flex-col justify-between h-full select-none">
+          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
+            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-amber-300">
+              <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
+              <span>GÖKTÜRK GEMINI AI</span>
+            </div>
+            <span className="rounded bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-400/40 text-amber-300 px-1.5 py-0.2 text-[7.5px] font-black tracking-wider animate-pulse">
+              YAKINDA!
+            </span>
+          </div>
+
+          <div className="my-auto flex flex-col gap-1 text-[8px]">
+            <div className="rounded bg-black/40 border border-white/5 px-1.5 py-1 text-zinc-300 flex items-center gap-1.5">
+              <span className="h-4 w-4 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-[9px] shrink-0">👤</span>
+              <span className="truncate"><strong className="text-white font-medium">@Üye:</strong> Göktürk botu sunucuma nasıl davet edilir?</span>
+            </div>
+            <div className="rounded bg-gradient-to-r from-amber-950/40 via-purple-950/40 to-transparent border border-amber-500/30 px-1.5 py-1 text-amber-200 flex items-center gap-1.5 shadow-[0_0_10px_rgba(251,191,36,0.15)]">
+              <span className="h-4 w-4 rounded bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[9px] shrink-0">🤖</span>
+              <span className="truncate"><strong className="text-amber-300 font-semibold">Gemini AI:</strong> Panelden 1 tıkla özel şablonla bağlanır!</span>
+            </div>
+          </div>
+
+          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
+            <span className="text-amber-400 font-mono flex items-center gap-1">
+              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" /> Doğal Dil &amp; Zeka
+            </span>
+            <span className="text-purple-300 font-bold font-mono">⚡ Gemini 2.5 Flash</span>
           </div>
         </div>
       );
