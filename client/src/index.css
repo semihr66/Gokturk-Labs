@@ -149,7 +149,8 @@ html { scroll-behavior: smooth; }
 .legal-order-note a { color: #c084fc; text-decoration: underline; text-decoration-color: rgba(147,51,234,.42); text-underline-offset: 3px; }
 .legal-order-note a:hover { color: #fff; }
 
-.policy-page, .not-found-page { position: relative; overflow: hidden; }
+.policy-page { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: space-between; }
+.not-found-page { position: relative; overflow: hidden; }
 .policy-nav { position: relative; z-index: 2; display: flex; align-items: center; justify-content: space-between; max-width: 1130px; min-height: 4.8rem; margin: 0 auto; padding: .75rem 1.25rem; border-bottom: 1px solid rgba(255,255,255,.08); }
 .policy-nav a:first-child { color: #d9d7e3; }
 .policy-nav em { color: #9333ea; font-style: normal; }
