@@ -384,24 +384,43 @@ export default function Home() {
     document.title = "Göktürk Labs — Güçlü Discord Botları, Web Paneli ve Altyapı Çözümleri";
   }, []);
 
-  const handlePlanOrder = (plan: PlanItem) => {
-    if (!acceptedTerms[plan.id]) {
-      toast.error("Lütfen sipariş öncesinde Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
-      return;
-    }
-
-    const orderMsg = plan.price === "₺0"
+  const getOrderMessage = (plan: PlanItem) => {
+    return plan.price === "₺0"
       ? `Merhaba, Göktürk Labs ${plan.name} ücretsiz başlangıç paketi için başvurmak istiyorum.`
       : `Merhaba, Göktürk Labs ${plan.name} (${plan.price}/${plan.period}) paketi için sipariş başlatmak istiyorum.`;
+  };
 
+  const handleCopyPlanText = (plan: PlanItem) => {
+    if (!acceptedTerms[plan.id]) {
+      toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
+      return;
+    }
+    const orderMsg = getOrderMessage(plan);
     if (navigator.clipboard) {
       navigator.clipboard.writeText(orderMsg).then(() => {
         setCopiedPlan(plan.id);
-        toast.success("Hazır sipariş mesajı panonuza kopyalandı! Discord DM'ye aktarılıyorsunuz.");
-        setTimeout(() => setCopiedPlan(null), 3000);
+        toast.success(`"${plan.name}" sipariş metni panonuza kopyalandı!`);
+        setTimeout(() => setCopiedPlan(null), 3500);
+      }).catch(() => {
+        toast.error("Panoya kopyalama başarısız oldu.");
+      });
+    }
+  };
+
+  const handleOpenDiscordDM = (plan: PlanItem) => {
+    if (!acceptedTerms[plan.id]) {
+      toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
+      return;
+    }
+    // Also copy to clipboard seamlessly so it's ready in clipboard when DM opens
+    const orderMsg = getOrderMessage(plan);
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(orderMsg).then(() => {
+        setCopiedPlan(plan.id);
+        setTimeout(() => setCopiedPlan(null), 3500);
       }).catch(() => {});
     }
-
+    toast.success("Sipariş metni kopyalandı ve Discord DM açılıyor!");
     window.open(DISCORD_ORDER_URL, "_blank", "noopener,noreferrer");
   };
 
@@ -919,25 +938,47 @@ export default function Home() {
                         </label>
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => handlePlanOrder(p)}
-                        className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold transition-all active:scale-95 ${
-                          isVip
-                            ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/20"
-                            : isPopular
-                            ? "bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/20"
-                            : "bg-white/[0.06] hover:bg-white/[0.1] text-zinc-200"
-                        }`}
-                      >
-                        <MessageSquare className="h-3.5 w-3.5" />
-                        <span>Discord'dan Sipariş Ver</span>
-                        <ArrowUpRight className="h-3.5 w-3.5 opacity-80" />
-                      </button>
+                      <div className="flex flex-col gap-2 pt-1">
+                        {/* 1. Buton: Doğrudan Discord DM Aç */}
+                        <button
+                          type="button"
+                          onClick={() => handleOpenDiscordDM(p)}
+                          className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold transition-all active:scale-95 ${
+                            isVip
+                              ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/25"
+                              : isPopular
+                              ? "bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/25"
+                              : "bg-[#5865F2] hover:bg-[#4752c4] text-white shadow-lg shadow-[#5865F2]/20"
+                          }`}
+                        >
+                          <DiscordMark className="h-4 w-4" />
+                          <span>Discord DM'den İletişime Geç</span>
+                          <ArrowUpRight className="h-3.5 w-3.5 opacity-80" />
+                        </button>
+
+                        {/* 2. Buton: Hazır Sipariş Metnini Kopyala */}
+                        <button
+                          type="button"
+                          onClick={() => handleCopyPlanText(p)}
+                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl py-2 px-3 text-xs font-medium border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white transition-all active:scale-95"
+                        >
+                          {copiedPlan === p.id ? (
+                            <>
+                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
+                              <span className="text-emerald-400 font-semibold">Sipariş Metni Kopyalandı!</span>
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="h-3.5 w-3.5 text-purple-400" />
+                              <span>Sipariş Metnini Kopyala</span>
+                            </>
+                          )}
+                        </button>
+                      </div>
 
                       {copiedPlan === p.id && (
-                        <p className="text-[10px] text-emerald-400 font-mono text-center flex items-center justify-center gap-1">
-                          <CheckCircle2 className="h-3 w-3" /> Hazır sipariş metni kopyalandı!
+                        <p className="text-[10px] text-emerald-400 font-mono text-center flex items-center justify-center gap-1 mt-1">
+                          <CheckCircle2 className="h-3 w-3" /> Metin panoya alındı, Discord DM'ye yapıştırabilirsiniz.
                         </p>
                       )}
                     </div>
