@@ -29,7 +29,6 @@ import {
   Boxes,
   LockKeyhole
 } from "lucide-react";
-import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
@@ -463,16 +462,6 @@ export default function Home() {
                 <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> 7/24 VDS Kesintisiz Çalışma</span>
                 <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Geliştirici Desteği</span>
               </div>
-            </div>
-
-            {/* Aceternity Text Hover Effect Entegrasyonu */}
-            <div className="mt-8 sm:mt-12 relative flex flex-col items-center justify-center">
-              <div className="w-full max-w-4xl h-24 sm:h-36 overflow-hidden rounded-2xl border border-white/[0.06] bg-black/40 backdrop-blur-sm flex items-center justify-center">
-                <TextHoverEffect text="GÖKTÜRK" />
-              </div>
-              <span className="text-[11px] text-zinc-500 font-mono mt-2">
-                💡 İpucu: Farenizi logonun üzerine getirdiğinizde dinamik spektrum ışığı takip eder
-              </span>
             </div>
 
             {/* Canlı Sistem & Mimari Konsolu */}
