@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
+import Footer from "@/components/Footer";
 
 const LOGO_URL = "/gokturk-labs-logo.png";
 const DISCORD_URL = "https://discord.gg/CFrwUThhE";
@@ -40,6 +41,25 @@ export default function PolicyPage({ type }: { type: "privacy" | "terms" }) {
 
   return <main className="policy-page min-h-screen bg-[#08080b] text-[#f7f7fb]">
     <header className="policy-nav"><a href="/" className="flex items-center gap-3" aria-label="Göktürk Labs ana sayfa"><img src={LOGO_URL} alt="Göktürk Labs logosu" className="h-9 w-9 object-contain" /><span className="font-display text-sm font-semibold">Göktürk <em>Labs</em></span></a><a href="/" className="policy-back"><ArrowLeft className="h-4 w-4" /> Ana sayfaya dön</a></header>
-    <div className="policy-shell"><div className="policy-kicker"><ShieldCheck className="h-4 w-4" /> GÖKTÜRK LABS / POLİTİKALAR</div><h1>{title}</h1><p className="policy-date">Son Güncelleme: 31 Ağustos 2026</p><p className="policy-intro">{intro}</p><article className="policy-content">{sections.map(section => <section key={section.title}><h2>{section.title}</h2>{section.paragraphs?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}{section.bullets && <ul>{section.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>}</section>)}</article><div className="policy-footer"><strong>Göktürk Labs</strong><a href={DISCORD_URL} target="_blank" rel="noreferrer">Soruların mı var? Discord’dan yaz <ArrowUpRight className="h-4 w-4" /></a></div></div>
+    <div className="policy-shell">
+      <div className="policy-kicker"><ShieldCheck className="h-4 w-4" /> GÖKTÜRK LABS / POLİTİKALAR</div>
+      <h1>{title}</h1>
+      <p className="policy-date">Son Güncelleme: 31 Ağustos 2026</p>
+      <p className="policy-intro">{intro}</p>
+      <article className="policy-content">
+        {sections.map(section => (
+          <section key={section.title}>
+            <h2>{section.title}</h2>
+            {section.paragraphs?.map(paragraph => <p key={paragraph}>{paragraph}</p>)}
+            {section.bullets && <ul>{section.bullets.map(bullet => <li key={bullet}>{bullet}</li>)}</ul>}
+          </section>
+        ))}
+      </article>
+      <div className="policy-footer">
+        <strong>Göktürk Labs</strong>
+        <a href={DISCORD_URL} target="_blank" rel="noreferrer">Soruların mı var? Discord’dan yaz <ArrowUpRight className="h-4 w-4" /></a>
+      </div>
+    </div>
+    <Footer />
   </main>;
 }

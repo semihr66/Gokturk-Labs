@@ -32,6 +32,8 @@ import {
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { toast } from "sonner";
+import StudioHero3D from "@/components/StudioHero3D";
+import Footer from "@/components/Footer";
 
 const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
 const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
@@ -415,6 +417,9 @@ export default function Home() {
         
         {/* 2. HERO SECTION */}
         <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28 border-b border-white/[0.06]">
+          {/* Performans Dostu Three.js 3D Sahnesi (Zero-Lag, Capped Pixel Ratio) */}
+          <StudioHero3D />
+
           {/* Arka Plan Yumuşak Işıklar */}
           <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 h-[500px] w-[800px] rounded-full bg-purple-600/10 blur-[130px]" aria-hidden="true" />
           <div className="pointer-events-none absolute right-0 top-1/2 h-[350px] w-[500px] rounded-full bg-cyan-600/10 blur-[120px]" aria-hidden="true" />
@@ -1033,52 +1038,8 @@ export default function Home() {
 
       </main>
 
-      {/* 9. FOOTER */}
-      <footer className="bg-[#050508] py-14 text-xs text-zinc-400">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6 pb-8 border-b border-white/[0.06]">
-            <a href="#top" className="flex items-center gap-3">
-              <img src={LOGO_URL} alt="Göktürk Labs" className="h-8 w-8 object-contain" />
-              <span className="font-display text-base font-bold text-white">Göktürk <span className="text-purple-400">Labs</span></span>
-            </a>
-
-            <div className="flex flex-wrap items-center justify-center gap-6 text-xs">
-              <a href="#urunler" className="hover:text-white transition-colors">Ürünler</a>
-              <a href="#paketler" className="hover:text-white transition-colors">Paketler</a>
-              <a href="#hakkimizda" className="hover:text-white transition-colors">Hakkımızda</a>
-              <a href="#iletisim" className="hover:text-white transition-colors">İletişim</a>
-              <a href="/gizlilik-politikasi" className="hover:text-white transition-colors">Gizlilik Politikası</a>
-              <a href="/hizmet-sartlari" className="hover:text-white transition-colors">Hizmet Şartları</a>
-              <a href="/sitemap.xml" target="_blank" className="hover:text-white transition-colors">XML Sitemap</a>
-            </div>
-
-            <a 
-              href={COMMUNITY_URL}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#5865F2]/15 border border-[#5865F2]/30 px-3.5 py-2 text-xs font-semibold text-[#8a94fd] hover:text-white transition-all"
-            >
-              <DiscordMark className="h-4 w-4" />
-              <span>Discord Topluluğu</span>
-            </a>
-          </div>
-
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-            <div>
-              <p>© 2026 Göktürk Labs. Tüm hakları saklıdır.</p>
-              <p className="text-[11px] text-zinc-500 mt-1">
-                Geliştirici: <span className="text-purple-400 font-mono">semihr66</span> · Bağımsız Discord Bot &amp; Web Sistemleri
-              </p>
-            </div>
-
-            {/* Mustafa Kemal Atatürk Saygı Anması */}
-            <div className="flex flex-col items-center sm:items-end justify-center gap-0.5 select-none" title="Mustafa Kemal Atatürk (1881-193∞)">
-              <span className="font-display text-sm font-bold tracking-[0.2em] text-zinc-300">1881-193∞</span>
-              <span className="text-[11px] text-zinc-500 tracking-wider">Saygı ve minnetle...</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      {/* 9. REUSABLE STUDIO FOOTER */}
+      <Footer />
 
     </div>
   );
