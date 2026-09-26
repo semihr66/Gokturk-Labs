@@ -224,356 +224,124 @@ const products = [
 ];
 
 const extraSystems: Array<{
+  id: string;
+  category: string;
   title: string;
   detail: string;
+  command: string;
+  specs: string[];
   icon: any;
-  cover: string;
   badge?: string;
-  poweredBy?: { label: string; url: string };
+  statusText: string;
 }> = [
-  { title: "Karşılama Akışı & Afiş", detail: "Yeni üyeler için görsel karşılama afişi, otomatik rol ve yönlendirme sistemi.", icon: MessageCircle, cover: "cover-cyan" },
-  { title: "Seviye & Dinamik XP", detail: "Ses ve metin kanallarında aktif üyeleri ödüllendiren dinamik seviye ve rank sistemi.", icon: Zap, cover: "cover-violet" },
-  { title: "Davet Takibi & İstatistik", detail: "Sunucunuza gelen davetleri, ayrılanları ve sahte hesapları canlı takip eden motor.", icon: ArrowUpRight, cover: "cover-grid" },
-  { title: "Çekiliş & Ödül Yönetimi", detail: "Süre, şart, rol zorunluluğu ve kazanan belirleme akışını kolaylaştıran modül.", icon: Sparkles, cover: "cover-purple" },
   { 
+    id: "welcome",
+    category: "ONBOARDING",
+    title: "Karşılama Akışı & Canvas Afiş", 
+    detail: "Sunucuya katılan üyeleri dinamik avatar + banner grafikleriyle karşılar, kurallı hoş geldin mesajı ve otomatik rol atamasını 0.1 sn içinde tamamlar.",
+    command: "/welcome set [kanal] [afis_modu]",
+    specs: ["Canvas 2D Avatar Render", "Otomatik Karşılama Rolü", "DM veya Kanal Seçimi"],
+    icon: MessageCircle,
+    statusText: "Aktif Entegrasyon"
+  },
+  { 
+    id: "level",
+    category: "ENGAGEMENT",
+    title: "Seviye & Dinamik XP Motoru", 
+    detail: "Metin ve ses kanallarındaki etkileşimi ayrı puanlayan, spam filtresiyle korunan ve kişiselleştirilebilir rank kartları sunan ödül altyapısı.",
+    command: "/rank [kullanici] | /top10",
+    specs: ["Ses & Metin Çift XP Havuzu", "Özel SVG/PNG Rank Kartı", "Kademeli Rol Ödülleri"],
+    icon: Zap,
+    statusText: "Canlı Hesaplama"
+  },
+  { 
+    id: "invite",
+    category: "TELEMETRY",
+    title: "Davet Takibi & Vanity Analizi", 
+    detail: "Hangi üyenin hangi davet linkiyle geldiğini, ayrılanları, sahte (fake) hesapları ve özel URL kullanımlarını milisaniyelik loglar.",
+    command: "/invites [kullanici] | /vanity stats",
+    specs: ["Sahte Hesap (Fake) Algılama", "Bonus / Eksilen Davet Kaydı", "Canlı Log Kanalı"],
+    icon: ArrowUpRight,
+    statusText: "Gerçek Zamanlı"
+  },
+  { 
+    id: "giveaway",
+    category: "EVENTS",
+    title: "Çekiliş & Ödül Yönetimi", 
+    detail: "Zaman ayarlı, zorunlu rol şartlı ve çoklu kazanan destekli çekiliş motoru. Kriptografik rastgele seçimle manipülasyonu engeller.",
+    command: "/cekilis baslat [sure] [odul] [kazanan]",
+    specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı Filtresi", "Yedek Kazanan (Reroll)"],
+    icon: Sparkles,
+    statusText: "Otomasyon"
+  },
+  { 
+    id: "ticket",
+    category: "SUPPORT",
     title: "Gelişmiş Butonlu Bilet (Ticket)", 
-    detail: "Farklı departmanlara özel butonlu destek talepleri, transkript ve otomatik arşivleme.", 
+    detail: "Departman bazlı (Destek, Satış, VIP) buton menüleri, yetkiliye özel geçici kanallar ve kapatıldığında otomatik HTML transkript arşivleme.",
+    command: "/ticket panel kur [kategori]",
+    specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript", "Kilit ve Arşiv Akışı"],
     icon: Headphones, 
-    cover: "cover-magenta",
-    badge: "BUTONLU TICKET" 
+    badge: "BUTONLU TICKET",
+    statusText: "Kurumsal Altyapı"
   },
-  { title: "Otomatik Rol & Kayıt", detail: "Rolleri belirlediğiniz kurallara ve butonlu menülere göre anında tanımlayın.", icon: Settings2, cover: "cover-lines" },
-  { title: "Göktürk Defense (Anti-Raid)", detail: "Spam, flood, karantina ve sağ tıklama saldırılarına karşı native AutoMod kalkanı.", icon: ShieldCheck, cover: "cover-signal" },
   { 
+    id: "autorole",
+    category: "AUTOMATION",
+    title: "Otomatik Rol & Doğrulama", 
+    detail: "Yeni katılan üyelere veya kural kabul edenlere gecikmesiz rol dağıtır. Menülü veya butonlu rol alma istasyonları oluşturur.",
+    command: "/rolmenu olustur [mesaj_id]",
+    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri", "Bot & Üye Ayrımı"],
+    icon: Settings2,
+    statusText: "Yüksek Hızlı"
+  },
+  { 
+    id: "defense",
+    category: "SECURITY",
+    title: "Göktürk Defense (Anti-Raid)", 
+    detail: "Spam, hızlı katılım saldırıları, izinsiz link/reklam, sağ-tıklama ban koruması ve şüpheli hesapları anında karantinaya alma kalkanı.",
+    command: "/defense mod [katı|orta] | /karantina",
+    specs: ["Discord AutoMod v2 Entegre", "Anti-Raid & Karantina Kalkanı", "Sağ Tık / Yetki İhlal Alarmı"],
+    icon: ShieldCheck,
+    badge: "GÖKTÜRK DEFENSE",
+    statusText: "Tam Kalkan"
+  },
+  { 
+    id: "voice",
+    category: "AUDIO",
     title: "Özel Ses Odaları & HD Müzik", 
-    detail: "Tıkla-oluştur geçici kilitli ses odaları ve Spotify entegreli 128 kbps HD müzik motoru.", 
+    detail: "Odaya girince otomatik kilitli özel oda kurma, panelden üye izinlerini yönetme ve Spotify/YouTube destekli 128 kbps kristal netliğinde ses iletimi.",
+    command: "/ses oda-kilitle | /play [parca]",
+    specs: ["Tıkla-Oluşsun Dinamik Oda", "Kullanıcı Panel Arayüzü", "128 kbps Ultra HD Müzik"],
     icon: Music, 
-    cover: "cover-music", 
-    badge: "ÖZEL ODA & 128K HD" 
+    badge: "128K ULTRA HD",
+    statusText: "Düşük Gecikme"
   },
   { 
+    id: "backup",
+    category: "MANAGEMENT",
     title: "Sunucu Yedekleme & Şablon", 
-    detail: "Sunucu kanallarını, rollerini ve izinlerini tek tıkla yedekleyin; emojili hazır şablonu kurun.", 
+    detail: "Kanal hiyerarşisi, kategori izinleri, roller ve emojileri tek tıkla şifreli JSON olarak depolar; acil durumlarda sıfır kayıpla geri yükler.",
+    command: "/backup al | /sablon kur [kod]",
+    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon", "Sıfır İzin Kaybı Güvencesi"],
     icon: Layers3, 
-    cover: "cover-backup", 
-    badge: "1. SINIF ŞABLON" 
+    badge: "1. SINIF ŞABLON",
+    statusText: "Korumalı Veri"
   },
   { 
-    title: "Google Gemini AI Sohbet", 
-    detail: "Google Gemini AI destekli akıllı Türkçe sohbet, soru-cevap ve 7/24 sunucu rehberi.", 
+    id: "ai",
+    category: "INTELLIGENCE",
+    title: "Google Gemini AI Sohbet & Asistan", 
+    detail: "Google Gemini 2.5 Flash API ile güçlendirilen akıllı sunucu rehberi. Sunucu kurallarını öğrenir, soruları yanıtlar ve 7/24 moderatör desteği sağlar.",
+    command: "/ai sor [soru] | /ai rehber",
+    specs: ["Google Gemini 2.5 Flash", "Sunucu Dokümantasyonu Hafızası", "Doğal Türkçe Yanıtlama"],
     icon: Bot, 
-    cover: "cover-gemini", 
-    badge: "YAKINDA!" 
+    badge: "YAKINDA!",
+    statusText: "Geliştirme Aşamasında"
   }
 ];
 
-function ModuleCover({ index }: { index: number }) {
-  switch (index) {
-    case 0: // 01 Karşılama akışı
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1.5">
-            <div className="flex items-center gap-1.5">
-              <div className="relative flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-tr from-cyan-500 to-blue-600 text-[10px] font-bold text-white shadow-sm">
-                U
-                <span className="absolute -bottom-0.5 -right-0.5 h-1.5 w-1.5 rounded-full bg-emerald-400 ring-2 ring-[#121218]" />
-              </div>
-              <span className="text-[11px] font-semibold text-white">Yeni Üye</span>
-              <span className="rounded bg-[#5865F2] px-1 py-0.2 text-[8px] font-black text-white">BOT</span>
-            </div>
-            <span className="text-[9px] text-[#777682]">şimdi</span>
-          </div>
-          <div className="my-auto text-[10px] font-medium text-cyan-200/90 leading-tight">
-            👋 Sunucuya katıldı! Hoş geldin.
-          </div>
-          <div className="inline-flex items-center gap-1 self-start rounded-md border border-cyan-400/30 bg-cyan-500/10 px-1.5 py-0.5 text-[9px] font-semibold text-cyan-300">
-            <span className="h-1.5 w-1.5 rounded-full bg-cyan-400 animate-pulse" />
-            Rol Verildi: @Üye
-          </div>
-        </div>
-      );
 
-    case 1: // 02 Seviye & XP
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between">
-            <div className="inline-flex items-center gap-1 rounded-md border border-purple-500/40 bg-purple-500/20 px-2 py-0.5 text-[10px] font-extrabold text-purple-300 shadow-[0_0_12px_rgba(168,85,247,0.3)]">
-              <Zap className="h-3 w-3 text-purple-300 fill-purple-300" /> LVL 24
-            </div>
-            <span className="text-[10px] font-bold text-amber-300">🏆 TOP #1</span>
-          </div>
-          <div className="my-auto">
-            <div className="flex items-center justify-between text-[9px] text-[#9795a3] mb-1 font-mono">
-              <span>İlerleme (XP)</span>
-              <span className="text-purple-300 font-bold">4,850 / 5,000</span>
-            </div>
-            <div className="h-2 w-full overflow-hidden rounded-full bg-white/10 p-0.5">
-              <div className="h-full w-[86%] rounded-full bg-gradient-to-r from-purple-500 via-fuchsia-500 to-amber-400 shadow-[0_0_12px_rgba(192,132,252,0.8)] animate-pulse" />
-            </div>
-          </div>
-          <div className="flex items-center justify-between text-[8px] text-purple-300/90 font-mono">
-            <span>+250 XP Mesaj Bonusu</span>
-            <span className="text-emerald-400 font-bold">%97</span>
-          </div>
-        </div>
-      );
-
-    case 2: // 03 Davet takibi
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <span className="text-[10px] font-semibold text-white/80">🔗 Davet İstatistiği</span>
-            <span className="inline-flex items-center text-[9px] font-bold text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 rounded">
-              ↗ %24 Artış
-            </span>
-          </div>
-          <div className="my-auto flex items-baseline gap-2">
-            <span className="font-display text-2xl font-bold text-white tracking-tight">48</span>
-            <span className="text-[10px] text-blue-300/90 font-semibold">Toplam Davet</span>
-          </div>
-          <div className="flex items-center gap-1.5 text-[9px]">
-            <span className="rounded bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 text-emerald-300 font-bold">✓ 42 Aktif</span>
-            <span className="rounded bg-rose-500/15 border border-rose-500/30 px-1.5 py-0.5 text-rose-300 font-bold">✕ 6 Ayrıldı</span>
-          </div>
-        </div>
-      );
-
-    case 3: // 04 Çekiliş sistemi
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between">
-            <span className="inline-flex items-center gap-1 rounded bg-fuchsia-500/20 border border-fuchsia-500/40 px-1.5 py-0.5 text-[9px] font-black uppercase tracking-wider text-fuchsia-300">
-              🎉 ÇEKİLİŞ
-            </span>
-            <span className="font-mono text-[10px] font-bold text-amber-300 animate-pulse">⏱ 01:24:18</span>
-          </div>
-          <div className="my-auto text-[11px] font-bold text-white truncate">
-            1 Aylık Discord Nitro
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-[9px] text-[#9795a3]">👥 142 Katılımcı</span>
-            <span className="inline-flex items-center gap-1 rounded bg-gradient-to-r from-purple-600 to-fuchsia-600 px-2 py-0.5 text-[9px] font-bold text-white shadow-md">
-              Katıl 🎉
-            </span>
-          </div>
-        </div>
-      );
-
-    case 4: // 05 Destek & talep
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <span className="font-mono text-[10px] font-bold text-violet-300">🎫 #talep-0284</span>
-            <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 text-[8px] font-bold text-emerald-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" /> AÇIK
-            </span>
-          </div>
-          <div className="my-auto text-[10px] text-white/90 font-medium leading-tight">
-            Yetkili ekibi talebe bağlandı.
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="rounded bg-rose-500/20 border border-rose-500/30 px-1.5 py-0.5 text-[9px] font-bold text-rose-300">
-              🔒 Talebi Kapat
-            </span>
-            <span className="rounded bg-violet-500/20 border border-violet-500/30 px-1.5 py-0.5 text-[9px] font-bold text-violet-300">
-              📄 HTML Log
-            </span>
-          </div>
-        </div>
-      );
-
-    case 5: // 06 Otomatik rol
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <span className="text-[10px] font-semibold text-white/80">⚡ Oto-Rol Sistemi</span>
-            <span className="text-[8px] font-extrabold text-purple-300 bg-purple-500/20 border border-purple-500/40 px-1.5 py-0.2 rounded">0.1s ANINDA</span>
-          </div>
-          <div className="my-auto flex items-center justify-between gap-1 text-[10px]">
-            <div className="rounded bg-white/5 border border-white/10 px-2 py-1 text-white/80 font-medium">
-              👤 Katılan
-            </div>
-            <span className="text-purple-400 font-bold">➔</span>
-            <div className="rounded border border-purple-500/40 bg-purple-500/20 px-2 py-1 text-purple-200 font-bold shadow-[0_0_10px_rgba(168,85,247,0.3)]">
-              🏷️ @Oyuncu
-            </div>
-          </div>
-          <div className="text-[8px] text-emerald-400 flex items-center gap-1 font-medium">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" /> Sessizce otomatik tanımlanır
-          </div>
-        </div>
-      );
-
-    case 6: // 07 Güvenlik & moderasyon
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1 text-[10px] font-bold text-cyan-300">
-              <ShieldCheck className="h-3.5 w-3.5 text-cyan-400" />
-              <span>GÖKTÜRK DEFENSE</span>
-            </div>
-            <span className="rounded bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.2 text-[8px] font-bold text-emerald-400">
-              KORUMADA
-            </span>
-          </div>
-          <div className="my-auto grid grid-cols-2 gap-1.5 text-[9px]">
-            <div className="rounded bg-black/40 border border-white/5 p-1 text-center">
-              <span className="text-white/50 block text-[8px]">Anti-Raid</span>
-              <strong className="text-emerald-400 font-bold">✓ Aktif</strong>
-            </div>
-            <div className="rounded bg-black/40 border border-white/5 p-1 text-center">
-              <span className="text-white/50 block text-[8px]">Spam Koruması</span>
-              <strong className="text-cyan-300 font-bold">✓ Devrede</strong>
-            </div>
-          </div>
-          <div className="text-[8px] text-cyan-300/80 font-mono">
-            7/24 Filtre ve Kayıt devrede
-          </div>
-        </div>
-      );
-
-    case 7: // 08 Ses & Müzik
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-emerald-400">
-              <Headphones className="h-3.5 w-3.5 text-emerald-400" />
-              <span>GÖKTÜRK SES &amp; MÜZİK</span>
-            </div>
-            <div className="flex items-center gap-1">
-              <span className="rounded bg-emerald-500/20 border border-emerald-500/40 px-1 py-0.2 text-[7.5px] font-bold text-emerald-300">
-                ÖZEL ODA
-              </span>
-              <span className="rounded bg-[#1DB954]/20 border border-[#1DB954]/40 px-1 py-0.2 text-[7.5px] font-bold text-[#1DB954]">
-                128K HD
-              </span>
-            </div>
-          </div>
-
-          <div className="my-auto flex flex-col gap-1">
-            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <span className="h-4 w-4 rounded bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-[9px] shrink-0">🔊</span>
-                <div className="min-w-0">
-                  <span className="text-white font-semibold block truncate leading-tight">Özel Oda Oluştur</span>
-                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Kişiye özel kanal &amp; panel</span>
-                </div>
-              </div>
-              <div className="flex items-center gap-1 text-[7px] text-emerald-300/90 font-mono bg-emerald-950/60 border border-emerald-500/30 px-1 rounded shrink-0">
-                <span>🔒 Kilit</span>
-                <span>👥 Limit</span>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <span className="h-4 w-4 rounded bg-[#1DB954]/20 text-[#1DB954] flex items-center justify-center font-bold text-[9px] shrink-0">🎵</span>
-                <div className="min-w-0">
-                  <span className="text-white font-semibold block truncate leading-tight">/play &lt;şarkı|link&gt;</span>
-                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Spotify entegreli 128 kbps</span>
-                </div>
-              </div>
-              <div className="flex items-end gap-0.5 h-2.5 px-0.5 shrink-0">
-                <span className="w-0.5 h-1.5 bg-[#1DB954] rounded-full animate-pulse" />
-                <span className="w-0.5 h-2.5 bg-emerald-400 rounded-full animate-bounce" />
-                <span className="w-0.5 h-1 bg-[#1DB954] rounded-full animate-pulse" />
-                <span className="w-0.5 h-2.5 bg-emerald-300 rounded-full animate-bounce" />
-              </div>
-            </div>
-          </div>
-
-          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
-            <span className="text-emerald-400 font-mono">✓ Tıkla-Oluşsun Oda</span>
-            <span className="text-[#1DB954] font-semibold font-mono">🟢 Spotify Ultra HD</span>
-          </div>
-        </div>
-      );
-
-    case 8: // 09 Yedek & Şablon
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-violet-300">
-              <Layers3 className="h-3.5 w-3.5 text-violet-400" />
-              <span>GÖKTÜRK YEDEK &amp; ŞABLON</span>
-            </div>
-            <span className="rounded bg-violet-500/20 border border-violet-500/40 px-1 py-0.2 text-[7.5px] font-bold text-violet-300">
-              EMOJİLİ ŞABLON
-            </span>
-          </div>
-
-          <div className="my-auto flex flex-col gap-1">
-            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <span className="h-4 w-4 rounded bg-violet-500/20 text-violet-400 flex items-center justify-center font-bold text-[9px] shrink-0">🛡️</span>
-                <div className="min-w-0">
-                  <span className="text-white font-semibold block truncate leading-tight">Anlık Tam Yedek</span>
-                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">Rol, kanal &amp; izinler</span>
-                </div>
-              </div>
-              <span className="text-[7px] text-violet-300 font-mono bg-violet-950/60 border border-violet-500/30 px-1 rounded shrink-0">
-                GL-BK-JSON
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between gap-1.5 rounded bg-black/40 border border-white/5 px-1.5 py-1 text-[8px]">
-              <div className="flex items-center gap-1.5 min-w-0">
-                <span className="h-4 w-4 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-[9px] shrink-0">👑</span>
-                <div className="min-w-0">
-                  <span className="text-white font-semibold block truncate leading-tight">/sablon kur</span>
-                  <span className="text-zinc-400 text-[7px] block truncate leading-tight">17 Kanal, 7 Rol (Onaylı)</span>
-                </div>
-              </div>
-              <span className="text-[7px] text-cyan-300 font-mono bg-cyan-950/60 border border-cyan-500/30 px-1 rounded shrink-0">
-                1. Sınıf Kurumsal
-              </span>
-            </div>
-          </div>
-
-          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
-            <span className="text-violet-300 font-mono">✓ Güvenli Onay Butonları</span>
-            <span className="text-emerald-400 font-semibold font-mono">✓ Sıfır Veri Kaybı</span>
-          </div>
-        </div>
-      );
-
-    case 9: // 10 Google Gemini AI
-      return (
-        <div className="relative z-10 flex flex-col justify-between h-full select-none">
-          <div className="flex items-center justify-between border-b border-white/[0.08] pb-1">
-            <div className="flex items-center gap-1.5 text-[9.5px] font-bold text-amber-300">
-              <Sparkles className="h-3.5 w-3.5 text-amber-400 animate-pulse" />
-              <span>GÖKTÜRK GEMINI AI</span>
-            </div>
-            <span className="rounded bg-gradient-to-r from-amber-500/20 to-purple-500/20 border border-amber-400/40 text-amber-300 px-1.5 py-0.2 text-[7.5px] font-black tracking-wider animate-pulse">
-              YAKINDA!
-            </span>
-          </div>
-
-          <div className="my-auto flex flex-col gap-1 text-[8px]">
-            <div className="rounded bg-black/40 border border-white/5 px-1.5 py-1 text-zinc-300 flex items-center gap-1.5">
-              <span className="h-4 w-4 rounded bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold text-[9px] shrink-0">👤</span>
-              <span className="truncate"><strong className="text-white font-medium">@Üye:</strong> Göktürk botu sunucuma nasıl davet edilir?</span>
-            </div>
-            <div className="rounded bg-gradient-to-r from-amber-950/40 via-purple-950/40 to-transparent border border-amber-500/30 px-1.5 py-1 text-amber-200 flex items-center gap-1.5 shadow-[0_0_10px_rgba(251,191,36,0.15)]">
-              <span className="h-4 w-4 rounded bg-amber-500/20 text-amber-300 flex items-center justify-center font-bold text-[9px] shrink-0">🤖</span>
-              <span className="truncate"><strong className="text-amber-300 font-semibold">Gemini AI:</strong> Panelden 1 tıkla özel şablonla bağlanır!</span>
-            </div>
-          </div>
-
-          <div className="text-[7.5px] flex items-center justify-between text-[#8f8e9c]">
-            <span className="text-amber-400 font-mono flex items-center gap-1">
-              <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-ping" /> Doğal Dil &amp; Zeka
-            </span>
-            <span className="text-purple-300 font-bold font-mono">⚡ Gemini 2.5 Flash</span>
-          </div>
-        </div>
-      );
-
-    default:
-      return null;
-  }
-}
 
 function BotIcon({ className }: { className?: string }) {
   return (
@@ -895,47 +663,96 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* Engineering Bento Grid Showcase */}
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {extraSystems.map((item, idx) => {
                 const Icon = item.icon;
+                const isSpecial = item.id === "defense" || item.id === "ticket";
                 return (
                   <div 
-                    key={item.title}
-                    className={`extra-system-card ${item.cover} rounded-2xl border border-white/10 bg-[#101016] p-4 flex flex-col justify-between hover:border-purple-500/50 transition-all duration-300 group`}
+                    key={item.id}
+                    className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden group ${
+                      isSpecial 
+                        ? "border-purple-500/40 bg-gradient-to-b from-[#141224] to-[#0c0c14] shadow-xl shadow-purple-950/20" 
+                        : "border-white/10 bg-[#0e0e16] hover:border-purple-500/30"
+                    } p-5`}
                   >
+                    {/* Top Meta Bar */}
                     <div>
-                      {/* Canlı Görsel Mockup Önizleme */}
-                      <div className="extra-system-cover rounded-xl overflow-hidden h-28 p-3 mb-4 bg-[#14141e] border border-white/5">
-                        <ModuleCover index={idx} />
-                      </div>
+                      <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-3.5 mb-3.5">
+                        <div className="flex items-center gap-2">
+                          <div className={`p-2 rounded-lg border ${
+                            isSpecial
+                              ? "bg-purple-500/15 border-purple-500/30 text-purple-300"
+                              : "bg-white/[0.04] border-white/10 text-zinc-300 group-hover:text-purple-300 group-hover:border-purple-500/30 transition-colors"
+                          }`}>
+                            <Icon className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <span className="block text-[10px] font-mono tracking-wider font-semibold text-purple-400">
+                              {item.category}
+                            </span>
+                            <span className="block text-[10px] font-mono text-zinc-500">
+                              SYS-MOD 0{idx + 1}
+                            </span>
+                          </div>
+                        </div>
 
-                      <div className="flex items-center justify-between text-xs font-mono text-zinc-400 pb-2">
-                        <span className="flex items-center gap-1.5 text-purple-300 font-bold">
-                          <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                          MODÜL 0{idx + 1}
-                        </span>
                         {item.badge ? (
-                          <span className="px-2 py-0.5 rounded-md bg-purple-500/20 border border-purple-500/40 text-[10px] text-purple-200 font-bold">
+                          <span className="px-2 py-0.5 rounded border border-purple-500/40 bg-purple-500/10 text-[9px] font-mono font-bold text-purple-300 tracking-wide">
                             {item.badge}
                           </span>
                         ) : (
-                          <span className="text-[10px] text-zinc-500 uppercase">GÖKTÜRK LABS</span>
+                          <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-400">
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                            {item.statusText}
+                          </span>
                         )}
                       </div>
 
-                      <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors mt-1">
+                      {/* Title & Description */}
+                      <h3 className="font-display text-base font-bold text-white group-hover:text-purple-200 transition-colors">
                         {item.title}
                       </h3>
-                      <p className="text-xs text-zinc-400 mt-1.5 leading-relaxed">
+                      <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
                         {item.detail}
                       </p>
+
+                      {/* Slash Command Console Display */}
+                      <div className="mt-4 rounded-lg border border-white/5 bg-[#08080d] p-2.5 font-mono text-[11px] text-zinc-300 flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-1.5 overflow-hidden">
+                          <Terminal className="h-3 w-3 text-purple-400 shrink-0" />
+                          <span className="text-zinc-500 shrink-0">$</span>
+                          <span className="truncate text-purple-300 font-semibold">{item.command}</span>
+                        </div>
+                        <span className="shrink-0 text-[9px] font-sans font-medium text-zinc-500 uppercase px-1.5 py-0.5 rounded bg-white/[0.04]">
+                          NATIVE
+                        </span>
+                      </div>
+
+                      {/* Technical Specs Tags */}
+                      <div className="mt-3.5 flex flex-wrap gap-1.5">
+                        {item.specs.map((spec, sIdx) => (
+                          <span 
+                            key={sIdx}
+                            className="inline-flex items-center gap-1 text-[10px] font-mono rounded bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 text-zinc-400"
+                          >
+                            <span className="text-purple-400 font-bold">›</span>
+                            <span>{spec}</span>
+                          </span>
+                        ))}
+                      </div>
                     </div>
 
-                    <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between text-xs">
-                      <span className="text-emerald-400 font-mono text-[11px]">✓ Hazır Entegre</span>
+                    {/* Bottom Action */}
+                    <div className="mt-5 pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
+                        <ShieldCheck className="h-3 w-3 text-emerald-400" />
+                        <span>Production Ready</span>
+                      </div>
                       <a 
                         href="#paketler"
-                        className="text-purple-400 hover:text-purple-300 font-semibold inline-flex items-center gap-1 text-[11px]"
+                        className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
                       >
                         <span>Paketle Edin</span>
                         <ArrowUpRight className="h-3 w-3" />
@@ -947,10 +764,10 @@ export default function Home() {
             </div>
 
             {/* Özel Modül Çağrısı */}
-            <div className="mt-10 rounded-2xl border border-white/10 bg-gradient-to-r from-purple-950/30 via-[#101017] to-indigo-950/30 p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="mt-12 rounded-2xl border border-white/10 bg-gradient-to-r from-purple-950/40 via-[#101017] to-indigo-950/40 p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
               <div className="space-y-1 text-center sm:text-left">
-                <strong className="text-white font-display text-base block">İhtiyacınız olan özel bir modül mü var?</strong>
-                <span className="text-xs text-zinc-400 block">Discord DM üzerinden anlatın; sunucunuza özel yeni slash komutları ve sistemleri sıfırdan kodlayalım.</span>
+                <strong className="text-white font-display text-base block">Sunucunuza özel spesifik bir mimari veya bot mu lazım?</strong>
+                <span className="text-xs text-zinc-400 block">Kendi slash komutlarınızı, harici API entegrasyonlarınızı (Webhooks, MongoDB, Rest API) sıfırdan TypeScript ile kodluyoruz.</span>
               </div>
               <a 
                 href={DISCORD_ORDER_URL}
