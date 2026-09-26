@@ -26,6 +26,25 @@
 /* Göktürk Labs / Signal Harbor: quiet dark Discord bot studio, amber signal, restrained depth. */
 .new-site { font-family: "DM Sans", sans-serif; }
 .font-display { font-family: "Space Grotesk", sans-serif; }
+.font-editorial { font-family: "Syne", "Space Grotesk", sans-serif; }
+.font-mono-code { font-family: "JetBrains Mono", monospace; }
+
+/* Lenis smooth scroll recommended base */
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
 .new-nav { position: absolute; inset: 0 0 auto; z-index: 30; padding: 0.75rem 1rem; }
 .new-nav-inner { max-width: 1130px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; min-height: 3.2rem; padding: 0.35rem 0.75rem 0.35rem 1rem; border: 1px solid rgba(255,255,255,0.09); border-radius: 1.1rem; background: rgba(10,10,14,0.64); backdrop-filter: blur(22px); }
 .new-nav a { color: #aaa9b5; } .new-nav a:hover { color: white; }
