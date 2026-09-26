@@ -1,0 +1,16 @@
+{
+  "name": "Göktürk Labs — Discord Bot ve Yazılım Çözümleri",
+  "short_name": "Göktürk Labs",
+  "description": "Discord bot geliştirme, özel modüller, güvenlik sistemleri ve 7/24 kesintisiz barındırma.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#08080b",
+  "theme_color": "#9333ea",
+  "icons": [
+    {
+      "src": "/gokturk-labs-logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

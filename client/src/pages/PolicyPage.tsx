@@ -1,4 +1,4 @@
-/* Göktürk Labs policy pages: calm dark reading surface, amber signal links, no form or data collection. */
+import { useEffect } from "react";
 import { ArrowLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
 
 const LOGO_URL = "/gokturk-labs-logo.png";
@@ -32,6 +32,11 @@ export default function PolicyPage({ type }: { type: "privacy" | "terms" }) {
   const sections = isPrivacy ? privacySections : termsSections;
   const title = isPrivacy ? "Gizlilik Politikası" : "Hizmet Şartları";
   const intro = isPrivacy ? "Göktürk Labs, kullanıcıların gizliliğine önem verir ve yalnızca hizmetlerin yürütülmesi için gerekli olan bilgileri kullanır." : "Göktürk Labs hizmetlerini kullanarak aşağıdaki şartları kabul etmiş olursunuz.";
+
+  useEffect(() => {
+    document.title = `Göktürk Labs — ${title}`;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [title]);
 
   return <main className="policy-page min-h-screen bg-[#08080b] text-[#f7f7fb]">
     <header className="policy-nav"><a href="/" className="flex items-center gap-3" aria-label="Göktürk Labs ana sayfa"><img src={LOGO_URL} alt="Göktürk Labs logosu" className="h-9 w-9 object-contain" /><span className="font-display text-sm font-semibold">Göktürk <em>Labs</em></span></a><a href="/" className="policy-back"><ArrowLeft className="h-4 w-4" /> Ana sayfaya dön</a></header>
