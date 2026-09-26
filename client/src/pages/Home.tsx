@@ -939,11 +939,20 @@ export default function Home() {
                       </div>
 
                       <div className="flex flex-col gap-2 pt-1">
-                        {/* 1. Buton: Doğrudan Discord DM Aç */}
-                        <button
-                          type="button"
-                          onClick={() => handleOpenDiscordDM(p)}
-                          className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold transition-all active:scale-95 ${
+                        {/* 1. Buton: Doğrudan Discord DM Aç (Native Link + Kopyalama) */}
+                        <a
+                          href={DISCORD_ORDER_URL}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => {
+                            if (!acceptedTerms[p.id]) {
+                              e.preventDefault();
+                              toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
+                              return;
+                            }
+                            handleCopyPlanText(p);
+                          }}
+                          className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold transition-all active:scale-95 cursor-pointer ${
                             isVip
                               ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/25"
                               : isPopular
@@ -954,13 +963,13 @@ export default function Home() {
                           <DiscordMark className="h-4 w-4" />
                           <span>Discord DM'den İletişime Geç</span>
                           <ArrowUpRight className="h-3.5 w-3.5 opacity-80" />
-                        </button>
+                        </a>
 
                         {/* 2. Buton: Hazır Sipariş Metnini Kopyala */}
                         <button
                           type="button"
                           onClick={() => handleCopyPlanText(p)}
-                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl py-2 px-3 text-xs font-medium border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white transition-all active:scale-95"
+                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl py-2 px-3 text-xs font-medium border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer"
                         >
                           {copiedPlan === p.id ? (
                             <>
