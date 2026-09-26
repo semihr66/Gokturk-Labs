@@ -680,9 +680,8 @@ export default function Home() {
 
           {/* Masaüstü Navigasyon */}
           <nav className="hidden items-center gap-6 text-sm font-medium text-zinc-300 lg:flex" aria-label="Ana Gezinti">
-            <a href="#urunler" className="hover:text-white transition-colors">Ürünler</a>
-            <a href="#moduller" className="hover:text-white transition-colors text-purple-300 font-semibold flex items-center gap-1">
-              <span>Modüller</span>
+            <a href="#moduller" className="hover:text-white transition-colors text-purple-300 font-semibold flex items-center gap-1.5">
+              <span>Modüller &amp; Sistemler</span>
               <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.2 rounded border border-purple-500/30">10</span>
             </a>
             <a href="#nasil" className="hover:text-white transition-colors">Nasıl Çalışır?</a>
@@ -737,10 +736,9 @@ export default function Home() {
                 </SheetHeader>
 
                 <div className="my-8 flex flex-col gap-4 text-base font-medium text-zinc-300">
-                  <a href="#urunler" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Ürünler</a>
                   <a href="#moduller" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1 text-purple-300 font-semibold flex items-center justify-between">
                     <span>Modüller (10 Özel Sistem)</span>
-                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">Yeni</span>
+                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">10</span>
                   </a>
                   <a href="#nasil" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Nasıl Çalışır?</a>
                   <a href="#paketler" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Paketler &amp; Fiyatlar</a>
@@ -818,7 +816,7 @@ export default function Home() {
                   <ArrowRight className="h-4 w-4" />
                 </a>
                 <a 
-                  href="#urunler"
+                  href="#moduller"
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-zinc-200 transition-all hover:bg-white/[0.08] hover:text-white"
                 >
                   <Boxes className="h-4 w-4 text-purple-400" />
@@ -880,82 +878,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. ÜRÜNLER & HİZMETLER BÖLÜMÜ */}
-        <section id="urunler" className="py-20 border-b border-white/[0.06] bg-[#09090d]">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">ÜRÜNLER &amp; ÇÖZÜMLER</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Sunucunuzun İhtiyaç Duyduğu Tüm Altyapı Tek Çatı Altında
-              </h2>
-              <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                Birbirinden kopuk eklentilerle uğraşmak yerine; bot motoru, telemetri paneli ve özel kodlama çözümlerimizle kusursuz bir Discord ekosistemi kuruyoruz.
-              </p>
-            </div>
-
-            {/* Ürün Sekmeleri */}
-            <div className="mt-10 flex flex-wrap gap-2 border-b border-white/10 pb-4">
-              {products.map((p, idx) => (
-                <button
-                  key={p.id}
-                  type="button"
-                  onClick={() => setActiveProductTab(idx)}
-                  className={`flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-semibold transition-all ${
-                    activeProductTab === idx
-                      ? "bg-purple-600 text-white shadow-lg shadow-purple-600/20"
-                      : "bg-white/[0.03] text-zinc-400 hover:bg-white/[0.07] hover:text-white"
-                  }`}
-                >
-                  <p.icon className="h-4 w-4" />
-                  <span>{p.title}</span>
-                </button>
-              ))}
-            </div>
-
-            {/* Aktif Ürün Kartı */}
-            <div className="mt-8 rounded-2xl border border-white/10 bg-[#101017] p-6 sm:p-8">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                <div className="lg:col-span-5 space-y-4">
-                  <div className="inline-flex items-center gap-1.5 rounded-lg border border-purple-500/30 bg-purple-500/10 px-2.5 py-1 text-[11px] font-mono text-purple-300">
-                    <span>{products[activeProductTab].tagline}</span>
-                  </div>
-                  <h3 className="font-display text-2xl font-bold text-white">
-                    {products[activeProductTab].title}
-                  </h3>
-                  <p className="text-sm text-zinc-300 leading-relaxed">
-                    {products[activeProductTab].description}
-                  </p>
-                  <div className="pt-2">
-                    <a
-                      href="#paketler"
-                      className="inline-flex items-center gap-2 rounded-xl bg-white/[0.06] border border-white/10 px-4 py-2.5 text-xs font-semibold text-white hover:bg-white/[0.1] transition-all"
-                    >
-                      <span>Bu Altyapıyı Edin</span>
-                      <ArrowRight className="h-3.5 w-3.5 text-purple-400" />
-                    </a>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-7 rounded-xl border border-white/[0.08] bg-black/40 p-5 space-y-3">
-                  <span className="text-xs font-mono font-semibold text-zinc-400 uppercase tracking-wider block pb-2 border-b border-white/5">
-                    Öne Çıkan Özellikler ve Yetenekler
-                  </span>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                    {products[activeProductTab].highlights.map((h, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-zinc-300">
-                        <CheckCircle2 className="h-4 w-4 text-purple-400 shrink-0 mt-0.5" />
-                        <span className="leading-snug">{h}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </section>
-
-        {/* 3.1. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (10 ÇEŞİT MODÜL) */}
+        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (10 ÇEŞİT MODÜL) */}
         <section id="moduller" className="extra-systems-section border-b border-white/[0.06] bg-[#09090d] py-20">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
