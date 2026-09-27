@@ -734,59 +734,16 @@ export default function Home() {
 
               {/* Hızlı Güven Sinyalleri */}
               <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-400 font-medium">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-purple-400" /> Yapay zeka kalıbı değil, yaşayan kod</span>
-                <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> Kendi VDS'imizde 7/24 barındırma</span>
-                <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Semih ile Discord DM</span>
-              </div>
-            </div>
-
-            {/* Canlı Sistem & Mimari Konsolu */}
-            <div className="mt-12 max-w-4xl mx-auto rounded-2xl border border-white/10 bg-[#0e0e14] p-5 shadow-2xl space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
-                <div className="flex items-center gap-2 font-mono text-xs">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-white font-semibold">GÖKTÜRK LABS · CANLI DİSCORD KÜMESİ</span>
-                  <span className="text-zinc-500 hidden sm:inline">|</span>
-                  <span className="text-zinc-400 hidden sm:inline">Debian 12 Dedicated Host</span>
-                </div>
-                <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-purple-300">discord.js v14.27 + TS</span>
-                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-cyan-300">Gateway: 18ms</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Process Daemon</span>
-                  <strong className="text-white font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Cpu className="h-3.5 w-3.5 text-purple-400" /> PM2 7/24 Auto-Restart
-                  </strong>
-                </div>
-                <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Web Panel Güvenliği</span>
-                  <strong className="text-emerald-400 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Lock className="h-3.5 w-3.5 text-emerald-400" /> PBKDF2 + Sızıntı Kalkanı
-                  </strong>
-                </div>
-                <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Yetkili Mülakatı</span>
-                  <strong className="text-cyan-300 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Radio className="h-3.5 w-3.5 text-cyan-400" /> Otomatik Geçici Oda
-                  </strong>
-                </div>
-                <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Görsel Denetim</span>
-                  <strong className="text-amber-300 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Eye className="h-3.5 w-3.5 text-amber-400" /> Silinen Resim / Ek Logu
-                  </strong>
-                </div>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-purple-400" /> Şişirilmiş / Sahte Veri Yok</span>
+                <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> 7/24 VDS Kesintisiz Çalışma</span>
+                <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Geliştirici Desteği</span>
               </div>
             </div>
 
           </div>
         </section>
 
-        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (16 ÇEŞİT MODÜL) */}
+        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ */}
         <section id="moduller" className="extra-systems-section relative overflow-hidden border-b border-white/[0.06] bg-[#09090d] py-20">
           {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar Çift Katmanlı Orbitler) */}
           <div className="ambient-orbit ambient-orbit-right top-[12%]" aria-hidden="true" />
@@ -800,11 +757,11 @@ export default function Home() {
                   <Boxes className="h-4 w-4" /> BOT SİSTEMLERİ &amp; EKLENTİLER
                 </span>
                 <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Sunucunuzu Güçlendiren 16 Özel Modül
+                  Sunucunuzu Güçlendiren Modüller
                 </h2>
               </div>
               <p className="max-w-md text-sm text-zinc-400 leading-relaxed">
-                İster topluluk, ister oyun, ister kurumsal sunucu... Görsel loglama, mülakat motoru, şifreli web paneli ve istediğiniz modülleri paketinize dahil edin.
+                İhtiyacınıza uygun modülü seçerek projenize entegre edebilirsiniz.
               </p>
             </div>
 
@@ -815,80 +772,44 @@ export default function Home() {
                 <span>İsteğe Özel Mimari ve Tasarım</span>
               </div>
               <p className="mt-1 text-xs text-zinc-300">
-                Aşağıdaki standart modüller dışında, topluluğunuza veya kurumunuza özel spesifik iş mantıklarını da <strong className="text-white underline decoration-amber-400 underline-offset-2">Discord üzerinden özel olarak kodluyoruz</strong>.
+                Aşağıdaki standart modüller dışında, topluluğunuza veya kurumunuza özel spesifik iş mantıklarını da <strong className="text-white underline decoration-amber-400 underline-offset-2">sıfırdan ücretsiz kodluyoruz</strong>.
               </p>
             </div>
 
-            {/* ParsBot Style Module Cards Grid */}
+            {/* ParsBot Birebir Kart Yapısı: Sadece Üst Görsel + Emoji + Başlık + Temiz Açıklama */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {extraSystems.map((item, idx) => {
-                const modNumber = (idx + 1).toString().padStart(2, "0");
+              {extraSystems.map((item) => {
                 return (
                   <div 
                     key={item.id}
-                    className="group relative rounded-2xl border border-white/10 bg-[#0c0c12] hover:border-purple-500/40 hover:bg-[#101018] transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl shadow-black/40"
+                    className="group rounded-2xl border border-white/10 bg-[#0e0e14] hover:border-purple-500/40 hover:bg-[#12121c] transition-all duration-300 overflow-hidden flex flex-col shadow-xl shadow-black/40"
                   >
                     {/* Üst Görsel / Banner Alanı */}
-                    <div className="relative w-full h-36 overflow-hidden bg-zinc-950">
+                    <div className="relative w-full h-40 overflow-hidden bg-zinc-950">
                       {item.coverImage ? (
                         <img 
                           src={item.coverImage} 
                           alt={item.title} 
                           loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-95" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                         />
                       ) : (
-                        <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient} opacity-85`} />
+                        <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient}`} />
                       )}
-                      
-                      {/* Görsel Üzeri Hafif Karartma Gradyanı */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c12] via-transparent to-black/30 pointer-events-none" />
-
-                      {/* Sağ Üst Rozet */}
-                      <div className="absolute top-3 right-3 flex items-center gap-2">
-                        {item.badge ? (
-                          <span className="px-2 py-0.5 rounded-full border border-purple-400/40 bg-purple-950/80 backdrop-blur-md text-[9px] font-sans font-bold text-purple-200 tracking-wider uppercase shadow-md">
-                            {item.badge}
-                          </span>
-                        ) : (
-                          <span className="px-2 py-0.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-[9px] font-mono text-zinc-300">
-                            MOD {modNumber}
-                          </span>
-                        )}
-                      </div>
                     </div>
 
-                    {/* Alt Bilgi & İçerik Alanı */}
-                    <div className="p-4 flex flex-col flex-1 justify-between">
-                      <div>
-                        {/* Başlık ve Emoji */}
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="text-base select-none">{item.emoji}</span>
-                          <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
-                            {item.title}
-                          </h3>
-                        </div>
-
-                        {/* Açıklama */}
-                        <p className="text-xs text-zinc-400 leading-relaxed min-h-[38px]">
-                          {item.detail}
-                        </p>
+                    {/* Alt Bilgi & İçerik Alanı: Sadece Emoji, Başlık ve Açıklama */}
+                    <div className="p-4 flex-1 flex flex-col justify-start">
+                      <div className="flex items-center gap-2 mb-1.5">
+                        <span className="text-base select-none shrink-0">{item.emoji}</span>
+                        <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
+                          {item.title}
+                        </h3>
                       </div>
 
-                      {/* Alt Konsol & Komut Şeridi */}
-                      <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                        <div className="flex items-center gap-1.5 font-mono text-[11px] text-purple-400 truncate max-w-[200px]">
-                          <span className="text-zinc-500">$</span>
-                          <span className="truncate">{item.command.split(" ")[0]}</span>
-                        </div>
-                        <a 
-                          href="#paketler"
-                          className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-300 hover:text-white transition-colors"
-                        >
-                          <span>Paket Seç</span>
-                          <ArrowRight className="h-3 w-3 text-purple-400" />
-                        </a>
-                      </div>
+                      <p className="text-xs text-zinc-400 leading-relaxed">
+                        {item.detail}
+                      </p>
                     </div>
                   </div>
                 );
