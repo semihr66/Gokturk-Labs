@@ -118,19 +118,20 @@ const plans: PlanItem[] = [
     period: "aylık",
     badge: "🔥 En Çok Tercih Edilen",
     badgeType: "popular",
-    label: "GELİŞMİŞ · ÖZEL KOD & TICKET",
-    description: "Özel bilet destek motoru, özel komutlar ve açık kaynak kod teslimi seçeneğiyle tam bağımsızlık.",
+    label: "GELİŞMİŞ · ÖZEL MİMARİ",
+    description: "Özel bilet destek motoru, sunucunuza özel komutlar ve 7/24 izole VDS barındırma.",
     performance: "Yüksek Kapasite",
     score: 3,
     features: [
       "Dengeli paketindeki tüm özellikler",
       "Sınırsız modül hakkı ve öncelikli işlem gücü",
       "Butonlu & kategorili bilet (ticket) destek sistemi",
-      "Custom Bot Seçeneği: Açık kaynak kod paylaşılır",
-      "Kendi VDS'inizde veya Göktürk Labs sunucusunda çalıştırma",
+      "Sunucunuza özel terzi usulü komut & iş mantığı",
+      "7/24 Göktürk Labs Debian 12 VDS barındırma",
       "İsim, logo ve kapak görseli serbestçe düzenlenir",
       "'Powered by' ibaresi tamamen kaldırılabilir"
-    ]
+    ],
+    notice: "⚠️ Hizmet ve Barındırma Kuralı: Bot kodları ve süreçleri aylık abonelik süresince Göktürk Labs VDS altyapısında güvenle çalışır; harici sunucuya aktarılamaz veya kaynak kod teslimi yapılmaz."
   },
   {
     id: "pro",
@@ -147,26 +148,27 @@ const plans: PlanItem[] = [
       "Özel Şifreli Web Yönetim Paneli (PBKDF2 256-Bit + HIBP korumalı)",
       "Yetkili Başvuru & Mülakat Motoru (Sesli/Yazılı özel odalar + Aday rolü)",
       "Sınırsız modül hakkı ve yüksek VDS kaynak tahsisi",
-      "Gelişmiş paketindeki tüm özellikler ve tam kod erişimi",
-      "Kendi sunucunuzda veya Göktürk Labs altyapısında çalışma",
+      "Gelişmiş paketindeki tüm sistemler ve öncelikli kuyruk",
+      "7/24 Göktürk Labs kurumsal VDS sunucusunda çalışma",
       "Birebir öncelikli Discord VIP teknik destek",
       "Marka ibarelerinin tamamı kaldırılabilir"
-    ]
+    ],
+    notice: "⚠️ Hizmet ve Barındırma Kuralı: Tüm süreçler ve web panel altyapısı Göktürk Labs sunucularında izole barındırılır. Aylık lisanslama modeli gereği kaynak kodlar üçüncü taraflarla paylaşılmaz."
   }
 ];
 
 const faqs = [
   {
     q: "Abonelik ve 7/24 barındırma nasıl işliyor?",
-    a: "Botunuz Debian 12 kurulu VDS sunucumuzda PM2 süreci altında sürekli çalışır. Bilgisayarınızı açık bırakmanıza, elektrik veya sunucu faturası ödemenize gerek kalmaz."
+    a: "Botunuz Debian 12 kurulu Göktürk Labs VDS sunucumuzda PM2 süreci altında sürekli çalışır. Bilgisayarınızı açık bırakmanıza, elektrik veya harici sunucu faturası ödemenize gerek kalmaz."
   },
   {
     q: "Sipariş ve kurulum ne kadar sürer?",
     a: "Discord DM'den bana ulaştığınızda sunucunuzun ihtiyaçlarını konuşuruz. Hazır modüller ortalama 1-2 saat içinde sunucunuza eklenip teslim edilir."
   },
   {
-    q: "Botun kodlarını teslim alabilir miyim?",
-    a: "Gelişmiş ve Pro paketlerde botun TypeScript kaynak kodlarını temiz şekilde GitHub reposu veya ZIP olarak teslim alabilirsiniz."
+    q: "Botun kodlarını kendi sunucumda çalıştırabilir miyim?",
+    a: "Hayır. Sistemlerimiz aylık kiralama ve abonelik modeliyle sunulur. Fikri mülkiyetin ve hizmet devamlılığının korunması amacıyla botlar yalnızca Göktürk Labs'ın güvenli VDS sunucularında 7/24 kesintisiz çalıştırılır; harici sunucuya kod teslimi yapılmaz."
   },
   {
     q: "Web Yönetim Paneli neleri kapsıyor?",
