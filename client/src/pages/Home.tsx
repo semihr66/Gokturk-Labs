@@ -76,19 +76,19 @@ const plans: PlanItem[] = [
     badge: "🎁 Ücretsiz Başlangıç",
     badgeType: "free",
     label: "TOPLULUK · ÜCRETSİZ",
-    description: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
-    performance: "Standart",
+    description: "Yeni açılan veya küçük topluluklar için masrafsız başlangıç. Bot bizden, sunucu sizden.",
+    performance: "Standart VDS",
     score: 1,
     features: [
       "Temel genel komutlar ve karşılama mesajları",
-      "Hazır altyapı modülleriyle hızlı kurulum",
-      "3 + 1 modül hakkı (Kampanya dahil)",
-      "7/24 Kesintisiz Göktürk Labs VDS barındırma",
-      "Modüllü yapı (Kod Göktürk Labs sunucusunda izole çalışır)",
-      "İsim/logo/kapak düzenleme yok",
-      "Zorunlu: Sunucu adı veya açıklamasında '— By Göktürk Labs' ibaresi"
+      "Hazır altyapı modülleriyle hızlı entegrasyon",
+      "3 + 1 modül hakkı (Seçtiğiniz 4 modül)",
+      "7/24 Göktürk Labs VDS barındırma dahil",
+      "İzole kod mimarisi (Kesintisiz uptime)",
+      "İsim/logo/kapak özelleştirmesi kapalıdır",
+      "Zorunlu: Sunucu açıklamasında '— By Göktürk Labs' ibaresi"
     ],
-    notice: "Topluluk planında sunucunuzda Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer almalıdır."
+    notice: "Topluluk paketinde sunucunuzda Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer almalıdır."
   },
   {
     id: "dengeli",
@@ -98,15 +98,15 @@ const plans: PlanItem[] = [
     badge: "⚡ En İyi Fiyat / Performans",
     badgeType: "fp",
     label: "DENGELİ · SINIRSIZ MODÜL",
-    description: "Gelişmiş moderasyon, loglama ve sınırsız modül kapasitesiyle sunucunuzun güvenliği tam kontrol altında.",
-    performance: "Dengeli & Hızlı",
+    description: "Orta büyüklükteki sunucular için tam teşekküllü moderasyon, resimli log ve sınırsız modül esnekliği.",
+    performance: "Yüksek Hızlı PM2",
     score: 2,
     features: [
-      "Başlangıç paketindeki tüm özellikler",
-      "Sınırsız modül tanımlama hakkı",
-      "Gelişmiş moderasyon ve detaylı denetim kayıtları",
+      "Başlangıç paketindeki tüm temel özellikler",
+      "16 modül arasından sınırsız kullanım hakkı",
+      "Gelişmiş moderasyon ve silinen resim/dosya logu",
       "7/24 Kesintisiz VDS barındırma dahil",
-      "Bot ismi, logosu ve Discord profili özelleştirilebilir",
+      "Bot ismi, logosu ve Discord profili tamamen size özel",
       "Otomatik rol ve gelişmiş filtre sistemleri",
       "Açıklama ve banner'da 'Powered by Göktürk Labs' bağlantısı yer alır"
     ]
@@ -119,15 +119,15 @@ const plans: PlanItem[] = [
     badge: "🔥 En Çok Tercih Edilen",
     badgeType: "popular",
     label: "GELİŞMİŞ · ÖZEL KOD & TICKET",
-    description: "Özel bilet destek motoru, özel komutlar ve açık kaynak kod teslimi seçeneğiyle tam bağımsızlık.",
-    performance: "Yüksek Kapasite",
+    description: "Kendi özel bilet destek sistemini kurmak, açık kaynak koda erişmek ve tam yetkiyle yönetmek isteyenler için.",
+    performance: "Öncelikli VDS Kaynağı",
     score: 3,
     features: [
       "Dengeli paketindeki tüm özellikler",
       "Sınırsız modül hakkı ve öncelikli işlem gücü",
-      "Butonlu & kategorili bilet (ticket) destek sistemi",
-      "Custom Bot Seçeneği: Açık kaynak kod paylaşılır",
-      "Kendi VDS'inizde veya Göktürk Labs sunucusunda çalıştırma",
+      "Butonlu, HTML dökümlü bilet (ticket) destek motoru",
+      "Custom Bot Opsiyonu: TypeScript kaynak kod teslimi",
+      "Kendi VDS'inizde veya bizim sunucumuzda çalıştırma",
       "İsim, logo ve kapak görseli serbestçe düzenlenir",
       "'Powered by' ibaresi tamamen kaldırılabilir"
     ]
@@ -140,8 +140,8 @@ const plans: PlanItem[] = [
     badge: "👑 Maksimum Kurumsal Seviye",
     badgeType: "vip",
     label: "PRO · ŞİFRELİ WEB PANEL",
-    description: "Şifreli Web Yönetim Paneli, Yetkili Mülakat Masası, HIBP sızıntı kalkanı ve VIP 7/24 öncelikli destek.",
-    performance: "Maksimum VIP",
+    description: "Web yönetim paneli, otomatik yetkili mülakat masası, HIBP sızıntı kalkanı ve doğrudan Discord VIP destek.",
+    performance: "Dedicated Tahsis",
     score: 4,
     features: [
       "Özel Şifreli Web Yönetim Paneli (PBKDF2 256-Bit + HIBP korumalı)",
@@ -158,27 +158,27 @@ const plans: PlanItem[] = [
 const faqs = [
   {
     q: "Abonelik ve 7/24 barındırma nasıl işliyor?",
-    a: "Paketlerimiz aylık periyotta sunulur. Botunuz Göktürk Labs'ın yüksek performanslı Debian 12 VDS sunucularında (PM2 kümesiyle) 7/24 kesintisiz çalışır. Kendi bilgisayarınızı açık bırakmanıza, harici VDS kiralamanıza veya konsol ayarlarıyla uğraşmanıza gerek kalmaz."
+    a: "Botunuz Debian 12 kurulu VDS sunucumuzda PM2 süreci altında sürekli çalışır. Bilgisayarınızı açık bırakmanıza, elektrik veya sunucu faturası ödemenize gerek kalmaz."
   },
   {
-    q: "Sipariş ve kurulum süreci nasıl başlıyor?",
-    a: "İstediğiniz paketin altındaki şartları onaylayıp 'Discord’dan Sipariş Ver' butonuna bastığınızda, hazır sipariş metni panonuza kopyalanır ve doğrudan geliştiriciye yönlendirilirsiniz. İsteklerinizi dinler, botu hazırlar ve ortalama aynı gün içerisinde sunucunuza entegre ederiz."
+    q: "Sipariş ve kurulum ne kadar sürer?",
+    a: "Discord DM'den bana ulaştığınızda sunucunuzun ihtiyaçlarını konuşuruz. Hazır modüller ortalama 1-2 saat içinde sunucunuza eklenip teslim edilir."
   },
   {
     q: "Botun kodlarını teslim alabilir miyim?",
-    a: "Gelişmiş ve Pro paketlerde 'Custom Bot' seçeneği bulunur; bu seçenekle TypeScript tabanlı temiz kaynak kodlarını teslim alabilir, dilediğiniz gibi geliştirebilir veya kendi sunucunuza aktarabilirsiniz. Başlangıç ve Dengeli paketlerde bot güvenliği için kodlar Göktürk Labs sunucusunda barındırılır."
+    a: "Gelişmiş ve Pro paketlerde botun TypeScript kaynak kodlarını temiz şekilde GitHub reposu veya ZIP olarak teslim alabilirsiniz."
   },
   {
     q: "Web Yönetim Paneli neleri kapsıyor?",
-    a: "Pro pakette sunulan Web Yönetim Paneli; PBKDF2 şifreleme ve Have I Been Pwned sızıntı kalkanıyla korunur. Panel üzerinden yetkili başvuru/mülakat sistemini, Discord AutoMod kurallarını, seviye ve rank kartlarını, bilet kanallarını tek tıkla canlı olarak yönetebilirsiniz."
+    a: "Pro paketteki panel tarayıcı üzerinden açılır; PBKDF2 şifreleme ve sızıntı kontrolü içerir. Mülakat masasını, AutoMod kurallarını ve bilet kanallarını canlı yönetirsiniz."
   },
   {
-    q: "Kişisel verilerim veya sunucu bilgilerim saklanıyor mu?",
-    a: "Göktürk Labs veri gizliliğine tam saygı duyar. Gereksiz kişisel veri toplanmaz, sunucu içi özel mesajlar üçüncü taraflarla paylaşılmaz ve reklam amaçlı veri işlenmez. Tüm detayları Gizlilik Politikası sayfamızdan inceleyebilirsiniz."
+    q: "Kişisel verilerim veya sunucu bilgileri güvende mi?",
+    a: "Kesinlikle evet. Mesaj içerikleri satılmaz, üçüncü taraflarla paylaşılmaz. Loglar yalnızca belirlediğiniz Discord log kanalına iletilir."
   },
   {
-    q: "Ödemeler hangi kanallar üzerinden alınıyor?",
-    a: "Ödemeler sipariş aşamasında mutabık kalınarak güvenli Türk ödeme sağlayıcıları (Shopier vb.) veya havale/EFT üzerinden gerçekleştirilir. Web sitemizde kredi kartı bilgisi saklanmaz veya talep edilmez."
+    q: "Ödemeyi nasıl yapabilirim?",
+    a: "Sipariş onayından sonra güvenli Türk ödeme aracıları (Shopier vb.) veya IBAN/Havale ile ödeme yapabilirsiniz. Web sitemizde kart bilgisi istenmez."
   }
 ];
 
@@ -650,17 +650,17 @@ export default function Home() {
               {/* Kicker Rozeti */}
               <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-xs font-mono text-purple-300">
                 <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-ping" />
-                <span>GÖKTÜRK LABS · BAĞIMSIZ DİSCORD MİMARİSİ</span>
+                <span>GÖKTÜRK LABS · BAĞIMSIZ GELİŞTİRİCİ ATÖLYESİ</span>
               </div>
 
               {/* H1 Başlık */}
               <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl leading-[1.08]">
-                Sunucunuz İçin Güçlü <span className="bg-gradient-to-r from-purple-300 via-purple-400 to-indigo-300 bg-clip-text text-transparent">Discord Botları</span> ve Yönetim Paneli
+                Sunucunuz İçin Özel <span className="bg-gradient-to-r from-purple-300 via-purple-400 to-indigo-300 bg-clip-text text-transparent">Discord Botları</span> ve Yönetim Altyapısı
               </h1>
 
               {/* Alt Metin */}
               <p className="mt-6 text-base text-zinc-300 sm:text-lg leading-relaxed">
-                7/24 kesintisiz VDS barındırma, PBKDF2 şifreli web kontrol paneli, yetkili mülakat motoru ve kurumsal koruma modülleriyle Discord topluluğunuzu tek merkezden profesyonelce yönetin.
+                Yıllardır Discord topluluklarının içinde kod yazıyorum. Kendi VDS sunucumuzda 7/24 kesintisiz çalışan, resimli log tutan, bilet ve mülakat odalarını otomatik yöneten botunuzu birkaç saat içinde yayına alalım.
               </p>
 
               {/* Aksiyon Butonları */}
@@ -683,9 +683,9 @@ export default function Home() {
 
               {/* Hızlı Güven Sinyalleri */}
               <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-400 font-medium">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-purple-400" /> Şişirilmiş / Sahte Veri Yok</span>
-                <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> 7/24 VDS Kesintisiz Çalışma</span>
-                <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Geliştirici Desteği</span>
+                <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-purple-400" /> Yapay zeka kalıbı değil, yaşayan kod</span>
+                <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> Kendi VDS'imizde 7/24 barındırma</span>
+                <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Semih ile Discord DM</span>
               </div>
             </div>
 
@@ -694,39 +694,39 @@ export default function Home() {
               <div className="flex flex-wrap items-center justify-between gap-3 pb-3 border-b border-white/[0.06]">
                 <div className="flex items-center gap-2 font-mono text-xs">
                   <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                  <span className="text-white font-semibold">GÖKTÜRK LABS TELEMETRİ KONSOLU</span>
+                  <span className="text-white font-semibold">GÖKTÜRK LABS · CANLI DİSCORD KÜMESİ</span>
                   <span className="text-zinc-500 hidden sm:inline">|</span>
-                  <span className="text-zinc-400 hidden sm:inline">Debian 12 x86_64</span>
+                  <span className="text-zinc-400 hidden sm:inline">Debian 12 Dedicated Host</span>
                 </div>
                 <div className="flex items-center gap-2 text-xs font-mono text-zinc-400">
-                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-purple-300">discord.js v14.27</span>
-                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-cyan-300">Ping: 18ms</span>
+                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-purple-300">discord.js v14.27 + TS</span>
+                  <span className="px-2 py-0.5 rounded bg-white/[0.05] border border-white/5 text-cyan-300">Gateway: 18ms</span>
                 </div>
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
                 <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Çalışma Modu</span>
+                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Process Daemon</span>
                   <strong className="text-white font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Cpu className="h-3.5 w-3.5 text-purple-400" /> PM2 Cluster 7/24
+                    <Cpu className="h-3.5 w-3.5 text-purple-400" /> PM2 7/24 Auto-Restart
                   </strong>
                 </div>
                 <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Yönetim Paneli</span>
+                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Web Panel Güvenliği</span>
                   <strong className="text-emerald-400 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Lock className="h-3.5 w-3.5 text-emerald-400" /> PBKDF2 + HIBP
+                    <Lock className="h-3.5 w-3.5 text-emerald-400" /> PBKDF2 + Sızıntı Kalkanı
                   </strong>
                 </div>
                 <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Mülakat Motoru</span>
+                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Yetkili Mülakatı</span>
                   <strong className="text-cyan-300 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <Radio className="h-3.5 w-3.5 text-cyan-400" /> Sesli / Yazılı Oda
+                    <Radio className="h-3.5 w-3.5 text-cyan-400" /> Otomatik Geçici Oda
                   </strong>
                 </div>
                 <div className="rounded-xl border border-white/5 bg-black/30 p-3">
-                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Güvenlik Kalkanı</span>
+                  <span className="text-zinc-500 block text-[10px] uppercase font-mono">Görsel Denetim</span>
                   <strong className="text-amber-300 font-medium mt-0.5 block flex items-center gap-1.5">
-                    <ShieldCheck className="h-3.5 w-3.5 text-amber-400" /> Native AutoMod
+                    <Eye className="h-3.5 w-3.5 text-amber-400" /> Silinen Resim / Ek Logu
                   </strong>
                 </div>
               </div>
@@ -879,19 +879,19 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 4. NASIL ÇALIŞIR? (SÜREÇ) */}
+        {/* 4. NASIL ÇALIŞIR? (GELİŞTİRME & KURULUM SÜRECİ) */}
         <section id="nasil" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
           {/* Sağ Kenar Atmosferik Elips */}
           <div className="ambient-orbit ambient-orbit-right top-[25%]" aria-hidden="true" />
           
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">İŞLEYİŞ SÜRECİ</span>
+              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">İŞLEYİŞ &amp; ÇALIŞMA BİÇİMİ</span>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Adım Adım Nasıl Çalışıyoruz?
+                Bürokrasi Yok, Doğrudan Geliştirici Masası
               </h2>
               <p className="mt-3 text-sm text-zinc-400">
-                Karmaşık başvuru süreçleri veya bürokrasi yok. Doğrudan geliştiriciyle iletişimdesiniz.
+                Ticket botlarının otomatik cevaplarıyla değil, doğrudan botunuzu yazan ve derleyen kişiyle Discord DM üzerinden konuşursunuz.
               </p>
             </div>
 
@@ -900,9 +900,9 @@ export default function Home() {
                 <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
                   01
                 </div>
-                <h3 className="font-display text-lg font-bold text-white">İhtiyaç ve Paket Seçimi</h3>
+                <h3 className="font-display text-lg font-bold text-white">İhtiyaçları Konuşuyoruz</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Sunucunuzun üye sayısını, hedeflerini ve ihtiyacınız olan özellikleri konuşuruz. Bütçenize en uygun paketi birlikte netleştiririz.
+                  Sunucunda ne eksik? Resimli log mu lazım, mülakat motoru mu, yoksa özel bir komut mu? Bütçene ve sunucu kitlene göre en mantıklı paketi ve modülleri seçiyoruz.
                 </p>
               </div>
 
@@ -910,9 +910,9 @@ export default function Home() {
                 <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
                   02
                 </div>
-                <h3 className="font-display text-lg font-bold text-white">Hızlı Kurulum &amp; Markalaşma</h3>
+                <h3 className="font-display text-lg font-bold text-white">VDS Ortamında Derleme &amp; Test</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Botu Göktürk Labs VDS sunucusunda ayağa kaldırır; sunucunuzun adı, logosu ve rollerine tam uyumlu şekilde yapılandırırız.
+                  Botu Debian 12 sunucumuzda izole bir servis olarak kuruyoruz. Sunucu logoların, yetki kademelerin ve hoş geldin afişlerin test edilip onayına sunuluyor.
                 </p>
               </div>
 
@@ -920,9 +920,9 @@ export default function Home() {
                 <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
                   03
                 </div>
-                <h3 className="font-display text-lg font-bold text-white">Teslim &amp; 7/24 Kesintisiz Destek</h3>
+                <h3 className="font-display text-lg font-bold text-white">Yetki Teslimi &amp; Sürekli Destek</h3>
                 <p className="text-xs text-zinc-400 leading-relaxed">
-                  Web panel şifrenizi teslim ederiz. İlerleyen süreçte modül ekleme, güncelleme ve bakım konularında Discord üzerinden 7/24 yanınızdayız.
+                  Botunu sunucuna davet ediyoruz, gerekiyorsa web yönetim paneli girişini iletiyoruz. Herhangi bir sorunda veya yeni modül eklemek istediğinde Discord'dan bir mesaj uzağındayım.
                 </p>
               </div>
             </div>
