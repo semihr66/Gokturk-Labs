@@ -244,13 +244,14 @@ const extraSystems: Array<{
   badge?: string;
   statusText: string;
 }> = [
+  // Satır 1: Temel Topluluk Giriş Modülleri
   { 
     id: "welcome",
     category: "ONBOARDING",
     title: "Karşılama & Uğurlama", 
-    detail: "Dinamik görsel kartlar ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
+    detail: "Dinamik görsel afişler, avatar render ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
     command: "/welcome set [kanal] [afis_modu]",
-    specs: ["Canvas 2D Avatar Render", "Otomatik Karşılama Rolü", "DM veya Kanal Seçimi"],
+    specs: ["Canvas 2D Avatar", "Otomatik Karşılama Rolü"],
     icon: MessageCircle,
     emoji: "🖼️",
     coverGradient: "from-purple-900 via-indigo-900 to-black",
@@ -258,92 +259,12 @@ const extraSystems: Array<{
     statusText: "Aktif Entegrasyon"
   },
   { 
-    id: "level",
-    category: "ENGAGEMENT",
-    title: "Seviye & XP Sistemi", 
-    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
-    command: "/rank [kullanici] | /top10",
-    specs: ["Ses & Metin Çift XP Havuzu", "Özel SVG/PNG Rank Kartı", "Kademeli Rol Ödülleri"],
-    icon: Zap,
-    emoji: "📊",
-    coverGradient: "from-cyan-900 via-blue-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
-    statusText: "Canlı Hesaplama"
-  },
-  { 
-    id: "invite",
-    category: "TELEMETRY",
-    title: "Davet Takip Sistemi", 
-    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
-    command: "/invites [kullanici] | /vanity stats",
-    specs: ["Sahte Hesap (Fake) Algılama", "Bonus / Eksilen Davet Kaydı", "Canlı Log Kanalı"],
-    icon: ArrowUpRight,
-    emoji: "📩",
-    coverGradient: "from-emerald-900 via-teal-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
-    statusText: "Gerçek Zamanlı"
-  },
-  { 
-    id: "giveaway",
-    category: "EVENTS",
-    title: "Çekiliş Sistemi", 
-    detail: "Zaman ayarlı, kriter destekli ve otomatize edilmiş çekiliş motoru. Rol şartı ve yedek talihli seçer.",
-    command: "/cekilis baslat [sure] [odul] [kazanan]",
-    specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı Filtresi", "Yedek Kazanan (Reroll)"],
-    icon: Sparkles,
-    emoji: "🎉",
-    coverGradient: "from-amber-900 via-yellow-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=700&q=80",
-    statusText: "Otomasyon"
-  },
-  { 
-    id: "entertainment",
-    category: "COMMUNITY",
-    title: "Eğlence Modülleri", 
-    detail: "Topluluk etkileşimini artıran interaktif komut setleri, mini oyunlar ve kullanıcı eğlence araçları.",
-    command: "/eglence zar-at | /eglence duello",
-    specs: ["İnteraktif Oyun Menüsü", "Şans ve Zar Komutları", "Özelleştirilebilir Yanıtlar"],
-    icon: Coins,
-    emoji: "🎲",
-    coverGradient: "from-fuchsia-900 via-purple-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
-    statusText: "Aktif Modül"
-  },
-  { 
-    id: "ai",
-    category: "INTELLIGENCE",
-    title: "Gemini AI Entegrasyonu", 
-    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
-    command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Sunucu Dokümantasyonu Hafızası", "Doğal Türkçe Yanıtlama"],
-    icon: Bot, 
-    emoji: "🤖",
-    coverGradient: "from-indigo-950 via-purple-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
-    badge: "YAKINDA!",
-    statusText: "Geliştirme Aşamasında"
-  },
-  { 
-    id: "ticket",
-    category: "SUPPORT",
-    title: "Destek & Talep (Ticket)", 
-    detail: "Buton tabanlı özel destek kanalları ve log transkript altyapısı. Departmanlara göre ayrılmış hızlı bilet masası.",
-    command: "/ticket panel kur [kategori]",
-    specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript", "Kilit ve Arşiv Akışı"],
-    icon: Headphones, 
-    emoji: "🎫",
-    coverGradient: "from-zinc-900 via-slate-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80",
-    badge: "BUTONLU TICKET",
-    statusText: "Kurumsal Altyapı"
-  },
-  { 
     id: "autorole",
     category: "AUTOMATION",
     title: "Otomatik Rol Yönetimi", 
     detail: "Yeni katılan üye ve botlara anlık yetki ve rol tanımlaması. Menülü veya butonlu rol dağıtımı.",
     command: "/rolmenu olustur [mesaj_id]",
-    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri", "Bot & Üye Ayrımı"],
+    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri"],
     icon: Settings2,
     emoji: "🎴",
     coverGradient: "from-blue-950 via-indigo-950 to-black",
@@ -351,45 +272,32 @@ const extraSystems: Array<{
     statusText: "Yüksek Hızlı"
   },
   { 
+    id: "level",
+    category: "ENGAGEMENT",
+    title: "Seviye & XP Sistemi", 
+    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
+    command: "/rank [kullanici] | /top10",
+    specs: ["Ses & Metin Çift XP", "Özel SVG Rank Kartı"],
+    icon: Zap,
+    emoji: "📊",
+    coverGradient: "from-cyan-900 via-blue-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
+    statusText: "Canlı Hesaplama"
+  },
+
+  // Satır 2: Güvenlik & Denetim Altyapısı
+  { 
     id: "defense",
     category: "SECURITY",
     title: "Güvenlik & Moderasyon", 
     detail: "Spam, reklam, küfür ve zararlı linklere karşı 7/24 aktif koruma filtresi. Anti-raid ve karantina kalkanı.",
     command: "/defense mod [katı|orta] | /karantina",
-    specs: ["Discord AutoMod v2 Entegre", "Anti-Raid & Karantina Kalkanı", "Sağ Tık / Yetki İhlal Alarmı"],
+    specs: ["Discord AutoMod v2", "Anti-Raid Kalkanı"],
     icon: ShieldCheck,
     emoji: "🛡️",
     coverGradient: "from-red-950 via-slate-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80",
-    badge: "GÖKTÜRK DEFENSE",
     statusText: "Tam Kalkan"
-  },
-  { 
-    id: "games",
-    category: "INTERACTION",
-    title: "İnteraktif Oyun Sistemleri", 
-    detail: "Kelime türetme, sayı tahmini ve oyun kanalı modülleri. Sunucu içi rekabeti canlı tutan puan tablosu.",
-    command: "/oyun kelime-turet | /oyun sayi-tahmin",
-    specs: ["Kelime Zinciri & Sözlük", "Sayı Tahmin Motoru", "Günlük & Haftalık Skor"],
-    icon: Bot,
-    emoji: "🎮",
-    coverGradient: "from-purple-950 via-violet-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=700&q=80",
-    statusText: "Topluluk Oyunları"
-  },
-  { 
-    id: "backup",
-    category: "MANAGEMENT",
-    title: "Otomatik Sunucu Mimarisi", 
-    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
-    command: "/backup al | /sablon kur [kod]",
-    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon", "Sıfır İzin Kaybı Güvencesi"],
-    icon: Layers3, 
-    emoji: "🛠️",
-    coverGradient: "from-amber-950 via-stone-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
-    badge: "1. SINIF ŞABLON",
-    statusText: "Korumalı Veri"
   },
   {
     id: "audit-log",
@@ -397,27 +305,42 @@ const extraSystems: Array<{
     title: "Görsel Denetim & Resimli Audit Log",
     detail: "Silinen ve düzenlenen mesajları kaydeder. Silinen resim, gif ve dosya eklerini görsel olarak log kanalına iletir.",
     command: "/log kanal-ayarla [kanal] | /log filtre",
-    specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Karşılaştırma", "Ses & Rol Hareket Günlüğü"],
+    specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Takibi"],
     icon: Eye,
     emoji: "📸",
     coverGradient: "from-rose-950 via-zinc-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
-    badge: "GÖRSEL LOG DESTEĞİ",
+    badge: "GÖRSEL LOG",
     statusText: "7/24 Canlı Kayıt"
   },
-  {
-    id: "recruitment",
-    category: "RECRUITMENT",
-    title: "Yetkili Başvuru & Mülakat Motoru",
-    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
-    command: "/basvuru panel-kur | /mulakat baslat",
-    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası", "Tek Tıkla Kabul / Ret"],
-    icon: UserCheck,
-    emoji: "👤",
-    coverGradient: "from-indigo-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
-    badge: "MÜLAKAT MASASI",
-    statusText: "Otomatik Akış"
+  { 
+    id: "ticket",
+    category: "SUPPORT",
+    title: "Destek & Talep (Ticket)", 
+    detail: "Buton tabanlı özel destek kanalları ve log transkript altyapısı. Departmanlara göre ayrılmış hızlı bilet masası.",
+    command: "/ticket panel kur [kategori]",
+    specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript"],
+    icon: Headphones, 
+    emoji: "🎫",
+    coverGradient: "from-zinc-900 via-slate-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80",
+    statusText: "Kurumsal Altyapı"
+  },
+
+  // Satır 3: Yapay Zeka, Web Yönetim & Analitik
+  { 
+    id: "ai",
+    category: "INTELLIGENCE",
+    title: "Gemini AI Entegrasyonu", 
+    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
+    command: "/ai sor [soru] | /ai rehber",
+    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
+    icon: Bot, 
+    emoji: "🤖",
+    coverGradient: "from-indigo-950 via-purple-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
+    badge: "YAKINDA",
+    statusText: "Geliştirme Aşamasında"
   },
   {
     id: "web-panel",
@@ -425,7 +348,7 @@ const extraSystems: Array<{
     title: "Şifreli Web Yönetim Paneli",
     detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını ve rollerini güvenle yönetin.",
     command: "/panel giris-linki | /panel yetki",
-    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı", "Mobil Uyumlu Canlı Kontrol"],
+    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı"],
     icon: Lock,
     emoji: "🔒",
     coverGradient: "from-purple-950 via-zinc-900 to-black",
@@ -439,26 +362,94 @@ const extraSystems: Array<{
     title: "Canlı Sunucu İstatistik Sayaçları",
     detail: "Toplam üye, çevrimiçi kullanıcılar, seste olanlar ve sunucu boost seviyesini güncelleyen kilitli ses sayaçları.",
     command: "/sayac kur [stil] | /sayac guncelle",
-    specs: ["Kilitli Ses Kanal Sayaçları", "5 Farklı İstatistik Modu", "10 Dk Otomatik Senkron"],
+    specs: ["Kilitli Ses Kanalları", "5 Farklı İstatistik Modu"],
     icon: BarChart3,
     emoji: "📈",
     coverGradient: "from-cyan-950 via-zinc-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80",
     statusText: "Sürekli Canlı"
   },
+
+  // Satır 4: Takip, Mülakat & Ses Stüdyosu
+  { 
+    id: "invite",
+    category: "TELEMETRY",
+    title: "Davet Takip Sistemi", 
+    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
+    command: "/invites [kullanici] | /vanity stats",
+    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
+    icon: ArrowUpRight,
+    emoji: "📩",
+    coverGradient: "from-emerald-900 via-teal-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
+    statusText: "Gerçek Zamanlı"
+  },
   {
+    id: "recruitment",
+    category: "RECRUITMENT",
+    title: "Yetkili Başvuru & Mülakat Motoru",
+    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
+    command: "/basvuru panel-kur | /mulakat baslat",
+    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası"],
+    icon: UserCheck,
+    emoji: "👤",
+    coverGradient: "from-indigo-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
+    statusText: "Otomatik Akış"
+  },
+  { 
     id: "voice",
     category: "AUDIO",
     title: "Özel Ses Odaları & HD Müzik", 
     detail: "Odaya girince otomatik kilitli özel oda kurma ve Spotify/YouTube destekli 128 kbps kristal netliğinde ses iletimi.",
     command: "/ses oda-kilitle | /play [parca]",
-    specs: ["Tıkla-Oluşsun Dinamik Oda", "Kullanıcı Panel Arayüzü", "128 kbps Ultra HD Müzik"],
+    specs: ["Tıkla-Oluşsun Oda", "128 kbps Ultra HD Müzik"],
     icon: Music, 
     emoji: "🎵",
     coverGradient: "from-pink-950 via-purple-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=700&q=80",
-    badge: "128K ULTRA HD",
     statusText: "Düşük Gecikme"
+  },
+
+  // Satır 5: Etkinlik, Eğlence & Şablon Altyapısı
+  { 
+    id: "giveaway",
+    category: "EVENTS",
+    title: "Çekiliş Sistemi", 
+    detail: "Zaman ayarlı, kriter destekli ve otomatize edilmiş çekiliş motoru. Rol şartı ve yedek talihli seçer.",
+    command: "/cekilis baslat [sure] [odul] [kazanan]",
+    specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı"],
+    icon: Sparkles,
+    emoji: "🎉",
+    coverGradient: "from-amber-900 via-yellow-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=700&q=80",
+    statusText: "Otomasyon"
+  },
+  { 
+    id: "entertainment",
+    category: "COMMUNITY",
+    title: "Eğlence Modülleri", 
+    detail: "Topluluk etkileşimini artıran interaktif komut setleri, mini oyunlar ve kullanıcı eğlence araçları.",
+    command: "/eglence zar-at | /eglence duello",
+    specs: ["İnteraktif Oyun Menüsü", "Şans ve Zar Komutları"],
+    icon: Coins,
+    emoji: "🎲",
+    coverGradient: "from-fuchsia-900 via-purple-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
+    statusText: "Aktif Modül"
+  },
+  { 
+    id: "backup",
+    category: "MANAGEMENT",
+    title: "Otomatik Sunucu Mimarisi", 
+    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
+    command: "/backup al | /sablon kur [kod]",
+    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon"],
+    icon: Layers3, 
+    emoji: "🛠️",
+    coverGradient: "from-amber-950 via-stone-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
+    statusText: "Korumalı Veri"
   }
 ];
 
@@ -786,20 +777,49 @@ export default function Home() {
                       ) : (
                         <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient}`} />
                       )}
+
+                      {/* Sağ Üst Rozet (Örn: YAKINDA veya GÖRSEL LOG) */}
+                      {item.badge && (
+                        <div className="absolute top-2.5 right-2.5 z-10">
+                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold tracking-wider uppercase backdrop-blur-md border shadow-lg ${
+                            item.badge === "YAKINDA"
+                              ? "bg-purple-600/80 text-purple-100 border-purple-400/40"
+                              : "bg-emerald-600/80 text-emerald-100 border-emerald-400/40"
+                          }`}>
+                            {item.badge}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
-                    {/* Alt Bilgi & İçerik Alanı: Sadece Emoji, Başlık ve Açıklama */}
-                    <div className="p-4 flex-1 flex flex-col justify-start">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className="text-base select-none shrink-0">{item.emoji}</span>
-                        <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
-                          {item.title}
-                        </h3>
+                    {/* Alt Bilgi & İçerik Alanı: Emoji, Başlık, Açıklama ve İnce Detay Etiketleri */}
+                    <div className="p-4 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-base select-none shrink-0">{item.emoji}</span>
+                          <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
+                            {item.title}
+                          </h3>
+                        </div>
+
+                        <p className="text-xs text-zinc-400 leading-relaxed">
+                          {item.detail}
+                        </p>
                       </div>
 
-                      <p className="text-xs text-zinc-400 leading-relaxed">
-                        {item.detail}
-                      </p>
+                      {/* İnce Özellik Detayları */}
+                      {item.specs && item.specs.length > 0 && (
+                        <div className="mt-3.5 pt-2.5 border-t border-white/[0.04] flex items-center gap-1.5 flex-wrap">
+                          {item.specs.map((sp, sIdx) => (
+                            <span 
+                              key={sIdx}
+                              className="text-[10px] text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-md px-2 py-0.5"
+                            >
+                              {sp}
+                            </span>
+                          ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 );
