@@ -127,11 +127,12 @@ const plans: PlanItem[] = [
       "Sınırsız modül hakkı ve öncelikli işlem gücü",
       "Butonlu & kategorili bilet (ticket) destek sistemi",
       "Sunucunuza özel terzi usulü komut & iş mantığı",
+      "Özel geliştirilen bot kodları müşteriyle şeffaf paylaşılır",
       "7/24 Göktürk Labs Debian 12 VDS barındırma",
       "İsim, logo ve kapak görseli serbestçe düzenlenir",
       "'Powered by' ibaresi tamamen kaldırılabilir"
     ],
-    notice: "⚠️ Hizmet ve Barındırma Kuralı: Bot kodları ve süreçleri aylık abonelik süresince Göktürk Labs VDS altyapısında güvenle çalışır; harici sunucuya aktarılamaz veya kaynak kod teslimi yapılmaz."
+    notice: "⚠️ Hizmet ve Barındırma Kuralı: Custom seçenekte size özel yazılan kodlar sizinle paylaşılır; ancak aylık abonelik modeli gereği bot kesintisiz olarak bizim sunucumuzda (Göktürk Labs VDS) barındırılır ve çalıştırılır."
   },
   {
     id: "pro",
@@ -149,11 +150,12 @@ const plans: PlanItem[] = [
       "Yetkili Başvuru & Mülakat Motoru (Sesli/Yazılı özel odalar + Aday rolü)",
       "Sınırsız modül hakkı ve yüksek VDS kaynak tahsisi",
       "Gelişmiş paketindeki tüm sistemler ve öncelikli kuyruk",
+      "Size özel yazılım mimarisi ve kod paylaşımı",
       "7/24 Göktürk Labs kurumsal VDS sunucusunda çalışma",
       "Birebir öncelikli Discord VIP teknik destek",
       "Marka ibarelerinin tamamı kaldırılabilir"
     ],
-    notice: "⚠️ Hizmet ve Barındırma Kuralı: Tüm süreçler ve web panel altyapısı Göktürk Labs sunucularında izole barındırılır. Aylık lisanslama modeli gereği kaynak kodlar üçüncü taraflarla paylaşılmaz."
+    notice: "⚠️ Hizmet ve Barındırma Kuralı: Özel yazılan kodlar paylaşılır; ancak aylık abonelik sistemi kapsamında süreçler ve bot yalnızca Göktürk Labs izole sunucularında 7/24 çalışır."
   }
 ];
 
@@ -167,8 +169,8 @@ const faqs = [
     a: "Discord DM'den bana ulaştığınızda sunucunuzun ihtiyaçlarını konuşuruz. Hazır modüller ortalama 1-2 saat içinde sunucunuza eklenip teslim edilir."
   },
   {
-    q: "Botun kodlarını kendi sunucumda çalıştırabilir miyim?",
-    a: "Hayır. Sistemlerimiz aylık kiralama ve abonelik modeliyle sunulur. Fikri mülkiyetin ve hizmet devamlılığının korunması amacıyla botlar yalnızca Göktürk Labs'ın güvenli VDS sunucularında 7/24 kesintisiz çalıştırılır; harici sunucuya kod teslimi yapılmaz."
+    q: "Botun kodlarını alabilir miyim ve nerede çalışır?",
+    a: "Custom (Gelişmiş & Pro) seçeneklerde sunucunuza özel geliştirilen kodlar sizinle şeffaf şekilde paylaşılır. Ancak aylık abonelik modeli geçerli olduğundan, bot harici veya kendi sunucunuzda değil, yalnızca Göktürk Labs'ın güvenli VDS sunucularında 7/24 kesintisiz çalıştırılır."
   },
   {
     q: "Web Yönetim Paneli neleri kapsıyor?",
