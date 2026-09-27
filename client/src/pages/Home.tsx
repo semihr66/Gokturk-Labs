@@ -244,48 +244,7 @@ const extraSystems: Array<{
   badge?: string;
   statusText: string;
 }> = [
-  // Satır 1: Temel Topluluk Giriş Modülleri
-  { 
-    id: "welcome",
-    category: "ONBOARDING",
-    title: "Karşılama & Uğurlama", 
-    detail: "Dinamik görsel afişler, avatar render ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
-    command: "/welcome set [kanal] [afis_modu]",
-    specs: ["Canvas 2D Avatar", "Otomatik Karşılama Rolü"],
-    icon: MessageCircle,
-    emoji: "🖼️",
-    coverGradient: "from-purple-900 via-indigo-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=700&q=80",
-    statusText: "Aktif Entegrasyon"
-  },
-  { 
-    id: "autorole",
-    category: "AUTOMATION",
-    title: "Otomatik Rol Yönetimi", 
-    detail: "Yeni katılan üye ve botlara anlık yetki ve rol tanımlaması. Menülü veya butonlu rol dağıtımı.",
-    command: "/rolmenu olustur [mesaj_id]",
-    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri"],
-    icon: Settings2,
-    emoji: "🎴",
-    coverGradient: "from-blue-950 via-indigo-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=700&q=80",
-    statusText: "Yüksek Hızlı"
-  },
-  { 
-    id: "level",
-    category: "ENGAGEMENT",
-    title: "Seviye & XP Sistemi", 
-    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
-    command: "/rank [kullanici] | /top10",
-    specs: ["Ses & Metin Çift XP", "Özel SVG Rank Kartı"],
-    icon: Zap,
-    emoji: "📊",
-    coverGradient: "from-cyan-900 via-blue-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
-    statusText: "Canlı Hesaplama"
-  },
-
-  // Satır 2: Güvenlik & Denetim Altyapısı
+  // 1. KADEME: TEMEL GÜVENLİK, DENETİM & KORUMA (Sunucunun Temel Direği)
   { 
     id: "defense",
     category: "SECURITY",
@@ -314,6 +273,62 @@ const extraSystems: Array<{
     statusText: "7/24 Canlı Kayıt"
   },
   { 
+    id: "backup",
+    category: "MANAGEMENT",
+    title: "Otomatik Sunucu Mimarisi & Yedek", 
+    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
+    command: "/backup al | /sablon kur [kod]",
+    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon"],
+    icon: Layers3, 
+    emoji: "🛠️",
+    coverGradient: "from-amber-950 via-stone-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
+    statusText: "Korumalı Veri"
+  },
+
+  // 2. KADEME: ONBOARDING, KAYIT & GİRİŞ AKIŞI (Üyenin İlk Karşılaştığı Alan)
+  { 
+    id: "welcome",
+    category: "ONBOARDING",
+    title: "Karşılama & Uğurlama", 
+    detail: "Dinamik görsel afişler, avatar render ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
+    command: "/welcome set [kanal] [afis_modu]",
+    specs: ["Canvas 2D Avatar", "Otomatik Karşılama Rolü"],
+    icon: MessageCircle,
+    emoji: "🖼️",
+    coverGradient: "from-purple-900 via-indigo-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=700&q=80",
+    statusText: "Aktif Entegrasyon"
+  },
+  { 
+    id: "autorole",
+    category: "AUTOMATION",
+    title: "Otomatik Rol Yönetimi", 
+    detail: "Yeni katılan üye ve botlara anlık yetki ve rol tanımlaması. Menülü veya butonlu rol dağıtımı.",
+    command: "/rolmenu olustur [mesaj_id]",
+    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri"],
+    icon: Settings2,
+    emoji: "🎴",
+    coverGradient: "from-blue-950 via-indigo-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=700&q=80",
+    statusText: "Yüksek Hızlı"
+  },
+  { 
+    id: "invite",
+    category: "TELEMETRY",
+    title: "Davet Takip Sistemi", 
+    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
+    command: "/invites [kullanici] | /vanity stats",
+    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
+    icon: ArrowUpRight,
+    emoji: "📩",
+    coverGradient: "from-emerald-900 via-teal-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
+    statusText: "Gerçek Zamanlı"
+  },
+
+  // 3. KADEME: YÖNETİM, BİLET & PERSONEL MÜLAKATI (Sunucu Operasyonları)
+  { 
     id: "ticket",
     category: "SUPPORT",
     title: "Destek & Talep (Ticket)", 
@@ -326,35 +341,18 @@ const extraSystems: Array<{
     coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80",
     statusText: "Kurumsal Altyapı"
   },
-
-  // Satır 3: Yapay Zeka, Web Yönetim & Analitik
-  { 
-    id: "ai",
-    category: "INTELLIGENCE",
-    title: "Gemini AI Entegrasyonu", 
-    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
-    command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
-    icon: Bot, 
-    emoji: "🤖",
-    coverGradient: "from-indigo-950 via-purple-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
-    badge: "YAKINDA",
-    statusText: "Geliştirme Aşamasında"
-  },
   {
-    id: "web-panel",
-    category: "MANAGEMENT",
-    title: "Şifreli Web Yönetim Paneli",
-    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını ve rollerini güvenle yönetin.",
-    command: "/panel giris-linki | /panel yetki",
-    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı"],
-    icon: Lock,
-    emoji: "🔒",
-    coverGradient: "from-purple-950 via-zinc-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80",
-    badge: "PRO WEB PANEL",
-    statusText: "Tam Şifreli"
+    id: "recruitment",
+    category: "RECRUITMENT",
+    title: "Yetkili Başvuru & Mülakat Motoru",
+    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
+    command: "/basvuru panel-kur | /mulakat baslat",
+    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası"],
+    icon: UserCheck,
+    emoji: "👤",
+    coverGradient: "from-indigo-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
+    statusText: "Otomatik Akış"
   },
   {
     id: "stats-voice",
@@ -370,32 +368,34 @@ const extraSystems: Array<{
     statusText: "Sürekli Canlı"
   },
 
-  // Satır 4: Takip, Mülakat & Ses Stüdyosu
-  { 
-    id: "invite",
-    category: "TELEMETRY",
-    title: "Davet Takip Sistemi", 
-    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
-    command: "/invites [kullanici] | /vanity stats",
-    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
-    icon: ArrowUpRight,
-    emoji: "📩",
-    coverGradient: "from-emerald-900 via-teal-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
-    statusText: "Gerçek Zamanlı"
-  },
+  // 4. KADEME: İLERİ TEKNOLOJİ & WEB ALTYAPISI (Akıllı Sistemler)
   {
-    id: "recruitment",
-    category: "RECRUITMENT",
-    title: "Yetkili Başvuru & Mülakat Motoru",
-    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
-    command: "/basvuru panel-kur | /mulakat baslat",
-    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası"],
-    icon: UserCheck,
-    emoji: "👤",
-    coverGradient: "from-indigo-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Otomatik Akış"
+    id: "web-panel",
+    category: "MANAGEMENT",
+    title: "Şifreli Web Yönetim Paneli",
+    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını ve rollerini güvenle yönetin.",
+    command: "/panel giris-linki | /panel yetki",
+    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı"],
+    icon: Lock,
+    emoji: "🔒",
+    coverGradient: "from-purple-950 via-zinc-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80",
+    badge: "PRO WEB PANEL",
+    statusText: "Tam Şifreli"
+  },
+  { 
+    id: "ai",
+    category: "INTELLIGENCE",
+    title: "Gemini AI Entegrasyonu", 
+    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
+    command: "/ai sor [soru] | /ai rehber",
+    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
+    icon: Bot, 
+    emoji: "🤖",
+    coverGradient: "from-indigo-950 via-purple-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
+    badge: "YAKINDA",
+    statusText: "Geliştirme Aşamasında"
   },
   { 
     id: "voice",
@@ -411,7 +411,20 @@ const extraSystems: Array<{
     statusText: "Düşük Gecikme"
   },
 
-  // Satır 5: Etkinlik, Eğlence & Şablon Altyapısı
+  // 5. KADEME: TOPLULUK ETKİLEŞİMİ, AKTİVİTE & ÖDÜLLER (Sosyal Katman)
+  { 
+    id: "level",
+    category: "ENGAGEMENT",
+    title: "Seviye & XP Sistemi", 
+    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
+    command: "/rank [kullanici] | /top10",
+    specs: ["Ses & Metin Çift XP", "Özel SVG Rank Kartı"],
+    icon: Zap,
+    emoji: "📊",
+    coverGradient: "from-cyan-900 via-blue-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
+    statusText: "Canlı Hesaplama"
+  },
   { 
     id: "giveaway",
     category: "EVENTS",
@@ -437,19 +450,6 @@ const extraSystems: Array<{
     coverGradient: "from-fuchsia-900 via-purple-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
     statusText: "Aktif Modül"
-  },
-  { 
-    id: "backup",
-    category: "MANAGEMENT",
-    title: "Otomatik Sunucu Mimarisi", 
-    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
-    command: "/backup al | /sablon kur [kod]",
-    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon"],
-    icon: Layers3, 
-    emoji: "🛠️",
-    coverGradient: "from-amber-950 via-stone-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Korumalı Veri"
   }
 ];
 
