@@ -667,8 +667,10 @@ export default function Home() {
 
         {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (10 ÇEŞİT MODÜL) */}
         <section id="moduller" className="extra-systems-section relative overflow-hidden border-b border-white/[0.06] bg-[#09090d] py-20">
-          {/* Kenar Atmosferik Elipsler (Left & Right Edge Orbits) */}
-          <div className="ambient-orbit ambient-orbit-right top-[22%]" aria-hidden="true" />
+          {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar Çift Katmanlı Orbitler) */}
+          <div className="ambient-orbit ambient-orbit-right top-[12%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right-inner top-[16%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right top-[65%]" aria-hidden="true" />
           
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
@@ -807,8 +809,11 @@ export default function Home() {
         </section>
 
         {/* 4. NASIL ÇALIŞIR? (SÜREÇ) */}
-        <section id="nasil" className="py-20 border-b border-white/[0.06]">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <section id="nasil" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
+          {/* Sağ Kenar Atmosferik Elips */}
+          <div className="ambient-orbit ambient-orbit-right top-[25%]" aria-hidden="true" />
+          
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-2xl mx-auto">
               <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">İŞLEYİŞ SÜRECİ</span>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -855,8 +860,10 @@ export default function Home() {
 
         {/* 5. PAKETLER & FİYATLANDIRMA */}
         <section id="paketler" className="relative overflow-hidden py-20 border-b border-white/[0.06] bg-[#09090d]">
-          {/* Sol Kenar Atmosferik Elips */}
+          {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar) */}
           <div className="ambient-orbit ambient-orbit-left top-[35%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right top-[15%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right-inner top-[20%]" aria-hidden="true" />
           
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="max-w-2xl">
@@ -1011,8 +1018,9 @@ export default function Home() {
 
         {/* 6. HAKKIMIZDA BÖLÜMÜ */}
         <section id="hakkimizda" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
-          {/* Sağ Kenar Atmosferik Elips */}
-          <div className="ambient-orbit ambient-orbit-right top-[28%]" aria-hidden="true" />
+          {/* Sağ Kenar Çift Katmanlı Atmosferik Elipsler */}
+          <div className="ambient-orbit ambient-orbit-right top-[18%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right-inner top-[24%]" aria-hidden="true" />
           
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
@@ -1083,8 +1091,10 @@ export default function Home() {
 
         {/* 7. İLETİŞİM BÖLÜMÜ (CANLI VE ÇALIŞAN FORM) */}
         <section id="iletisim" className="relative overflow-hidden py-20 border-b border-white/[0.06] bg-[#09090d]">
-          {/* Sol Kenar Atmosferik Elips */}
+          {/* Sağ ve Sol Kenar Atmosferik Elipsler */}
           <div className="ambient-orbit ambient-orbit-left top-[30%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right top-[20%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right-inner top-[25%]" aria-hidden="true" />
           
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
@@ -1259,8 +1269,13 @@ export default function Home() {
         </section>
 
         {/* 8. SSS (SIKÇA SORULAN SORULAR) */}
-        <section id="sss" className="py-20 border-b border-white/[0.06]">
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+        <section id="sss" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
+          {/* Sağ ve Sol Kenar Atmosferik Elipsler */}
+          <div className="ambient-orbit ambient-orbit-right top-[20%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-right-inner top-[26%]" aria-hidden="true" />
+          <div className="ambient-orbit ambient-orbit-left top-[35%]" aria-hidden="true" />
+          
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center max-w-xl mx-auto">
               <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">SSS</span>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
