@@ -76,19 +76,19 @@ const plans: PlanItem[] = [
     badge: "🎁 Ücretsiz Başlangıç",
     badgeType: "free",
     label: "TOPLULUK · ÜCRETSİZ",
-    description: "Yeni açılan veya küçük topluluklar için masrafsız başlangıç. Bot bizden, sunucu sizden.",
-    performance: "Standart VDS",
+    description: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
+    performance: "Standart",
     score: 1,
     features: [
       "Temel genel komutlar ve karşılama mesajları",
-      "Hazır altyapı modülleriyle hızlı entegrasyon",
-      "3 + 1 modül hakkı (Seçtiğiniz 4 modül)",
-      "7/24 Göktürk Labs VDS barındırma dahil",
-      "İzole kod mimarisi (Kesintisiz uptime)",
-      "İsim/logo/kapak özelleştirmesi kapalıdır",
-      "Zorunlu: Sunucu açıklamasında '— By Göktürk Labs' ibaresi"
+      "Hazır altyapı modülleriyle hızlı kurulum",
+      "3 + 1 modül hakkı (Kampanya dahil)",
+      "7/24 Kesintisiz Göktürk Labs VDS barındırma",
+      "Modüllü yapı (Kod Göktürk Labs sunucusunda izole çalışır)",
+      "İsim/logo/kapak düzenleme yok",
+      "Zorunlu: Sunucu adı veya açıklamasında '— By Göktürk Labs' ibaresi"
     ],
-    notice: "Topluluk paketinde sunucunuzda Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer almalıdır."
+    notice: "Topluluk planında sunucunuzda Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer almalıdır."
   },
   {
     id: "dengeli",
@@ -98,15 +98,15 @@ const plans: PlanItem[] = [
     badge: "⚡ En İyi Fiyat / Performans",
     badgeType: "fp",
     label: "DENGELİ · SINIRSIZ MODÜL",
-    description: "Orta büyüklükteki sunucular için tam teşekküllü moderasyon, resimli log ve sınırsız modül esnekliği.",
-    performance: "Yüksek Hızlı PM2",
+    description: "Gelişmiş moderasyon, loglama ve sınırsız modül kapasitesiyle sunucunuzun güvenliği tam kontrol altında.",
+    performance: "Dengeli & Hızlı",
     score: 2,
     features: [
-      "Başlangıç paketindeki tüm temel özellikler",
-      "16 modül arasından sınırsız kullanım hakkı",
-      "Gelişmiş moderasyon ve silinen resim/dosya logu",
+      "Başlangıç paketindeki tüm özellikler",
+      "Sınırsız modül tanımlama hakkı",
+      "Gelişmiş moderasyon ve detaylı denetim kayıtları",
       "7/24 Kesintisiz VDS barındırma dahil",
-      "Bot ismi, logosu ve Discord profili tamamen size özel",
+      "Bot ismi, logosu ve Discord profili özelleştirilebilir",
       "Otomatik rol ve gelişmiş filtre sistemleri",
       "Açıklama ve banner'da 'Powered by Göktürk Labs' bağlantısı yer alır"
     ]
@@ -119,15 +119,15 @@ const plans: PlanItem[] = [
     badge: "🔥 En Çok Tercih Edilen",
     badgeType: "popular",
     label: "GELİŞMİŞ · ÖZEL KOD & TICKET",
-    description: "Kendi özel bilet destek sistemini kurmak, açık kaynak koda erişmek ve tam yetkiyle yönetmek isteyenler için.",
-    performance: "Öncelikli VDS Kaynağı",
+    description: "Özel bilet destek motoru, özel komutlar ve açık kaynak kod teslimi seçeneğiyle tam bağımsızlık.",
+    performance: "Yüksek Kapasite",
     score: 3,
     features: [
       "Dengeli paketindeki tüm özellikler",
       "Sınırsız modül hakkı ve öncelikli işlem gücü",
-      "Butonlu, HTML dökümlü bilet (ticket) destek motoru",
-      "Custom Bot Opsiyonu: TypeScript kaynak kod teslimi",
-      "Kendi VDS'inizde veya bizim sunucumuzda çalıştırma",
+      "Butonlu & kategorili bilet (ticket) destek sistemi",
+      "Custom Bot Seçeneği: Açık kaynak kod paylaşılır",
+      "Kendi VDS'inizde veya Göktürk Labs sunucusunda çalıştırma",
       "İsim, logo ve kapak görseli serbestçe düzenlenir",
       "'Powered by' ibaresi tamamen kaldırılabilir"
     ]
@@ -140,8 +140,8 @@ const plans: PlanItem[] = [
     badge: "👑 Maksimum Kurumsal Seviye",
     badgeType: "vip",
     label: "PRO · ŞİFRELİ WEB PANEL",
-    description: "Web yönetim paneli, otomatik yetkili mülakat masası, HIBP sızıntı kalkanı ve doğrudan Discord VIP destek.",
-    performance: "Dedicated Tahsis",
+    description: "Şifreli Web Yönetim Paneli, Yetkili Mülakat Masası, HIBP sızıntı kalkanı ve VIP 7/24 öncelikli destek.",
+    performance: "Maksimum VIP",
     score: 4,
     features: [
       "Özel Şifreli Web Yönetim Paneli (PBKDF2 256-Bit + HIBP korumalı)",
@@ -915,7 +915,7 @@ export default function Home() {
           <div className="ambient-orbit ambient-orbit-right top-[15%]" aria-hidden="true" />
           <div className="ambient-orbit ambient-orbit-right-inner top-[20%]" aria-hidden="true" />
           
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 relative z-10">
             <div className="max-w-2xl">
               <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">ŞEFFAF FİYATLANDIRMA</span>
               <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
@@ -926,7 +926,7 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5">
               {plans.map((p) => {
                 const isVip = p.badgeType === "vip";
                 const isPopular = p.badgeType === "popular";
