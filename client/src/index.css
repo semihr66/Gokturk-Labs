@@ -35,14 +35,46 @@
 }
 
 /* Göktürk Labs Creative Studio Typography & UI Tokens */
-.new-site { font-family: "Inter", sans-serif; }
-.font-display { 
+.new-site { 
   font-family: "Plus Jakarta Sans", "Inter", sans-serif; 
-  letter-spacing: -0.025em;
 }
+
+.font-display { 
+  font-family: "Plus Jakarta Sans", -apple-system, sans-serif; 
+  letter-spacing: -0.03em;
+  font-weight: 700;
+}
+
+.font-mono,
 .font-mono-code {
-  font-family: "JetBrains Mono", monospace;
-  letter-spacing: -0.02em;
+  font-family: "Fira Code", "JetBrains Mono", monospace !important;
+  letter-spacing: -0.015em;
+}
+
+/* Reusable Atmospheric Edge Orbit Ellipses */
+.ambient-orbit {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ambient-orbit-left {
+  width: 48rem;
+  height: 20rem;
+  left: -18rem;
+  border: 1px solid rgba(168, 85, 247, 0.12);
+  transform: rotate(-18deg);
+  box-shadow: 0 0 110px rgba(147, 51, 234, 0.06), inset 0 0 50px rgba(168, 85, 247, 0.03);
+}
+
+.ambient-orbit-right {
+  width: 46rem;
+  height: 19rem;
+  right: -16rem;
+  border: 1px solid rgba(147, 51, 234, 0.12);
+  transform: rotate(22deg);
+  box-shadow: 0 0 110px rgba(147, 51, 234, 0.06), inset 0 0 50px rgba(168, 85, 247, 0.03);
 }
 .new-nav { position: absolute; inset: 0 0 auto; z-index: 30; padding: 0.75rem 1rem; }
 .new-nav-inner { max-width: 1130px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; min-height: 3.2rem; padding: 0.35rem 0.75rem 0.35rem 1rem; border: 1px solid rgba(255,255,255,0.09); border-radius: 1.1rem; background: rgba(10,10,14,0.64); backdrop-filter: blur(22px); }
