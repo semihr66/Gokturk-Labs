@@ -765,16 +765,6 @@ export default function Home() {
               </p>
             </div>
 
-            {/* İsteğe Özel Mimari ve Tasarım Üst Çağrı Kutusu (ParsBot Stili) */}
-            <div className="mt-10 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] via-zinc-900/80 to-amber-500/[0.08] p-5 text-center shadow-lg shadow-amber-500/5 backdrop-blur-md">
-              <div className="flex items-center justify-center gap-2 text-amber-400 font-bold text-sm">
-                <span>🛠️</span>
-                <span>İsteğe Özel Mimari ve Tasarım</span>
-              </div>
-              <p className="mt-1 text-xs text-zinc-300">
-                Aşağıdaki standart modüller dışında, topluluğunuza veya kurumunuza özel spesifik iş mantıklarını da <strong className="text-white underline decoration-amber-400 underline-offset-2">sıfırdan ücretsiz kodluyoruz</strong>.
-              </p>
-            </div>
 
             {/* ParsBot Birebir Kart Yapısı: Sadece Üst Görsel + Emoji + Başlık + Temiz Açıklama */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
