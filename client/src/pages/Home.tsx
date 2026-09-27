@@ -253,8 +253,8 @@ const extraSystems: Array<{
     specs: ["Canvas 2D Avatar Render", "Otomatik Karşılama Rolü", "DM veya Kanal Seçimi"],
     icon: MessageCircle,
     emoji: "🖼️",
-    coverGradient: "from-purple-600 via-indigo-500 to-pink-500",
-    coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-purple-900 via-indigo-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=700&q=80",
     statusText: "Aktif Entegrasyon"
   },
   { 
@@ -266,8 +266,8 @@ const extraSystems: Array<{
     specs: ["Ses & Metin Çift XP Havuzu", "Özel SVG/PNG Rank Kartı", "Kademeli Rol Ödülleri"],
     icon: Zap,
     emoji: "📊",
-    coverGradient: "from-cyan-600 via-blue-600 to-indigo-900",
-    coverImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-cyan-900 via-blue-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
     statusText: "Canlı Hesaplama"
   },
   { 
@@ -279,8 +279,8 @@ const extraSystems: Array<{
     specs: ["Sahte Hesap (Fake) Algılama", "Bonus / Eksilen Davet Kaydı", "Canlı Log Kanalı"],
     icon: ArrowUpRight,
     emoji: "📩",
-    coverGradient: "from-emerald-700 via-teal-800 to-zinc-900",
-    coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-emerald-900 via-teal-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
     statusText: "Gerçek Zamanlı"
   },
   { 
@@ -292,8 +292,8 @@ const extraSystems: Array<{
     specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı Filtresi", "Yedek Kazanan (Reroll)"],
     icon: Sparkles,
     emoji: "🎉",
-    coverGradient: "from-blue-600 via-cyan-500 to-teal-400",
-    coverImage: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-amber-900 via-yellow-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=700&q=80",
     statusText: "Otomasyon"
   },
   { 
@@ -305,8 +305,8 @@ const extraSystems: Array<{
     specs: ["İnteraktif Oyun Menüsü", "Şans ve Zar Komutları", "Özelleştirilebilir Yanıtlar"],
     icon: Coins,
     emoji: "🎲",
-    coverGradient: "from-fuchsia-600 via-purple-700 to-zinc-900",
-    coverImage: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-fuchsia-900 via-purple-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
     statusText: "Aktif Modül"
   },
   { 
@@ -318,8 +318,8 @@ const extraSystems: Array<{
     specs: ["Google Gemini 2.5 Flash", "Sunucu Dokümantasyonu Hafızası", "Doğal Türkçe Yanıtlama"],
     icon: Bot, 
     emoji: "🤖",
-    coverGradient: "from-indigo-600 via-purple-600 to-pink-500",
-    coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-indigo-950 via-purple-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
     badge: "YAKINDA!",
     statusText: "Geliştirme Aşamasında"
   },
@@ -332,8 +332,8 @@ const extraSystems: Array<{
     specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript", "Kilit ve Arşiv Akışı"],
     icon: Headphones, 
     emoji: "🎫",
-    coverGradient: "from-zinc-700 via-zinc-800 to-black",
-    coverImage: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-zinc-900 via-slate-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80",
     badge: "BUTONLU TICKET",
     statusText: "Kurumsal Altyapı"
   },
@@ -346,8 +346,8 @@ const extraSystems: Array<{
     specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri", "Bot & Üye Ayrımı"],
     icon: Settings2,
     emoji: "🎴",
-    coverGradient: "from-blue-700 via-indigo-900 to-zinc-950",
-    coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-blue-950 via-indigo-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=700&q=80",
     statusText: "Yüksek Hızlı"
   },
   { 
@@ -359,8 +359,8 @@ const extraSystems: Array<{
     specs: ["Discord AutoMod v2 Entegre", "Anti-Raid & Karantina Kalkanı", "Sağ Tık / Yetki İhlal Alarmı"],
     icon: ShieldCheck,
     emoji: "🛡️",
-    coverGradient: "from-sky-700 via-slate-800 to-black",
-    coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-red-950 via-slate-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80",
     badge: "GÖKTÜRK DEFENSE",
     statusText: "Tam Kalkan"
   },
@@ -373,8 +373,8 @@ const extraSystems: Array<{
     specs: ["Kelime Zinciri & Sözlük", "Sayı Tahmin Motoru", "Günlük & Haftalık Skor"],
     icon: Bot,
     emoji: "🎮",
-    coverGradient: "from-purple-800 via-violet-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-purple-950 via-violet-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1538481199705-c710c4e965fc?auto=format&fit=crop&w=700&q=80",
     statusText: "Topluluk Oyunları"
   },
   { 
@@ -386,8 +386,8 @@ const extraSystems: Array<{
     specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon", "Sıfır İzin Kaybı Güvencesi"],
     icon: Layers3, 
     emoji: "🛠️",
-    coverGradient: "from-amber-700 via-orange-900 to-zinc-950",
-    coverImage: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-amber-950 via-stone-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
     badge: "1. SINIF ŞABLON",
     statusText: "Korumalı Veri"
   },
@@ -400,8 +400,8 @@ const extraSystems: Array<{
     specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Karşılaştırma", "Ses & Rol Hareket Günlüğü"],
     icon: Eye,
     emoji: "📸",
-    coverGradient: "from-rose-800 via-red-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-rose-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
     badge: "GÖRSEL LOG DESTEĞİ",
     statusText: "7/24 Canlı Kayıt"
   },
@@ -414,8 +414,8 @@ const extraSystems: Array<{
     specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası", "Tek Tıkla Kabul / Ret"],
     icon: UserCheck,
     emoji: "👤",
-    coverGradient: "from-indigo-800 via-violet-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-indigo-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
     badge: "MÜLAKAT MASASI",
     statusText: "Otomatik Akış"
   },
@@ -428,8 +428,8 @@ const extraSystems: Array<{
     specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı", "Mobil Uyumlu Canlı Kontrol"],
     icon: Lock,
     emoji: "🔒",
-    coverGradient: "from-purple-900 via-zinc-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-purple-950 via-zinc-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80",
     badge: "PRO WEB PANEL",
     statusText: "Tam Şifreli"
   },
@@ -442,8 +442,8 @@ const extraSystems: Array<{
     specs: ["Kilitli Ses Kanal Sayaçları", "5 Farklı İstatistik Modu", "10 Dk Otomatik Senkron"],
     icon: BarChart3,
     emoji: "📈",
-    coverGradient: "from-cyan-800 via-sky-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-cyan-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80",
     statusText: "Sürekli Canlı"
   },
   {
@@ -455,8 +455,8 @@ const extraSystems: Array<{
     specs: ["Tıkla-Oluşsun Dinamik Oda", "Kullanıcı Panel Arayüzü", "128 kbps Ultra HD Müzik"],
     icon: Music, 
     emoji: "🎵",
-    coverGradient: "from-pink-700 via-purple-900 to-zinc-950",
-    coverImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+    coverGradient: "from-pink-950 via-purple-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=700&q=80",
     badge: "128K ULTRA HD",
     statusText: "Düşük Gecikme"
   }
