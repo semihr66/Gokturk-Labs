@@ -47,8 +47,20 @@
 
 .font-mono,
 .font-mono-code {
-  font-family: "Fira Code", "JetBrains Mono", monospace !important;
-  letter-spacing: -0.015em;
+  font-family: "Geist Mono", "JetBrains Mono", "Fira Code", monospace !important;
+  letter-spacing: 0.02em;
+}
+
+.mod-tag-category {
+  font-family: "Plus Jakarta Sans", "Inter", sans-serif;
+  letter-spacing: 0.06em;
+  font-weight: 700;
+}
+
+.mod-tag-id {
+  font-family: "Geist Mono", "JetBrains Mono", monospace;
+  letter-spacing: 0.08em;
+  font-weight: 600;
 }
 
 /* Reusable Atmospheric Edge Orbit Ellipses */

@@ -784,17 +784,20 @@ export default function Home() {
                             <Icon className="h-4 w-4" />
                           </div>
                           <div>
-                            <span className="block text-[10px] font-mono tracking-wider font-semibold text-purple-400">
-                              {item.category}
-                            </span>
-                            <span className="block text-[10px] font-mono text-zinc-500">
-                              SYS-MOD {modNumber}
-                            </span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="mod-tag-category text-[10px] uppercase text-purple-400 font-bold">
+                                {item.category}
+                              </span>
+                              <span className="text-zinc-600 text-[10px]">•</span>
+                              <span className="mod-tag-id text-[10px] text-zinc-400 bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded font-medium">
+                                MOD {modNumber}
+                              </span>
+                            </div>
                           </div>
                         </div>
 
                         {item.badge ? (
-                          <span className="px-2 py-0.5 rounded border border-purple-500/40 bg-purple-500/10 text-[9px] font-mono font-bold text-purple-300 tracking-wide">
+                          <span className="px-2 py-0.5 rounded border border-purple-500/40 bg-purple-500/10 text-[9px] font-sans font-bold text-purple-300 tracking-wider uppercase">
                             {item.badge}
                           </span>
                         ) : (
