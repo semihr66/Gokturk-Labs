@@ -32,7 +32,14 @@ import {
   Settings2,
   Layers3,
   Bot,
-  Music
+  Music,
+  FileText,
+  Coins,
+  Calendar,
+  BarChart3,
+  UserCheck,
+  Eye,
+  Image as ImageIcon
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -338,6 +345,69 @@ const extraSystems: Array<{
     icon: Bot, 
     badge: "YAKINDA!",
     statusText: "Geliştirme Aşamasında"
+  },
+  {
+    id: "audit-log",
+    category: "AUDIT & SECURITY",
+    title: "Görsel Denetim & Resimli Audit Log",
+    detail: "Silinen ve düzenlenen mesajları öncesi/sonrası ile anında kaydeder. Silinen resim, gif ve dosya eklerini embed içinde görsel olarak saklayıp log kanalına iletir.",
+    command: "/log kanal-ayarla [kanal] | /log filtre",
+    specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Karşılaştırma", "Ses & Rol Hareket Günlüğü"],
+    icon: Eye,
+    badge: "GÖRSEL LOG DESTEĞİ",
+    statusText: "7/24 Canlı Kayıt"
+  },
+  {
+    id: "recruitment",
+    category: "RECRUITMENT",
+    title: "Yetkili Başvuru & Mülakat Motoru",
+    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar, aday rolünü tanımlar ve yetkili karar butonları sunar.",
+    command: "/basvuru panel-kur | /mulakat baslat",
+    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası", "Tek Tıkla Kabul / Ret"],
+    icon: UserCheck,
+    badge: "MÜLAKAT MASASI",
+    statusText: "Otomatik Akış"
+  },
+  {
+    id: "web-panel",
+    category: "MANAGEMENT",
+    title: "Şifreli Web Yönetim Paneli",
+    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını, AutoMod kurallarını ve rollerini güvenle yönetin. PBKDF2 ve HIBP kalkanı ile korunur.",
+    command: "/panel giris-linki | /panel yetki",
+    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı", "Mobil Uyumlu Canlı Kontrol"],
+    icon: Lock,
+    badge: "PRO WEB PANEL",
+    statusText: "Tam Şifreli"
+  },
+  {
+    id: "stats-voice",
+    category: "ANALYTICS",
+    title: "Canlı Sunucu İstatistik Sayaçları",
+    detail: "Toplam üye, çevrimiçi kullanıcılar, seste olanlar, aktif yetkililer ve sunucu boost seviyesini otomatik güncelleyen şık kilitli ses kanalları.",
+    command: "/sayac kur [stil] | /sayac guncelle",
+    specs: ["Kilitli Ses Kanal Sayaçları", "5 Farklı İstatistik Modu", "10 Dk Otomatik Senkron"],
+    icon: BarChart3,
+    statusText: "Sürekli Canlı"
+  },
+  {
+    id: "economy",
+    category: "GAMIFICATION",
+    title: "Ekonomi, Sanal Kasa & Market",
+    detail: "Metin ve ses kanallarında aktif oldukça para kazandıran sanal bakiye motoru. Günlük ödüller, kullanıcılar arası para transferi ve özel rol marketi.",
+    command: "/bakiye | /gunluk | /market satin-al",
+    specs: ["Sanal Para & Kasa Motoru", "Rol Satın Alma Marketi", "Yazı-Tura & Bahis Oyunları"],
+    icon: Coins,
+    statusText: "Sosyal Etkileşim"
+  },
+  {
+    id: "scheduler",
+    category: "PRODUCTIVITY",
+    title: "Zaman Ayarlı Görev & Hatırlatıcı",
+    detail: "Toplantılar, turnuvalar veya periyodik duyurular için takvimli bildirim motoru. Kanallara veya kullanıcılara belirlediğiniz saatte otomatik anons yapar.",
+    command: "/hatirlat [zaman] [kanal] [mesaj]",
+    specs: ["Dakikalık Cron Zamanlayıcı", "Kanal ve DM Bildirimi", "Tekrarlı Duyuru Döngüsü"],
+    icon: Calendar,
+    statusText: "Zaman Ayarlı"
   }
 ];
 
@@ -469,7 +539,7 @@ export default function Home() {
           <nav className="hidden items-center gap-6 text-sm font-medium text-zinc-300 lg:flex" aria-label="Ana Gezinti">
             <a href="#moduller" className="hover:text-white transition-colors text-purple-300 font-semibold flex items-center gap-1.5">
               <span>Modüller &amp; Sistemler</span>
-              <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.2 rounded border border-purple-500/30">10</span>
+              <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.2 rounded border border-purple-500/30">16</span>
             </a>
             <a href="#nasil" className="hover:text-white transition-colors">Nasıl Çalışır?</a>
             <a href="#paketler" className="hover:text-white transition-colors">Paketler</a>
@@ -524,8 +594,8 @@ export default function Home() {
 
                 <div className="my-8 flex flex-col gap-4 text-base font-medium text-zinc-300">
                   <a href="#moduller" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1 text-purple-300 font-semibold flex items-center justify-between">
-                    <span>Modüller (10 Özel Sistem)</span>
-                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">10</span>
+                    <span>Modüller (16 Özel Sistem)</span>
+                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">16</span>
                   </a>
                   <a href="#nasil" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Nasıl Çalışır?</a>
                   <a href="#paketler" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Paketler &amp; Fiyatlar</a>
@@ -665,7 +735,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (10 ÇEŞİT MODÜL) */}
+        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ (16 ÇEŞİT MODÜL) */}
         <section id="moduller" className="extra-systems-section relative overflow-hidden border-b border-white/[0.06] bg-[#09090d] py-20">
           {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar Çift Katmanlı Orbitler) */}
           <div className="ambient-orbit ambient-orbit-right top-[12%]" aria-hidden="true" />
@@ -679,11 +749,11 @@ export default function Home() {
                   <Boxes className="h-4 w-4" /> BOT SİSTEMLERİ &amp; EKLENTİLER
                 </span>
                 <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Sunucunuzu Güçlendiren 10 Özel Modül
+                  Sunucunuzu Güçlendiren 16 Özel Modül
                 </h2>
               </div>
               <p className="max-w-md text-sm text-zinc-400 leading-relaxed">
-                İster topluluk, ister oyun, ister kurumsal sunucu... İstediğiniz modülleri paketinize dahil edin, botunuz tam donanımlı çalışsın.
+                İster topluluk, ister oyun, ister kurumsal sunucu... Görsel loglama, mülakat motoru, şifreli web paneli ve istediğiniz modülleri paketinize dahil edin.
               </p>
             </div>
 
@@ -691,7 +761,8 @@ export default function Home() {
             <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {extraSystems.map((item, idx) => {
                 const Icon = item.icon;
-                const isSpecial = item.id === "defense" || item.id === "ticket";
+                const isSpecial = item.id === "defense" || item.id === "ticket" || item.id === "audit-log";
+                const modNumber = (idx + 1).toString().padStart(2, "0");
                 return (
                   <div 
                     key={item.id}
@@ -717,7 +788,7 @@ export default function Home() {
                               {item.category}
                             </span>
                             <span className="block text-[10px] font-mono text-zinc-500">
-                              SYS-MOD 0{idx + 1}
+                              SYS-MOD {modNumber}
                             </span>
                           </div>
                         </div>
