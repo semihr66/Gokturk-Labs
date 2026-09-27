@@ -760,31 +760,43 @@ export default function Home() {
             {/* ParsBot Birebir Kart Yapısı: Sadece Üst Görsel + Emoji + Başlık + Temiz Açıklama */}
             <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {extraSystems.map((item) => {
+                const Icon = item.icon;
                 return (
                   <div 
                     key={item.id}
                     className="group rounded-2xl border border-white/10 bg-[#0e0e14] hover:border-purple-500/40 hover:bg-[#12121c] transition-all duration-300 overflow-hidden flex flex-col shadow-xl shadow-black/40"
                   >
                     {/* Üst Görsel / Banner Alanı */}
-                    <div className="relative w-full h-40 overflow-hidden bg-zinc-950">
+                    <div className="relative w-full h-44 overflow-hidden bg-zinc-950">
                       {item.coverImage ? (
                         <img 
                           src={item.coverImage} 
                           alt={item.title} 
                           loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
+                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.88] group-hover:brightness-100" 
                         />
                       ) : (
                         <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient}`} />
                       )}
 
-                      {/* Sağ Üst Rozet (Örn: YAKINDA veya GÖRSEL LOG) */}
+                      {/* Görsel üzerinde yumuşak karartma katmanı */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d14] via-black/20 to-transparent pointer-events-none" />
+
+                      {/* Sol Üst Kategori Etiketi */}
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[9px] font-mono font-semibold tracking-wider uppercase backdrop-blur-md bg-black/60 border border-white/10 text-zinc-300">
+                          <Icon className="h-3 w-3 text-purple-400" />
+                          <span>{item.category}</span>
+                        </span>
+                      </div>
+
+                      {/* Sağ Üst Özel Rozet (YAKINDA veya GÖRSEL LOG) */}
                       {item.badge && (
-                        <div className="absolute top-2.5 right-2.5 z-10">
-                          <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-sans font-bold tracking-wider uppercase backdrop-blur-md border shadow-lg ${
+                        <div className="absolute top-3 right-3 z-10">
+                          <span className={`px-2.5 py-0.8 rounded-full text-[9px] font-sans font-bold tracking-widest uppercase backdrop-blur-md border shadow-lg ${
                             item.badge === "YAKINDA"
-                              ? "bg-purple-600/80 text-purple-100 border-purple-400/40"
-                              : "bg-emerald-600/80 text-emerald-100 border-emerald-400/40"
+                              ? "bg-purple-600/80 text-purple-100 border-purple-400/50 shadow-purple-600/20"
+                              : "bg-emerald-600/80 text-emerald-100 border-emerald-400/50 shadow-emerald-600/20"
                           }`}>
                             {item.badge}
                           </span>
@@ -792,12 +804,11 @@ export default function Home() {
                       )}
                     </div>
 
-                    {/* Alt Bilgi & İçerik Alanı: Emoji, Başlık, Açıklama ve İnce Detay Etiketleri */}
-                    <div className="p-4 flex-1 flex flex-col justify-between">
+                    {/* Alt Bilgi & İçerik Alanı (Emojisiz, Kurumsal & Modern Tasarım) */}
+                    <div className="p-5 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#0d0d14] to-[#0a0a0f]">
                       <div>
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="text-base select-none shrink-0">{item.emoji}</span>
-                          <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
+                        <div className="flex items-center justify-between gap-2 mb-2">
+                          <h3 className="font-display text-[15px] font-bold text-white group-hover:text-purple-300 transition-colors tracking-tight">
                             {item.title}
                           </h3>
                         </div>
@@ -807,13 +818,13 @@ export default function Home() {
                         </p>
                       </div>
 
-                      {/* İnce Özellik Detayları */}
+                      {/* İnce Mühendislik Etiketleri */}
                       {item.specs && item.specs.length > 0 && (
-                        <div className="mt-3.5 pt-2.5 border-t border-white/[0.04] flex items-center gap-1.5 flex-wrap">
+                        <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-1.5 flex-wrap">
                           {item.specs.map((sp, sIdx) => (
                             <span 
                               key={sIdx}
-                              className="text-[10px] text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-md px-2 py-0.5"
+                              className="text-[10px] font-mono text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-md px-2 py-0.5"
                             >
                               {sp}
                             </span>
