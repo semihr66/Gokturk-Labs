@@ -238,122 +238,170 @@ const extraSystems: Array<{
   command: string;
   specs: string[];
   icon: any;
+  emoji: string;
+  coverGradient: string;
+  coverImage?: string;
   badge?: string;
   statusText: string;
 }> = [
   { 
     id: "welcome",
     category: "ONBOARDING",
-    title: "Karşılama Akışı & Canvas Afiş", 
-    detail: "Sunucuya katılan üyeleri dinamik avatar + banner grafikleriyle karşılar, kurallı hoş geldin mesajı ve otomatik rol atamasını 0.1 sn içinde tamamlar.",
+    title: "Karşılama & Uğurlama", 
+    detail: "Dinamik görsel kartlar ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
     command: "/welcome set [kanal] [afis_modu]",
     specs: ["Canvas 2D Avatar Render", "Otomatik Karşılama Rolü", "DM veya Kanal Seçimi"],
     icon: MessageCircle,
+    emoji: "🖼️",
+    coverGradient: "from-purple-600 via-indigo-500 to-pink-500",
+    coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
     statusText: "Aktif Entegrasyon"
   },
   { 
     id: "level",
     category: "ENGAGEMENT",
-    title: "Seviye & Dinamik XP Motoru", 
-    detail: "Metin ve ses kanallarındaki etkileşimi ayrı puanlayan, spam filtresiyle korunan ve kişiselleştirilebilir rank kartları sunan ödül altyapısı.",
+    title: "Seviye & XP Sistemi", 
+    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
     command: "/rank [kullanici] | /top10",
     specs: ["Ses & Metin Çift XP Havuzu", "Özel SVG/PNG Rank Kartı", "Kademeli Rol Ödülleri"],
     icon: Zap,
+    emoji: "📊",
+    coverGradient: "from-cyan-600 via-blue-600 to-indigo-900",
+    coverImage: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=600&q=80",
     statusText: "Canlı Hesaplama"
   },
   { 
     id: "invite",
     category: "TELEMETRY",
-    title: "Davet Takibi & Vanity Analizi", 
-    detail: "Hangi üyenin hangi davet linkiyle geldiğini, ayrılanları, sahte (fake) hesapları ve özel URL kullanımlarını milisaniyelik loglar.",
+    title: "Davet Takip Sistemi", 
+    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
     command: "/invites [kullanici] | /vanity stats",
     specs: ["Sahte Hesap (Fake) Algılama", "Bonus / Eksilen Davet Kaydı", "Canlı Log Kanalı"],
     icon: ArrowUpRight,
+    emoji: "📩",
+    coverGradient: "from-emerald-700 via-teal-800 to-zinc-900",
+    coverImage: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80",
     statusText: "Gerçek Zamanlı"
   },
   { 
     id: "giveaway",
     category: "EVENTS",
-    title: "Çekiliş & Ödül Yönetimi", 
-    detail: "Zaman ayarlı, zorunlu rol şartlı ve çoklu kazanan destekli çekiliş motoru. Kriptografik rastgele seçimle manipülasyonu engeller.",
+    title: "Çekiliş Sistemi", 
+    detail: "Zaman ayarlı, kriter destekli ve otomatize edilmiş çekiliş motoru. Rol şartı ve yedek talihli seçer.",
     command: "/cekilis baslat [sure] [odul] [kazanan]",
     specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı Filtresi", "Yedek Kazanan (Reroll)"],
     icon: Sparkles,
+    emoji: "🎉",
+    coverGradient: "from-blue-600 via-cyan-500 to-teal-400",
+    coverImage: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80",
     statusText: "Otomasyon"
+  },
+  { 
+    id: "entertainment",
+    category: "COMMUNITY",
+    title: "Eğlence Modülleri", 
+    detail: "Topluluk etkileşimini artıran interaktif komut setleri, mini oyunlar ve kullanıcı eğlence araçları.",
+    command: "/eglence zar-at | /eglence duello",
+    specs: ["İnteraktif Oyun Menüsü", "Şans ve Zar Komutları", "Özelleştirilebilir Yanıtlar"],
+    icon: Coins,
+    emoji: "🎲",
+    coverGradient: "from-fuchsia-600 via-purple-700 to-zinc-900",
+    coverImage: "https://images.unsplash.com/photo-1511512578047-dfb367046420?auto=format&fit=crop&w=600&q=80",
+    statusText: "Aktif Modül"
+  },
+  { 
+    id: "ai",
+    category: "INTELLIGENCE",
+    title: "Gemini AI Entegrasyonu", 
+    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
+    command: "/ai sor [soru] | /ai rehber",
+    specs: ["Google Gemini 2.5 Flash", "Sunucu Dokümantasyonu Hafızası", "Doğal Türkçe Yanıtlama"],
+    icon: Bot, 
+    emoji: "🤖",
+    coverGradient: "from-indigo-600 via-purple-600 to-pink-500",
+    coverImage: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=600&q=80",
+    badge: "YAKINDA!",
+    statusText: "Geliştirme Aşamasında"
   },
   { 
     id: "ticket",
     category: "SUPPORT",
-    title: "Gelişmiş Butonlu Bilet (Ticket)", 
-    detail: "Departman bazlı (Destek, Satış, VIP) buton menüleri, yetkiliye özel geçici kanallar ve kapatıldığında otomatik HTML transkript arşivleme.",
+    title: "Destek & Talep (Ticket)", 
+    detail: "Buton tabanlı özel destek kanalları ve log transkript altyapısı. Departmanlara göre ayrılmış hızlı bilet masası.",
     command: "/ticket panel kur [kategori]",
     specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript", "Kilit ve Arşiv Akışı"],
     icon: Headphones, 
+    emoji: "🎫",
+    coverGradient: "from-zinc-700 via-zinc-800 to-black",
+    coverImage: "https://images.unsplash.com/photo-1534536281715-e28d76689b4d?auto=format&fit=crop&w=600&q=80",
     badge: "BUTONLU TICKET",
     statusText: "Kurumsal Altyapı"
   },
   { 
     id: "autorole",
     category: "AUTOMATION",
-    title: "Otomatik Rol & Doğrulama", 
-    detail: "Yeni katılan üyelere veya kural kabul edenlere gecikmesiz rol dağıtır. Menülü veya butonlu rol alma istasyonları oluşturur.",
+    title: "Otomatik Rol Yönetimi", 
+    detail: "Yeni katılan üye ve botlara anlık yetki ve rol tanımlaması. Menülü veya butonlu rol dağıtımı.",
     command: "/rolmenu olustur [mesaj_id]",
     specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri", "Bot & Üye Ayrımı"],
     icon: Settings2,
+    emoji: "🎴",
+    coverGradient: "from-blue-700 via-indigo-900 to-zinc-950",
+    coverImage: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=600&q=80",
     statusText: "Yüksek Hızlı"
   },
   { 
     id: "defense",
     category: "SECURITY",
-    title: "Göktürk Defense (Anti-Raid)", 
-    detail: "Spam, hızlı katılım saldırıları, izinsiz link/reklam, sağ-tıklama ban koruması ve şüpheli hesapları anında karantinaya alma kalkanı.",
+    title: "Güvenlik & Moderasyon", 
+    detail: "Spam, reklam, küfür ve zararlı linklere karşı 7/24 aktif koruma filtresi. Anti-raid ve karantina kalkanı.",
     command: "/defense mod [katı|orta] | /karantina",
     specs: ["Discord AutoMod v2 Entegre", "Anti-Raid & Karantina Kalkanı", "Sağ Tık / Yetki İhlal Alarmı"],
     icon: ShieldCheck,
+    emoji: "🛡️",
+    coverGradient: "from-sky-700 via-slate-800 to-black",
+    coverImage: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=600&q=80",
     badge: "GÖKTÜRK DEFENSE",
     statusText: "Tam Kalkan"
   },
   { 
-    id: "voice",
-    category: "AUDIO",
-    title: "Özel Ses Odaları & HD Müzik", 
-    detail: "Odaya girince otomatik kilitli özel oda kurma, panelden üye izinlerini yönetme ve Spotify/YouTube destekli 128 kbps kristal netliğinde ses iletimi.",
-    command: "/ses oda-kilitle | /play [parca]",
-    specs: ["Tıkla-Oluşsun Dinamik Oda", "Kullanıcı Panel Arayüzü", "128 kbps Ultra HD Müzik"],
-    icon: Music, 
-    badge: "128K ULTRA HD",
-    statusText: "Düşük Gecikme"
+    id: "games",
+    category: "INTERACTION",
+    title: "İnteraktif Oyun Sistemleri", 
+    detail: "Kelime türetme, sayı tahmini ve oyun kanalı modülleri. Sunucu içi rekabeti canlı tutan puan tablosu.",
+    command: "/oyun kelime-turet | /oyun sayi-tahmin",
+    specs: ["Kelime Zinciri & Sözlük", "Sayı Tahmin Motoru", "Günlük & Haftalık Skor"],
+    icon: Bot,
+    emoji: "🎮",
+    coverGradient: "from-purple-800 via-violet-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&w=600&q=80",
+    statusText: "Topluluk Oyunları"
   },
   { 
     id: "backup",
     category: "MANAGEMENT",
-    title: "Sunucu Yedekleme & Şablon", 
-    detail: "Kanal hiyerarşisi, kategori izinleri, roller ve emojileri tek tıkla şifreli JSON olarak depolar; acil durumlarda sıfır kayıpla geri yükler.",
+    title: "Otomatik Sunucu Mimarisi", 
+    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
     command: "/backup al | /sablon kur [kod]",
     specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon", "Sıfır İzin Kaybı Güvencesi"],
     icon: Layers3, 
+    emoji: "🛠️",
+    coverGradient: "from-amber-700 via-orange-900 to-zinc-950",
+    coverImage: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=600&q=80",
     badge: "1. SINIF ŞABLON",
     statusText: "Korumalı Veri"
-  },
-  { 
-    id: "ai",
-    category: "INTELLIGENCE",
-    title: "Google Gemini AI Sohbet & Asistan", 
-    detail: "Google Gemini 2.5 Flash API ile güçlendirilen akıllı sunucu rehberi. Sunucu kurallarını öğrenir, soruları yanıtlar ve 7/24 moderatör desteği sağlar.",
-    command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Sunucu Dokümantasyonu Hafızası", "Doğal Türkçe Yanıtlama"],
-    icon: Bot, 
-    badge: "YAKINDA!",
-    statusText: "Geliştirme Aşamasında"
   },
   {
     id: "audit-log",
     category: "AUDIT & SECURITY",
     title: "Görsel Denetim & Resimli Audit Log",
-    detail: "Silinen ve düzenlenen mesajları öncesi/sonrası ile anında kaydeder. Silinen resim, gif ve dosya eklerini embed içinde görsel olarak saklayıp log kanalına iletir.",
+    detail: "Silinen ve düzenlenen mesajları kaydeder. Silinen resim, gif ve dosya eklerini görsel olarak log kanalına iletir.",
     command: "/log kanal-ayarla [kanal] | /log filtre",
     specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Karşılaştırma", "Ses & Rol Hareket Günlüğü"],
     icon: Eye,
+    emoji: "📸",
+    coverGradient: "from-rose-800 via-red-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80",
     badge: "GÖRSEL LOG DESTEĞİ",
     statusText: "7/24 Canlı Kayıt"
   },
@@ -361,10 +409,13 @@ const extraSystems: Array<{
     id: "recruitment",
     category: "RECRUITMENT",
     title: "Yetkili Başvuru & Mülakat Motoru",
-    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar, aday rolünü tanımlar ve yetkili karar butonları sunar.",
+    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
     command: "/basvuru panel-kur | /mulakat baslat",
     specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası", "Tek Tıkla Kabul / Ret"],
     icon: UserCheck,
+    emoji: "👤",
+    coverGradient: "from-indigo-800 via-violet-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=80",
     badge: "MÜLAKAT MASASI",
     statusText: "Otomatik Akış"
   },
@@ -372,10 +423,13 @@ const extraSystems: Array<{
     id: "web-panel",
     category: "MANAGEMENT",
     title: "Şifreli Web Yönetim Paneli",
-    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını, AutoMod kurallarını ve rollerini güvenle yönetin. PBKDF2 ve HIBP kalkanı ile korunur.",
+    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını ve rollerini güvenle yönetin.",
     command: "/panel giris-linki | /panel yetki",
     specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı", "Mobil Uyumlu Canlı Kontrol"],
     icon: Lock,
+    emoji: "🔒",
+    coverGradient: "from-purple-900 via-zinc-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=80",
     badge: "PRO WEB PANEL",
     statusText: "Tam Şifreli"
   },
@@ -383,31 +437,28 @@ const extraSystems: Array<{
     id: "stats-voice",
     category: "ANALYTICS",
     title: "Canlı Sunucu İstatistik Sayaçları",
-    detail: "Toplam üye, çevrimiçi kullanıcılar, seste olanlar, aktif yetkililer ve sunucu boost seviyesini otomatik güncelleyen şık kilitli ses kanalları.",
+    detail: "Toplam üye, çevrimiçi kullanıcılar, seste olanlar ve sunucu boost seviyesini güncelleyen kilitli ses sayaçları.",
     command: "/sayac kur [stil] | /sayac guncelle",
     specs: ["Kilitli Ses Kanal Sayaçları", "5 Farklı İstatistik Modu", "10 Dk Otomatik Senkron"],
     icon: BarChart3,
+    emoji: "📈",
+    coverGradient: "from-cyan-800 via-sky-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
     statusText: "Sürekli Canlı"
   },
   {
-    id: "economy",
-    category: "GAMIFICATION",
-    title: "Ekonomi, Sanal Kasa & Market",
-    detail: "Metin ve ses kanallarında aktif oldukça para kazandıran sanal bakiye motoru. Günlük ödüller, kullanıcılar arası para transferi ve özel rol marketi.",
-    command: "/bakiye | /gunluk | /market satin-al",
-    specs: ["Sanal Para & Kasa Motoru", "Rol Satın Alma Marketi", "Yazı-Tura & Bahis Oyunları"],
-    icon: Coins,
-    statusText: "Sosyal Etkileşim"
-  },
-  {
-    id: "scheduler",
-    category: "PRODUCTIVITY",
-    title: "Zaman Ayarlı Görev & Hatırlatıcı",
-    detail: "Toplantılar, turnuvalar veya periyodik duyurular için takvimli bildirim motoru. Kanallara veya kullanıcılara belirlediğiniz saatte otomatik anons yapar.",
-    command: "/hatirlat [zaman] [kanal] [mesaj]",
-    specs: ["Dakikalık Cron Zamanlayıcı", "Kanal ve DM Bildirimi", "Tekrarlı Duyuru Döngüsü"],
-    icon: Calendar,
-    statusText: "Zaman Ayarlı"
+    id: "voice",
+    category: "AUDIO",
+    title: "Özel Ses Odaları & HD Müzik", 
+    detail: "Odaya girince otomatik kilitli özel oda kurma ve Spotify/YouTube destekli 128 kbps kristal netliğinde ses iletimi.",
+    command: "/ses oda-kilitle | /play [parca]",
+    specs: ["Tıkla-Oluşsun Dinamik Oda", "Kullanıcı Panel Arayüzü", "128 kbps Ultra HD Müzik"],
+    icon: Music, 
+    emoji: "🎵",
+    coverGradient: "from-pink-700 via-purple-900 to-zinc-950",
+    coverImage: "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=600&q=80",
+    badge: "128K ULTRA HD",
+    statusText: "Düşük Gecikme"
   }
 ];
 
@@ -757,104 +808,87 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Engineering Bento Grid Showcase */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {/* İsteğe Özel Mimari ve Tasarım Üst Çağrı Kutusu (ParsBot Stili) */}
+            <div className="mt-10 rounded-2xl border border-amber-500/30 bg-gradient-to-r from-amber-500/[0.08] via-zinc-900/80 to-amber-500/[0.08] p-5 text-center shadow-lg shadow-amber-500/5 backdrop-blur-md">
+              <div className="flex items-center justify-center gap-2 text-amber-400 font-bold text-sm">
+                <span>🛠️</span>
+                <span>İsteğe Özel Mimari ve Tasarım</span>
+              </div>
+              <p className="mt-1 text-xs text-zinc-300">
+                Aşağıdaki standart modüller dışında, topluluğunuza veya kurumunuza özel spesifik iş mantıklarını da <strong className="text-white underline decoration-amber-400 underline-offset-2">Discord üzerinden özel olarak kodluyoruz</strong>.
+              </p>
+            </div>
+
+            {/* ParsBot Style Module Cards Grid */}
+            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {extraSystems.map((item, idx) => {
-                const Icon = item.icon;
-                const isSpecial = item.id === "defense" || item.id === "ticket" || item.id === "audit-log";
                 const modNumber = (idx + 1).toString().padStart(2, "0");
                 return (
                   <div 
                     key={item.id}
-                    className={`relative rounded-2xl border transition-all duration-300 flex flex-col justify-between overflow-hidden group ${
-                      isSpecial 
-                        ? "border-purple-500/40 bg-gradient-to-b from-[#141224] to-[#0c0c14] shadow-xl shadow-purple-950/20" 
-                        : "border-white/10 bg-[#0e0e16] hover:border-purple-500/30"
-                    } p-5`}
+                    className="group relative rounded-2xl border border-white/10 bg-[#0c0c12] hover:border-purple-500/40 hover:bg-[#101018] transition-all duration-300 overflow-hidden flex flex-col justify-between shadow-xl shadow-black/40"
                   >
-                    {/* Top Meta Bar */}
-                    <div>
-                      <div className="flex items-center justify-between gap-2 border-b border-white/[0.06] pb-3.5 mb-3.5">
-                        <div className="flex items-center gap-2">
-                          <div className={`p-2 rounded-lg border ${
-                            isSpecial
-                              ? "bg-purple-500/15 border-purple-500/30 text-purple-300"
-                              : "bg-white/[0.04] border-white/10 text-zinc-300 group-hover:text-purple-300 group-hover:border-purple-500/30 transition-colors"
-                          }`}>
-                            <Icon className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <div className="flex items-center gap-1.5">
-                              <span className="mod-tag-category text-[10px] uppercase text-purple-400 font-bold">
-                                {item.category}
-                              </span>
-                              <span className="text-zinc-600 text-[10px]">•</span>
-                              <span className="mod-tag-id text-[10px] text-zinc-400 bg-white/[0.04] border border-white/[0.08] px-1.5 py-0.5 rounded font-medium">
-                                MOD {modNumber}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
+                    {/* Üst Görsel / Banner Alanı */}
+                    <div className="relative w-full h-36 overflow-hidden bg-zinc-950">
+                      {item.coverImage ? (
+                        <img 
+                          src={item.coverImage} 
+                          alt={item.title} 
+                          loading="lazy"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-80 group-hover:opacity-95" 
+                        />
+                      ) : (
+                        <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient} opacity-85`} />
+                      )}
+                      
+                      {/* Görsel Üzeri Hafif Karartma Gradyanı */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0c0c12] via-transparent to-black/30 pointer-events-none" />
 
+                      {/* Sağ Üst Rozet */}
+                      <div className="absolute top-3 right-3 flex items-center gap-2">
                         {item.badge ? (
-                          <span className="px-2 py-0.5 rounded border border-purple-500/40 bg-purple-500/10 text-[9px] font-sans font-bold text-purple-300 tracking-wider uppercase">
+                          <span className="px-2 py-0.5 rounded-full border border-purple-400/40 bg-purple-950/80 backdrop-blur-md text-[9px] font-sans font-bold text-purple-200 tracking-wider uppercase shadow-md">
                             {item.badge}
                           </span>
                         ) : (
-                          <span className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-400">
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                            {item.statusText}
+                          <span className="px-2 py-0.5 rounded-full border border-white/10 bg-black/60 backdrop-blur-md text-[9px] font-mono text-zinc-300">
+                            MOD {modNumber}
                           </span>
                         )}
                       </div>
-
-                      {/* Title & Description */}
-                      <h3 className="font-display text-base font-bold text-white group-hover:text-purple-200 transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="mt-2 text-xs text-zinc-400 leading-relaxed">
-                        {item.detail}
-                      </p>
-
-                      {/* Slash Command Console Display */}
-                      <div className="mt-4 rounded-lg border border-white/5 bg-[#08080d] p-2.5 font-mono text-[11px] text-zinc-300 flex items-center justify-between gap-2">
-                        <div className="flex items-center gap-1.5 overflow-hidden">
-                          <Terminal className="h-3 w-3 text-purple-400 shrink-0" />
-                          <span className="text-zinc-500 shrink-0">$</span>
-                          <span className="truncate text-purple-300 font-semibold">{item.command}</span>
-                        </div>
-                        <span className="shrink-0 text-[9px] font-sans font-medium text-zinc-500 uppercase px-1.5 py-0.5 rounded bg-white/[0.04]">
-                          NATIVE
-                        </span>
-                      </div>
-
-                      {/* Technical Specs Tags */}
-                      <div className="mt-3.5 flex flex-wrap gap-1.5">
-                        {item.specs.map((spec, sIdx) => (
-                          <span 
-                            key={sIdx}
-                            className="inline-flex items-center gap-1 text-[10px] font-mono rounded bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 text-zinc-400"
-                          >
-                            <span className="text-purple-400 font-bold">›</span>
-                            <span>{spec}</span>
-                          </span>
-                        ))}
-                      </div>
                     </div>
 
-                    {/* Bottom Action */}
-                    <div className="mt-5 pt-3.5 border-t border-white/[0.06] flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-1.5 text-[10px] font-mono text-zinc-500">
-                        <ShieldCheck className="h-3 w-3 text-emerald-400" />
-                        <span>Production Ready</span>
+                    {/* Alt Bilgi & İçerik Alanı */}
+                    <div className="p-4 flex flex-col flex-1 justify-between">
+                      <div>
+                        {/* Başlık ve Emoji */}
+                        <div className="flex items-center gap-2 mb-1.5">
+                          <span className="text-base select-none">{item.emoji}</span>
+                          <h3 className="font-display text-base font-bold text-white group-hover:text-purple-300 transition-colors">
+                            {item.title}
+                          </h3>
+                        </div>
+
+                        {/* Açıklama */}
+                        <p className="text-xs text-zinc-400 leading-relaxed min-h-[38px]">
+                          {item.detail}
+                        </p>
                       </div>
-                      <a 
-                        href="#paketler"
-                        className="inline-flex items-center gap-1 text-xs font-semibold text-purple-400 hover:text-purple-300 transition-colors"
-                      >
-                        <span>Paketle Edin</span>
-                        <ArrowUpRight className="h-3 w-3" />
-                      </a>
+
+                      {/* Alt Konsol & Komut Şeridi */}
+                      <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between text-xs">
+                        <div className="flex items-center gap-1.5 font-mono text-[11px] text-purple-400 truncate max-w-[200px]">
+                          <span className="text-zinc-500">$</span>
+                          <span className="truncate">{item.command.split(" ")[0]}</span>
+                        </div>
+                        <a 
+                          href="#paketler"
+                          className="inline-flex items-center gap-1 text-xs font-semibold text-zinc-300 hover:text-white transition-colors"
+                        >
+                          <span>Paket Seç</span>
+                          <ArrowRight className="h-3 w-3 text-purple-400" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 );
