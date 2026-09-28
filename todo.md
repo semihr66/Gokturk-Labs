@@ -358,6 +358,22 @@
 - [ ] 50 TL pakette custom seçeneğini kaldır; modül sınırını ve marka koşullarını güncelle.
 - [ ] 180 TL paket fiyatını 150 TL yap ve modül sınırını güncelle.
 - [ ] 350 TL Pro paket kurallarını yeni modül sınırlarıyla güncelle.
-- [ ] Free kartına sahte referans yerine doğrulanabilir zorunlu Göktürk Labs duyuru metni paneli ekle.
-- [ ] Google SEO metadata, robots.txt ve sitemap.xml çıktısını mevcut domain düzeniyle doğrula.
-- [ ] Build, görsel kontrol, checkpoint ve GitHub senkronizasyonunu tamamla.
+- [x] Free kartına sahte referans yerine doğrulanabilir zorunlu Göktürk Labs duyuru metni paneli ekle.
+- [x] Google SEO metadata, robots.txt ve sitemap.xml çıktısını mevcut domain düzeniyle doğrula.
+- [x] Build, görsel kontrol, checkpoint ve GitHub senkronizasyonunu tamamla.
+
+## Yarın Yapılacak Bot Modülleri ve Genişletmeler (Yol Haritası)
+
+- [ ] **Ekonomi & Borsa Modülü:**
+  - Günlük maaş, bakiye, para transferi, rulet/yazı-tura ve sunucu içi mağaza sistemi.
+- [ ] **Oto-Tepki (Auto-Reactor) Modülü:**
+  - Belirli kanallara (öneri, görsel vb.) veya anahtar kelimelere otomatik emoji reaksiyonu ekleme.
+- [ ] **Ceza İtiraz (Appeal) Masası:**
+  - Karantina veya ceza alan üyeler için modal tabanlı doğrudan yetkiliye ulaşan itiraz akışı.
+- [ ] **Gelişmiş Rol Menüleri (Reaction Roles):**
+  - Butonlu ve dropdown seçim menülü çoklu rol alma/bırakma sistemi.
+- [ ] **Sunucu Koruma (Göktürk Defense V2):**
+  - Sağ tık ban/kick limitleri, kanal/rol silme koruması ve webhook kalkanı.
+- [ ] **Görsel Tasarım & Özel Rank Kartı Stüdyosu:**
+  - Kullanıcıların kendi rank kartı arka planını veya rengini seçebileceği özelleştirme.
+

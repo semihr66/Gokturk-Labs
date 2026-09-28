@@ -264,16 +264,16 @@ const extraSystems: Array<{
   },
   {
     id: "audit-log",
-    category: "AUDIT & SECURITY",
-    title: "Görsel Denetim & Resimli Audit Log",
-    detail: "Silinen ve düzenlenen mesajları kaydeder. Silinen resim, gif ve dosya eklerini görsel olarak log kanalına iletir.",
+    category: "LOGGING & AUDIT",
+    title: "Log Tutma",
+    detail: "Sunucudaki tüm hareketleri eksiksiz kaydeder. Silinen ve düzenlenen mesajların yanı sıra silinen resim, gif ve görsel dosyaları da anında log kanalına iletir.",
     command: "/log kanal-ayarla [kanal] | /log filtre",
-    specs: ["Silinen Görsel & GIF Kaydı", "Düzenlenen Mesaj Takibi"],
+    specs: ["Resimli & Görsel Log Kaydı", "Düzenlenen & Silinen Mesajlar"],
     icon: Eye,
-    emoji: "📸",
+    emoji: "📜",
     coverGradient: "from-rose-950 via-zinc-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
-    badge: "GÖRSEL LOG",
+    badge: "TAM DENETİM",
     statusText: "7/24 Canlı Kayıt"
   },
   { 
