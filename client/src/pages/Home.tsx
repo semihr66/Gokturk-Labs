@@ -291,6 +291,20 @@ const extraSystems: Array<{
   },
 
   // 2. KADEME: ONBOARDING, KAYIT & GİRİŞ AKIŞI (Üyenin İlk Karşılaştığı Alan)
+  {
+    id: "register",
+    category: "ONBOARDING",
+    title: "Butonlu Kayıt & Doğrulama Sistemi",
+    detail: "Sunucuya katılan yeni üyeleri kayıtsız rolüyle karşılar; tek tıkla buton veya modal form üzerinden anında kayıt edip sunucuya dahil eder.",
+    command: "/kayit panel-kur | /kayit log-ayarla",
+    specs: ["Tek Tık Butonlu Doğrulama", "Kayıtsız / Üye Rol Ayrımı"],
+    icon: UserCheck,
+    emoji: "📋",
+    coverGradient: "from-violet-950 via-purple-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&w=700&q=80",
+    badge: "YENİ SİSTEM",
+    statusText: "Anında Aktivasyon"
+  },
   { 
     id: "welcome",
     category: "ONBOARDING",
@@ -317,21 +331,8 @@ const extraSystems: Array<{
     coverImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=700&q=80",
     statusText: "Yüksek Hızlı"
   },
-  { 
-    id: "invite",
-    category: "TELEMETRY",
-    title: "Davet Takip Sistemi", 
-    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
-    command: "/invites [kullanici] | /vanity stats",
-    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
-    icon: ArrowUpRight,
-    emoji: "📩",
-    coverGradient: "from-emerald-900 via-teal-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
-    statusText: "Gerçek Zamanlı"
-  },
 
-  // 3. KADEME: YÖNETİM, BİLET & PERSONEL MÜLAKATI (Sunucu Operasyonları)
+  // 3. KADEME: YÖNETİM, BİLET, BAŞVURU & İSTATİSTİK (Sunucu Operasyonları)
   { 
     id: "ticket",
     category: "SUPPORT",
@@ -372,7 +373,7 @@ const extraSystems: Array<{
     statusText: "Sürekli Canlı"
   },
 
-  // 4. KADEME: İLERİ TEKNOLOJİ & WEB ALTYAPISI (Akıllı Sistemler)
+  // 4. KADEME: KURUMSAL WEB & GELİŞMİŞ ALTYAPI (Panel & Özel Ses)
   {
     id: "web-panel",
     category: "MANAGEMENT",
@@ -388,18 +389,17 @@ const extraSystems: Array<{
     statusText: "Tam Şifreli"
   },
   { 
-    id: "ai",
-    category: "INTELLIGENCE",
-    title: "Gemini AI Entegrasyonu", 
-    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
-    command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
-    icon: Bot, 
-    emoji: "🤖",
-    coverGradient: "from-indigo-950 via-purple-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
-    badge: "YAKINDA",
-    statusText: "Geliştirme Aşamasında"
+    id: "invite",
+    category: "TELEMETRY",
+    title: "Davet Takip Sistemi", 
+    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
+    command: "/invites [kullanici] | /vanity stats",
+    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
+    icon: ArrowUpRight,
+    emoji: "📩",
+    coverGradient: "from-emerald-900 via-teal-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
+    statusText: "Gerçek Zamanlı"
   },
   { 
     id: "voice",
@@ -454,6 +454,22 @@ const extraSystems: Array<{
     coverGradient: "from-fuchsia-900 via-purple-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
     statusText: "Aktif Modül"
+  },
+
+  // 6. KADEME: GELECEK VİZYONU & GELİŞTİRME AŞAMASINDAKİ SİSTEMLER (En Altta)
+  { 
+    id: "ai",
+    category: "INTELLIGENCE",
+    title: "Gemini AI Entegrasyonu", 
+    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
+    command: "/ai sor [soru] | /ai rehber",
+    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
+    icon: Bot, 
+    emoji: "🤖",
+    coverGradient: "from-indigo-950 via-purple-900 to-black",
+    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
+    badge: "YAKINDA",
+    statusText: "Geliştirme Aşamasında"
   }
 ];
 
