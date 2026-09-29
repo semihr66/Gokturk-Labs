@@ -362,14 +362,15 @@ const extraSystems: Array<{
   {
     id: "stats-voice",
     category: "ANALYTICS",
-    title: "Canlı Sunucu İstatistik Sayaçları",
-    detail: "Toplam üye, çevrimiçi kullanıcılar, seste olanlar ve sunucu boost seviyesini güncelleyen kilitli ses sayaçları.",
-    command: "/sayac kur [stil] | /sayac guncelle",
-    specs: ["Kilitli Ses Kanalları", "5 Farklı İstatistik Modu"],
+    title: "Canlı Kilitli Ses Sayaçları (10 Kanal)",
+    detail: "📈 İSTATİSTİK kategorisi altında kilitli ses kanallarında Toplam Üye, Üyeler, Botlar, Çevrimiçi, Sestekiler, Boost, Seviye, Roller ve Kanalları canlı günceller.",
+    command: "/sayac-kur | /sayac-guncelle | /sayac-sil",
+    specs: ["10 Kilitli Ses Sayacı", "Otomatik 10 Dk & Katılma Senkronu"],
     icon: BarChart3,
     emoji: "📈",
     coverGradient: "from-cyan-950 via-zinc-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80",
+    badge: "GELİŞMİŞ SAYAÇ",
     statusText: "Sürekli Canlı"
   },
 
