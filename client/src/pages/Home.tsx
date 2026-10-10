@@ -39,7 +39,8 @@ import {
   BarChart3,
   UserCheck,
   Eye,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Youtube
 } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -196,6 +197,7 @@ const products = [
     highlights: [
       "Şifreli Web Yönetim Paneli (PBKDF2 + Have I Been Pwned Koruması)",
       "Yetkili Başvuru & Mülakat Motoru (Sesli, metin ve kombine özel odalar)",
+      "YouTube Video & Canlı Bildirim Motoru (Sıfır Gecikme & Özel Rol Etiketi)",
       "Çoklu Departman Bilet (Ticket) Sistemi ve Otomatik Arşivleme",
       "Göktürk Defense (Anti-Raid, Anti-Spam, Karantina & Native AutoMod)",
       "Ses & Metin Seviye/XP Sistemi ve Özel Rank Kartı Tasarımcısı",
@@ -414,6 +416,20 @@ const extraSystems: Array<{
     coverGradient: "from-pink-950 via-purple-950 to-black",
     coverImage: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=700&q=80",
     statusText: "Düşük Gecikme"
+  },
+  {
+    id: "youtube-alert",
+    category: "MEDIA & BROADCAST",
+    title: "YouTube Video & Canlı Bildirim Sistemi",
+    detail: "YouTube kanallarınızı (@kullaniciadi, kanal linki veya ID ile) bağlayın; yeni video ve canlı yayınlar paylaşıldığı anda şık embed, doğrudan izleme butonu ve özel rol etiketiyle anında sunucunuza duyurulsun.",
+    command: "/youtube ekle [kanal] [discord_kanal] | /youtube liste",
+    specs: ["Sıfır Gecikme RSS Motoru", "Özel Rol Etiketi & Web Panel Entegre"],
+    icon: Youtube,
+    emoji: "📺",
+    coverGradient: "from-red-950 via-zinc-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=700&q=80",
+    badge: "YENİ SİSTEM",
+    statusText: "Canlı Entegrasyon"
   },
 
   // 5. KADEME: TOPLULUK ETKİLEŞİMİ, AKTİVİTE & ÖDÜLLER (Sosyal Katman)
