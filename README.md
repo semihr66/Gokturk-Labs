@@ -14,7 +14,7 @@ Amacımız; **kaliteli, güvenilir ve toplulukların ihtiyaçlarına gerçekten 
 ## Projemizi İnceleyin
 
 **Discord Sunucumuz:**
-https://discord.gg/zUwu3rr3N
+https://discord.gg/Y5CTNskKCG
 
 **Web Sitemiz:**
 https://gokturklabs.dev.tc/

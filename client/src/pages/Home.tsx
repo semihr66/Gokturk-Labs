@@ -48,7 +48,7 @@ import StudioHero3D from "@/components/StudioHero3D";
 import Footer from "@/components/Footer";
 
 const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
-const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
+const COMMUNITY_URL = "https://discord.gg/Y5CTNskKCG";
 const GITHUB_URL = "https://github.com/semihr66/Gokturk-Labs";
 const LOGO_URL = "/gokturk-labs-logo.png";
 
@@ -1207,7 +1207,7 @@ export default function Home() {
                     </div>
                     <div>
                       <strong className="text-xs font-semibold text-white block group-hover:text-purple-300 transition-colors">Göktürk Labs Topluluk Sunucusu</strong>
-                      <span className="text-[11px] text-zinc-400 font-mono">discord.gg/CFrwUThhE</span>
+                      <span className="text-[11px] text-zinc-400 font-mono">discord.gg/Y5CTNskKCG</span>
                     </div>
                     <ArrowUpRight className="h-4 w-4 ml-auto text-zinc-500 group-hover:text-white transition-colors" />
                   </a>

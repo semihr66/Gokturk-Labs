@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowUpRight, ShieldCheck } from "lucide-react";
 import Footer from "@/components/Footer";
 
 const LOGO_URL = "/gokturk-labs-logo.png";
-const DISCORD_URL = "https://discord.gg/CFrwUThhE";
+const DISCORD_URL = "https://discord.gg/Y5CTNskKCG";
 
 type PolicySection = { title: string; paragraphs?: string[]; bullets?: string[] };
 

@@ -72,7 +72,7 @@
 - [x] Free planı geri ekle.
 - [x] Fiyat arttıkça performans seviyesini kartlarda görünür kıl.
 - [x] Sipariş CTA’larını kişisel Discord DM adresine bağla.
-- [x] Topluluk CTA’larını https://discord.gg/CFrwUThhE adresine bağla.
+- [x] Topluluk CTA’larını https://discord.gg/Y5CTNskKCG adresine bağla.
 - [x] Üstteki 01/02/03 akışını koru ve alt kartlardaki A/B/C işaretlerini kaldır.
 
 ## 800 MB / 7/24 Bot Hosting Araştırması
@@ -153,7 +153,7 @@
 
 - [x] Üst menüdeki “Discord’a yaz” CTA’sına Discord logosu ekle.
 - [x] Üst CTA’yı “Topluluk & Destek” olarak değiştir.
-- [x] Üst CTA’yı https://discord.gg/CFrwUThhE topluluk/destek sunucusuna yönlendir.
+- [x] Üst CTA’yı https://discord.gg/Y5CTNskKCG topluluk/destek sunucusuna yönlendir.
 - [x] Görseldeki alt “Fikrini anlat / Biz üretelim / Yeri sen seç / Yanında olalım” rayını komple kaldır.
 - [x] Üstteki 01/02/03 Nasıl çalışır akışını koru.
 - [x] Masaüstü ve mobil görünümü doğrula.

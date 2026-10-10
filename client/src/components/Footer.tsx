@@ -1,7 +1,7 @@
 import { ArrowUpRight } from "lucide-react";
 
 const LOGO_URL = "/gokturk-labs-logo.png";
-const COMMUNITY_URL = "https://discord.gg/CFrwUThhE";
+const COMMUNITY_URL = "https://discord.gg/Y5CTNskKCG";
 
 function DiscordMark({ className = "h-4 w-4" }: { className?: string }) {
   return (
