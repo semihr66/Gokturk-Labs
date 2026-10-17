@@ -473,18 +473,31 @@ const extraSystems: Array<{
     statusText: "Aktif Modül"
   },
 
-  // 6. KADEME: GELECEK VİZYONU & GELİŞTİRME AŞAMASINDAKİ SİSTEMLER (En Altta)
+  // 6. KADEME: YAPAY ZEKA & GELECEK VİZYONU SİSTEMLERİ
   { 
     id: "ai",
     category: "INTELLIGENCE",
     title: "Gemini AI Entegrasyonu", 
-    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Sunucu kurallarını öğrenip 7/24 rehberlik eder.",
+    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Çok katmanlı Google Gemini altyapısıyla sunucu kurallarını öğrenip 7/24 rehberlik ve sohbet desteği sağlar.",
     command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Sunucu Hafızası"],
+    specs: ["Google Gemini 2.5 Flash", "Çok Katmanlı API", "Sunucu Hafızası"],
     icon: Bot, 
     emoji: "🤖",
     coverGradient: "from-indigo-950 via-purple-900 to-black",
     coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
+    statusText: "Aktif Modül"
+  },
+  { 
+    id: "minecraft",
+    category: "MINECRAFT",
+    title: "Minecraft Sunucu Sistemleri", 
+    detail: "Minecraft sunucunuzu Discord ile canlı entegre edin. Gerçek zamanlı konsol logları, Discord üzerinden oyun içi sunucu yönetimi, komut gönderme ve oyuncu takibi.",
+    command: "/mc komut [komut] | /mc log | /mc oyuncular",
+    specs: ["Canlı Konsol Logları", "Discord'dan Sunucu Yönetimi", "Oyuncu & Durum Takibi"],
+    icon: Server, 
+    emoji: "⛏️",
+    coverGradient: "from-emerald-950 via-green-950 to-black",
+    coverImage: "https://images.unsplash.com/photo-1627856014754-2907e2355d54?auto=format&fit=crop&w=700&q=80",
     badge: "YAKINDA",
     statusText: "Geliştirme Aşamasında"
   }
@@ -673,8 +686,8 @@ export default function Home() {
 
                 <div className="my-8 flex flex-col gap-4 text-base font-medium text-zinc-300">
                   <a href="#moduller" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1 text-purple-300 font-semibold flex items-center justify-between">
-                    <span>Modüller (16 Özel Sistem)</span>
-                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">16</span>
+                    <span>Modüller ({extraSystems.length} Özel Sistem)</span>
+                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">{extraSystems.length}</span>
                   </a>
                   <a href="#nasil" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Nasıl Çalışır?</a>
                   <a href="#paketler" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Paketler &amp; Fiyatlar</a>
