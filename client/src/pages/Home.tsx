@@ -497,7 +497,7 @@ const extraSystems: Array<{
     icon: Server, 
     emoji: "⛏️",
     coverGradient: "from-emerald-950 via-green-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1627856014754-2907e2355d54?auto=format&fit=crop&w=700&q=80",
+    coverImage: "/minecraft-server-banner.jpg",
     badge: "YAKINDA",
     statusText: "Geliştirme Aşamasında"
   }
@@ -818,15 +818,15 @@ export default function Home() {
                   >
                     {/* Üst Görsel / Banner Alanı */}
                     <div className="relative w-full h-44 overflow-hidden bg-zinc-950">
-                      {item.coverImage ? (
+                      <div className={`absolute inset-0 bg-gradient-to-br ${item.coverGradient}`} />
+                      {item.coverImage && (
                         <img 
                           src={item.coverImage} 
                           alt={item.title} 
                           loading="lazy"
-                          className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.88] group-hover:brightness-100" 
+                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
+                          className="relative w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.88] group-hover:brightness-100" 
                         />
-                      ) : (
-                        <div className={`w-full h-full bg-gradient-to-br ${item.coverGradient}`} />
                       )}
 
                       {/* Görsel üzerinde yumuşak karartma katmanı */}
