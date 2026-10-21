@@ -24,7 +24,6 @@ import {
   CheckCircle2, 
   AlertCircle, 
   HelpCircle,
-  ExternalLink,
   Send,
   Boxes,
   LockKeyhole,
@@ -81,6 +80,7 @@ const plans: PlanItem[] = [
     performance: "Standart",
     score: 1,
     features: [
+      "Zorunlu: En az 50 üye şartı (50+ members)",
       "Temel genel komutlar ve karşılama mesajları",
       "Hazır altyapı modülleriyle hızlı kurulum",
       "3 + 1 modül hakkı (Kampanya dahil)",
@@ -89,7 +89,7 @@ const plans: PlanItem[] = [
       "İsim/logo/kapak düzenleme yok",
       "Zorunlu: Sunucu adı veya açıklamasında '— By Göktürk Labs' ibaresi"
     ],
-    notice: "Topluluk planında sunucunuzda Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer almalıdır."
+    notice: "Topluluk planında sunucunuzun en az 50 üyeye sahip olması ve Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer alması şarttır."
   },
   {
     id: "dengeli",
@@ -98,13 +98,13 @@ const plans: PlanItem[] = [
     period: "aylık",
     badge: "⚡ En İyi Fiyat / Performans",
     badgeType: "fp",
-    label: "DENGELİ · 4 MODÜL",
-    description: "Gelişmiş moderasyon, loglama ve 4 modül kapasitesiyle sunucunuzun güvenliği tam kontrol altında.",
+    label: "DENGELİ · 5 MODÜL",
+    description: "Gelişmiş moderasyon, loglama ve 5 modül kapasitesiyle sunucunuzun güvenliği tam kontrol altında.",
     performance: "Dengeli & Hızlı",
     score: 2,
     features: [
       "Başlangıç paketindeki tüm özellikler",
-      "4 modül tanımlama hakkı",
+      "5 modül tanımlama hakkı",
       "Gelişmiş moderasyon ve detaylı denetim kayıtları",
       "7/24 Kesintisiz VDS barındırma dahil",
       "Bot ismi, logosu ve Discord profili özelleştirilebilir",
@@ -1122,67 +1122,27 @@ export default function Home() {
           <div className="ambient-orbit ambient-orbit-right top-[18%]" aria-hidden="true" />
           <div className="ambient-orbit ambient-orbit-right-inner top-[24%]" aria-hidden="true" />
           
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-6 space-y-5">
-                <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">HAKKIMIZDA</span>
-                <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Şeffaf, Bağımsız ve Topluluk Odaklı Yazılım Geliştirme
-                </h2>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  Göktürk Labs; geliştirici <strong className="text-purple-300">semihr66</strong> tarafından temelleri atılan, Discord sunucularına profesyonel yazılım, yönetim ve telemetri altyapısı sunan bağımsız bir girişimdir.
-                </p>
-                <p className="text-sm text-zinc-400 leading-relaxed">
-                  Piyasadaki şişirilmiş fiyatlar, karmaşık yabancı arayüzler ve veri gizliliğini ihlal eden bot sistemlerine karşı; Türk Discord topluluklarına hızlı, güvenilir ve 7/24 kesintisiz çalışan yerli bir alternatif inşa ediyoruz.
-                </p>
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="space-y-6">
+              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">HAKKIMIZDA</span>
+              <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
+                Şeffaf, Bağımsız ve Topluluk Odaklı Yazılım Geliştirme
+              </h2>
+              <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
+                Göktürk Labs; geliştirici <strong className="text-purple-300">semihr66</strong> tarafından temelleri atılan, Discord sunucularına profesyonel yazılım, yönetim ve telemetri altyapısı sunan bağımsız bir girişimdir.
+              </p>
+              <p className="text-sm text-zinc-400 leading-relaxed">
+                Piyasadaki şişirilmiş fiyatlar, karmaşık yabancı arayüzler ve veri gizliliğini ihlal eden bot sistemlerine karşı; Türk Discord topluluklarına hızlı, güvenilir ve 7/24 kesintisiz çalışan yerli bir alternatif inşa ediyoruz.
+              </p>
 
-                <div className="pt-2 grid grid-cols-2 gap-4 text-xs font-mono">
-                  <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3.5">
-                    <span className="text-purple-400 font-bold block text-sm">Açık İletişim</span>
-                    <span className="text-zinc-400 mt-1 block">Yapay zeka robotları yerine doğrudan geliştirici ile 1-1 muhatapsınız.</span>
-                  </div>
-                  <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3.5">
-                    <span className="text-emerald-400 font-bold block text-sm">Sıfır Telemetri Satışı</span>
-                    <span className="text-zinc-400 mt-1 block">Sunucunuzun özel verileri veya mesajları asla satılmaz ya da paylaşılmaz.</span>
-                  </div>
+              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                  <span className="text-purple-400 font-bold block text-sm">Açık İletişim</span>
+                  <span className="text-zinc-400 mt-1 block">Yapay zeka robotları yerine doğrudan geliştirici ile 1-1 muhatapsınız.</span>
                 </div>
-              </div>
-
-              <div className="lg:col-span-6 rounded-2xl border border-white/10 bg-[#0e0e14] p-6 sm:p-8 space-y-6">
-                <h3 className="font-display text-lg font-bold text-white flex items-center gap-2">
-                  <Code2 className="h-5 w-5 text-purple-400" />
-                  <span>Kullandığımız Teknoloji Mimarisi</span>
-                </h3>
-
-                <div className="space-y-3 text-xs text-zinc-300">
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5">
-                    <span className="font-semibold text-white">Bot Çekirdeği:</span>
-                    <span className="font-mono text-purple-300">discord.js v14 + TypeScript</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5">
-                    <span className="font-semibold text-white">İşletim &amp; Sunucu:</span>
-                    <span className="font-mono text-emerald-300">Debian 12 Bookworm VDS</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5">
-                    <span className="font-semibold text-white">Süreç Yöneticisi:</span>
-                    <span className="font-mono text-cyan-300">PM2 Enterprise Cluster</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5">
-                    <span className="font-semibold text-white">Web Güvenliği:</span>
-                    <span className="font-mono text-amber-300">PBKDF2 256-Bit + HIBP API</span>
-                  </div>
-                  <div className="flex items-center justify-between p-3 rounded-xl bg-black/40 border border-white/5">
-                    <span className="font-semibold text-white">Frontend Web:</span>
-                    <span className="font-mono text-purple-300">React + Vite + Tailwind CSS</span>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex items-center justify-between border-t border-white/[0.06] text-xs">
-                  <span className="text-zinc-400">Resmi Kaynak Deposu:</span>
-                  <a href={GITHUB_URL} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 text-purple-400 hover:text-purple-300 font-mono">
-                    <span>semihr66/Gokturk-Labs</span>
-                    <ExternalLink className="h-3 w-3" />
-                  </a>
+                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                  <span className="text-emerald-400 font-bold block text-sm">Sıfır Telemetri Satışı</span>
+                  <span className="text-zinc-400 mt-1 block">Sunucunuzun özel verileri veya mesajları asla satılmaz ya da paylaşılmaz.</span>
                 </div>
               </div>
             </div>
