@@ -17,7 +17,7 @@ Amacımız; **kaliteli, güvenilir ve toplulukların ihtiyaçlarına gerçekten 
 https://discord.gg/Y5CTNskKCG
 
 **Web Sitemiz:**
-https://gokturklabs.dev.tc/
+https://gokturklabs.vercel.app/
 
 ---
 
