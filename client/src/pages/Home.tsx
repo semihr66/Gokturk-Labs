@@ -1,1377 +1,1178 @@
-import { useState, useId, useEffect } from "react";
-import { 
-  ShieldCheck, 
-  Terminal, 
-  Code2, 
-  Headphones, 
-  Sparkles, 
-  Lock, 
-  Check, 
-  X, 
-  ArrowRight, 
-  ArrowUpRight, 
-  MessageSquare, 
-  Cpu, 
-  Activity, 
-  Server, 
-  Zap, 
-  Crown, 
-  Flame, 
-  Menu, 
-  Layers, 
-  Radio, 
-  Copy, 
-  CheckCircle2, 
-  AlertCircle, 
-  HelpCircle,
-  Send,
-  Boxes,
-  LockKeyhole,
-  MessageCircle,
-  Settings2,
-  Layers3,
-  Bot,
-  Music,
-  FileText,
-  Coins,
-  Calendar,
-  BarChart3,
-  UserCheck,
-  Eye,
-  Image as ImageIcon,
-  Youtube
+import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
+import { TextEffect } from "../components/core/text-effect";
+import { motion, AnimatePresence, useInView } from "framer-motion";
+import {
+  Shield, FileText, Server, UserCheck, Bell, Users,
+  ClipboardList, BarChart3, Lock, Globe, Music, Youtube,
+  Star, Gift, Gamepad2, Brain, Pickaxe,
+  ChevronDown, Plus, Minus, Check, Copy, ArrowRight,
+  ExternalLink, MessageCircle, Menu, X, Zap, Activity,
+  Flame, Crown, Ban, Headphones, Lightbulb,
 } from "lucide-react";
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { toast } from "sonner";
-import StudioHero3D from "@/components/StudioHero3D";
-import Footer from "@/components/Footer";
 
-const DISCORD_ORDER_URL = "https://discord.com/users/937079326149595147";
-const COMMUNITY_URL = "https://discord.gg/Y5CTNskKCG";
-const GITHUB_URL = "https://github.com/semihr66/Gokturk-Labs";
-const LOGO_URL = "/gokturk-labs-logo.png";
+/* ─── LINKS ─── */
+const DC = "https://discord.gg/Y5CTNskKCG";
+const DM = "https://discord.com/users/937079326149595147";
 
-interface PlanItem {
-  id: string;
-  name: string;
-  price: string;
-  period: string;
-  badge?: string;
-  badgeType?: "free" | "fp" | "popular" | "vip";
-  label: string;
-  description: string;
-  performance: string;
-  score: number;
-  features: string[];
-  notice?: string;
-}
+/* ─── COLORS ─── */
+const P = "#7C3AED"; // purple
+const PL = "#A78BFA"; // purple light
+const G = "#10B981"; // green
+const A = "#F59E0B"; // amber
+const BG = "#000000";
+const S1 = "#070709";
+const CARD = "rgba(255,255,255,0.04)";
+const BORDER = "rgba(255,255,255,0.08)";
+const GLASS: React.CSSProperties = { background: "rgba(255,255,255,0.04)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" };
+const GLASS_P: React.CSSProperties = { background: "rgba(124,58,237,0.08)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" };
+const TEXT = "#FFFFFF";
+const SUB = "#94A3B8";
+const MUT = "#4B5563";
 
-const plans: PlanItem[] = [
-  {
-    id: "free",
-    name: "Başlangıç (Topluluk)",
-    price: "₺0",
-    period: "ömür boyu",
-    badge: "🎁 Ücretsiz Başlangıç",
-    badgeType: "free",
-    label: "TOPLULUK · ÜCRETSİZ",
-    description: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
-    performance: "Standart",
-    score: 1,
-    features: [
-      "Zorunlu: En az 50 üye şartı (50+ members)",
-      "Temel genel komutlar ve karşılama mesajları",
-      "Hazır altyapı modülleriyle hızlı kurulum",
-      "3 + 1 modül hakkı (Kampanya dahil)",
-      "7/24 Kesintisiz Göktürk Labs VDS barındırma",
-      "Modüllü yapı (Kod Göktürk Labs sunucusunda izole çalışır)",
-      "İsim/logo/kapak düzenleme yok",
-      "Zorunlu: Sunucu adı veya açıklamasında '— By Göktürk Labs' ibaresi"
-    ],
-    notice: "Topluluk planında sunucunuzun en az 50 üyeye sahip olması ve Göktürk Labs hakkında destekleyici bir tanıtım mesajı yer alması şarttır."
-  },
-  {
-    id: "dengeli",
-    name: "Dengeli",
-    price: "₺50",
-    period: "aylık",
-    badge: "⚡ En İyi Fiyat / Performans",
-    badgeType: "fp",
-    label: "DENGELİ · 5 MODÜL",
-    description: "Gelişmiş moderasyon, loglama ve 5 modül kapasitesiyle sunucunuzun güvenliği tam kontrol altında.",
-    performance: "Dengeli & Hızlı",
-    score: 2,
-    features: [
-      "Başlangıç paketindeki tüm özellikler",
-      "5 modül tanımlama hakkı",
-      "Gelişmiş moderasyon ve detaylı denetim kayıtları",
-      "7/24 Kesintisiz VDS barındırma dahil",
-      "Bot ismi, logosu ve Discord profili özelleştirilebilir",
-      "Otomatik rol ve gelişmiş filtre sistemleri",
-      "Açıklama ve banner'da 'Powered by Göktürk Labs' bağlantısı yer alır"
-    ]
-  },
-  {
-    id: "gelismis",
-    name: "Gelişmiş (Custom)",
-    price: "₺150",
-    period: "aylık",
-    badge: "🔥 En Çok Tercih Edilen",
-    badgeType: "popular",
-    label: "GELİŞMİŞ · ÖZEL MİMARİ",
-    description: "Özel bilet destek motoru, sunucunuza özel komutlar ve 7/24 izole VDS barındırma.",
-    performance: "Yüksek Kapasite",
-    score: 3,
-    features: [
-      "Dengeli paketindeki tüm özellikler",
-      "Sınırsız modül hakkı ve öncelikli işlem gücü",
-      "Butonlu & kategorili bilet (ticket) destek sistemi",
-      "Sunucunuza özel terzi usulü komut & iş mantığı",
-      "Özel geliştirilen bot kodları müşteriyle şeffaf paylaşılır",
-      "7/24 Göktürk Labs Debian 12 VDS barındırma",
-      "İsim, logo ve kapak görseli serbestçe düzenlenir",
-      "'Powered by' ibaresi tamamen kaldırılabilir"
-    ],
-    notice: "⚠️ Hizmet ve Barındırma Kuralı: Custom seçenekte size özel yazılan kodlar sizinle paylaşılır; ancak aylık abonelik modeli gereği bot kesintisiz olarak bizim sunucumuzda (Göktürk Labs VDS) barındırılır ve çalıştırılır."
-  },
-  {
-    id: "pro",
-    name: "Pro (Enterprise)",
-    price: "₺350",
-    period: "aylık",
-    badge: "👑 Maksimum Kurumsal Seviye",
-    badgeType: "vip",
-    label: "PRO · ŞİFRELİ WEB PANEL",
-    description: "Şifreli Web Yönetim Paneli, Yetkili Mülakat Masası, HIBP sızıntı kalkanı ve VIP 7/24 öncelikli destek.",
-    performance: "Maksimum VIP",
-    score: 4,
-    features: [
-      "Özel Şifreli Web Yönetim Paneli (PBKDF2 256-Bit + HIBP korumalı)",
-      "Yetkili Başvuru & Mülakat Motoru (Sesli/Yazılı özel odalar + Aday rolü)",
-      "Sınırsız modül hakkı ve yüksek VDS kaynak tahsisi",
-      "Gelişmiş paketindeki tüm sistemler ve öncelikli kuyruk",
-      "Size özel yazılım mimarisi ve kod paylaşımı",
-      "7/24 Göktürk Labs kurumsal VDS sunucusunda çalışma",
-      "Birebir öncelikli Discord VIP teknik destek",
-      "Marka ibarelerinin tamamı kaldırılabilir"
-    ],
-    notice: "⚠️ Hizmet ve Barındırma Kuralı: Özel yazılan kodlar paylaşılır; ancak aylık abonelik sistemi kapsamında süreçler ve bot yalnızca Göktürk Labs izole sunucularında 7/24 çalışır."
-  }
+/* ─── SCROLL ANIMATION v2 — set SCROLL_V2=false to revert ─── */
+const SCROLL_V2 = true;
+const SPRING_S = SCROLL_V2
+  ? { type: "spring" as const, stiffness: 60, damping: 22 }
+  : { type: "spring" as const, stiffness: 38, damping: 18, mass: 1.3 };
+const SPRING_C = SCROLL_V2
+  ? { type: "spring" as const, stiffness: 72, damping: 24 }
+  : { type: "spring" as const, stiffness: 52, damping: 22 };
+
+/* ─── TYPES ─── */
+type Mod = { tag: string; name: string; desc: string; icon: React.ElementType; feats: string[]; isNew?: boolean; isSoon?: boolean; badge?: string };
+type Pkg = { id: string; icon: React.ElementType; name: string; desc: string; price: string; period: string; color: string; feats: string[]; copyText: string; highlight?: boolean; badge?: string };
+
+/* ─── DATA ─── */
+const MODS: Mod[] = [
+  { tag: "SECURITY", name: "Güvenlik & Moderasyon", icon: Shield, desc: "Spam, reklam, küfür filtresi. Anti-raid ve karantina ile 7/24 aktif koruma.", feats: ["Discord AutoMod v2","Anti-Raid Kalkanı"] },
+  { tag: "LOGGING", name: "Log Tutma", icon: FileText, desc: "Silinen mesajlar, düzenlemeler ve tüm hareketler resimli olarak kayıt altına alınır.", feats: ["Resimli & Görsel Log","Düzenlenen Mesaj Takibi"] },
+  { tag: "MANAGEMENT", name: "Sunucu Mimarisi & Yedek", icon: Server, desc: "Tek komutla 17 kanallı kurumsal şablon ve JSON şifreli tam yedek sistemi.", feats: ["JSON Şifreli Tam Yedek","17 Kanal Kurumsal Şablon"] },
+  { tag: "ONBOARDING", name: "Butonlu Kayıt & Doğrulama", icon: UserCheck, isNew: true, desc: "Yeni üyeleri kayıtsız rolüyle karşılar; tek tıkla buton veya modal formla doğrular.", feats: ["Tek Tık Doğrulama","Kayıtsız / Üye Rol Ayrımı"] },
+  { tag: "ONBOARDING", name: "Karşılama & Uğurlama", icon: Bell, desc: "Canvas 2D avatar renderli dinamik afiş ve özelleştirilebilir hoş geldin mesajları.", feats: ["Canvas 2D Avatar","Otomatik Karşılama Rolü"] },
+  { tag: "AUTOMATION", name: "Otomatik Rol Yönetimi", icon: Users, desc: "Yeni katılan üye ve botlara anlık yetki tanımlaması. Menülü veya butonlu rol.", feats: ["0.1s Gecikmesiz Atama","Seçimli Buton Menüleri"] },
+  { tag: "SUPPORT", name: "Destek & Talep (Ticket)", icon: ClipboardList, desc: "Buton tabanlı özel destek kanalları ve şifreli HTML log transkript sistemi.", feats: ["Çoklu Departman Seçimi","Şifreli HTML Transkript"] },
+  { tag: "RECRUITMENT", name: "Yetkili Başvuru & Mülakat", icon: UserCheck, desc: "Modal formla aday toplar; onayda özel sesli/yazılı mülakat odası otomatik açılır.", feats: ["Modal Başvuru Formu","Geçici Özel Mülakat Odası"] },
+  { tag: "ANALYTICS", name: "Canlı Ses Sayaçları", icon: BarChart3, badge: "GELİŞMİŞ", desc: "10 kilitli ses kanalında canlı üye, bot, çevrimiçi ve ses sayaçları.", feats: ["10 Kilitli Ses Sayacı","Otomatik 10 Dk Senkron"] },
+  { tag: "MANAGEMENT", name: "Şifreli Web Yönetim Paneli", icon: Lock, badge: "PRO", desc: "Tarayıcıdan bot ayarlarını, logları ve rolleri PBKDF2 256-bit güvenliğiyle yönet.", feats: ["PBKDF2 256-Bit","HIBP Şifre Sızıntı Kalkanı"] },
+  { tag: "TELEMETRY", name: "Davet Takip Sistemi", icon: Globe, desc: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik davet sayacı.", feats: ["Sahte Hesap Tespiti","Canlı Log Kanalı"] },
+  { tag: "AUDIO", name: "Özel Ses Odaları & HD Müzik", icon: Music, desc: "Odaya girince otomatik kilitli özel oda + 128 kbps Spotify/YouTube müzik.", feats: ["Tıkla-Oluşsun Oda","128 kbps Ultra HD Müzik"] },
+  { tag: "MEDIA", name: "YouTube & Canlı Yayın Bildirim", icon: Youtube, isNew: true, desc: "Kanal bağla; yeni video ve canlı yayınlarda anlık Discord bildirimleri al.", feats: ["Sıfır Gecikme RSS Motoru","Özel Rol Etiketi"] },
+  { tag: "ENGAGEMENT", name: "Seviye & XP Sistemi", icon: Star, desc: "Aktiviteye dayalı XP, kişiselleştirilebilir SVG rank kartı ve liderlik tablosu.", feats: ["Ses & Metin Çift XP","Özel SVG Rank Kartı"] },
+  { tag: "EVENTS", name: "Çekiliş Sistemi", icon: Gift, desc: "Zaman ayarlı, kriter destekli çekiliş motoru. Rol şartı ve yedek talihli seçer.", feats: ["Kriptografik RNG Seçim","Rol & Katılım Şartı"] },
+  { tag: "COMMUNITY", name: "Eğlence Modülleri", icon: Gamepad2, desc: "Mini oyunlar, şans komutları ve interaktif araçlarla topluluk etkileşimini artır.", feats: ["İnteraktif Oyun Menüsü","Şans ve Zar Komutları"] },
+  { tag: "INTELLIGENCE", name: "Gemini AI Entegrasyonu", icon: Brain, desc: "Çok katmanlı Google Gemini 2.5 Flash ile sunucu hafızalı AI sohbet asistanı.", feats: ["Google Gemini 2.5 Flash","Sunucu Hafızası"] },
+  { tag: "MINECRAFT", name: "Minecraft Sunucu Sistemleri", icon: Pickaxe, isSoon: true, desc: "Discord ile entegre Minecraft yönetimi — gerçek zamanlı konsol, oyuncu takibi.", feats: ["Canlı Konsol Logları","Discord'dan Yönetim"] },
 ];
 
-const faqs = [
-  {
-    q: "Abonelik ve 7/24 barındırma nasıl işliyor?",
-    a: "Botunuz Debian 12 kurulu Göktürk Labs VDS sunucumuzda PM2 süreci altında sürekli çalışır. Bilgisayarınızı açık bırakmanıza, elektrik veya harici sunucu faturası ödemenize gerek kalmaz."
-  },
-  {
-    q: "Sipariş ve kurulum ne kadar sürer?",
-    a: "Discord DM'den bana ulaştığınızda sunucunuzun ihtiyaçlarını konuşuruz. Hazır modüller ortalama 1-2 saat içinde sunucunuza eklenip teslim edilir."
-  },
-  {
-    q: "Botun kodlarını alabilir miyim ve nerede çalışır?",
-    a: "Custom (Gelişmiş & Pro) seçeneklerde sunucunuza özel geliştirilen kodlar sizinle şeffaf şekilde paylaşılır. Ancak aylık abonelik modeli geçerli olduğundan, bot harici veya kendi sunucunuzda değil, yalnızca Göktürk Labs'ın güvenli VDS sunucularında 7/24 kesintisiz çalıştırılır."
-  },
-  {
-    q: "Web Yönetim Paneli neleri kapsıyor?",
-    a: "Pro paketteki panel tarayıcı üzerinden açılır; PBKDF2 şifreleme ve sızıntı kontrolü içerir. Mülakat masasını, AutoMod kurallarını ve bilet kanallarını canlı yönetirsiniz."
-  },
-  {
-    q: "Kişisel verilerim veya sunucu bilgileri güvende mi?",
-    a: "Kesinlikle evet. Mesaj içerikleri satılmaz, üçüncü taraflarla paylaşılmaz. Loglar yalnızca belirlediğiniz Discord log kanalına iletilir."
-  },
-  {
-    q: "Ödemeyi nasıl yapabilirim?",
-    a: "Sipariş onayından sonra güvenli Türk ödeme aracıları (Shopier vb.) veya IBAN/Havale ile ödeme yapabilirsiniz. Web sitemizde kart bilgisi istenmez."
-  }
+const PKGS: Pkg[] = [
+  { id: "baslangic", icon: Gift, badge: "Ücretsiz", name: "Başlangıç (Topluluk)", price: "0", period: "ömür boyu", color: G,
+    desc: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
+    feats: ["En az 25–30 üye şartı","Duyuru kanalında duyurma zorunluluğu","Temel komutlar & karşılama","3 + 1 modül hakkı","7/24 Göktürk Labs VDS","'By Göktürk Labs' ibaresi zorunlu"],
+    copyText: "Merhaba, Göktürk Labs Başlangıç (Ücretsiz) paketini talep etmek istiyorum." },
+  { id: "dengeli", icon: Zap, badge: "Fiyat / Performans", name: "Dengeli", price: "50", period: "aylık", color: "#38BDF8",
+    desc: "Gelişmiş moderasyon, loglama ve 5 modül kapasitesiyle sunucunuzun güvenliği tam kontrol.",
+    feats: ["Başlangıç paketindeki özellikler","5 modül tanımlama hakkı","Gelişmiş moderasyon & log","Bot ismi & logo özelleştirme","7/24 Kesintisiz VDS","'Powered by' bağlantısı"],
+    copyText: "Merhaba, Göktürk Labs Dengeli (₺50/ay) paketini satın almak istiyorum." },
+  { id: "gelismis", icon: Flame, badge: "En Çok Tercih Edilen", name: "Gelişmiş (Custom)", price: "150", period: "aylık", color: P, highlight: true,
+    desc: "Özel ticket motoru, sunucuya özel komutlar ve 7/24 izole VDS barındırma.",
+    feats: ["Dengeli paketindeki özellikler","Sınırsız modül hakkı","Butonlu & kategorili ticket sistemi","Sunucuya özel terzi usulü komutlar","Özel bot kodu müşteriyle paylaşılır","'Powered by' ibaresi kaldırılabilir"],
+    copyText: "Merhaba, Göktürk Labs Gelişmiş/Custom (₺150/ay) paketini satın almak istiyorum." },
+  { id: "pro", icon: Crown, badge: "Kurumsal Seviye", name: "Pro (Enterprise)", price: "350", period: "aylık", color: A,
+    desc: "Şifreli Web Panel, Yetkili Mülakat Masası, HIBP kalkanı ve VIP öncelikli destek.",
+    feats: ["Şifreli Web Yönetim Paneli (PBKDF2 + HIBP)","Yetkili Başvuru & Mülakat Motoru","Sınırsız modül + yüksek VDS kaynağı","Gelişmiş paketindeki tüm sistemler","Birebir VIP teknik destek","Tüm marka ibareleri kaldırılabilir"],
+    copyText: "Merhaba, Göktürk Labs Pro/Enterprise (₺350/ay) paketini satın almak istiyorum." },
 ];
 
-const products = [
-  {
-    id: "bot",
-    title: "Göktürk Labs Bot",
-    tagline: "Kurumsal Discord Yönetim & Güvenlik Motoru",
-    icon: BotIcon,
-    description: "Discord sunucunuzun güvenliği, başvuruları, biletleri ve seviye sistemini tek merkezden yöneten yeni nesil altyapı.",
-    highlights: [
-      "Şifreli Web Yönetim Paneli (PBKDF2 + Have I Been Pwned Koruması)",
-      "Yetkili Başvuru & Mülakat Motoru (Sesli, metin ve kombine özel odalar)",
-      "YouTube Video & Canlı Bildirim Motoru (Sıfır Gecikme & Özel Rol Etiketi)",
-      "Çoklu Departman Bilet (Ticket) Sistemi ve Otomatik Arşivleme",
-      "Göktürk Defense (Anti-Raid, Anti-Spam, Karantina & Native AutoMod)",
-      "Ses & Metin Seviye/XP Sistemi ve Özel Rank Kartı Tasarımcısı",
-      "Tıkla-Oluştur Geçici Kilitli Ses Odaları ve 128 kbps HD Müzik"
-    ]
-  },
-  {
-    id: "monitor",
-    title: "Göktürk Node Sentinel",
-    tagline: "Canlı VDS & Donanım Telemetri Masası",
-    icon: Activity,
-    description: "Sunucu kaynaklarını, bot süreçlerini ve güvenlik günlüklerini milisaniyelik hassasiyetle izleyen bağımsız telemetri sistemi.",
-    highlights: [
-      "Canlı CPU, RAM, Yük ve Disk Telemetrisi",
-      "PM2 Süreç İzleme ve Otomatik Yeniden Başlatma Koruması",
-      "IP Tabanlı İstek Hız Sınırlayıcı (Rate Limiting)",
-      "Güvenlik Olay Günlükleri (Audit Trails)",
-      "Şifreli Sentinel Token Kimlik Doğrulaması",
-      "0-Kesinti Güvenlik Mimarisi"
-    ]
-  },
-  {
-    id: "custom",
-    title: "Özel Bot & Altyapı Çözümleri",
-    tagline: "Sunucunuza Özel Terzi Usulü Yazılım",
-    icon: Code2,
-    description: "Hazır şablonların yetmediği durumlarda, sunucunuzun iş modeline ve kurallarına özel TypeScript bot geliştirme.",
-    highlights: [
-      "discord.js v14 + TypeScript ile Sıfırdan Mimari",
-      "Özel API ve Veritabanı Entegrasyonları (MongoDB, SQLite, REST API)",
-      "Açık Kaynak Kod Teslimi veya Göktürk Labs VDS Barındırma",
-      "Özel Slash Komutları, Butonlar ve Modal Arayüzler",
-      "Rol, İzin ve Kategori Hiyerarşisine Özel Yapılandırma",
-      "Garantili Bakım ve Doğrudan Geliştirici Desteği"
-    ]
-  }
+const FAQS = [
+  { q: "Abonelik ve 7/24 barındırma nasıl işliyor?", a: "Aylık ödeme karşılığında botunuz Göktürk Labs VDS sunucusunda kesintisiz çalıştırılır. Abonelik süresi dolduğunda bota erişim durdurulur, önceki veriler silinmez." },
+  { q: "Sipariş ve kurulum ne kadar sürer?", a: "Çoğu sipariş Discord DM üzerinden 24 saat içinde tamamlanır. Kurumsal veya çok modüllü projeler 2–3 gün alabilir." },
+  { q: "Botun kodlarını alabilir miyim?", a: "Gelişmiş (Custom) ve Pro paketlerde özel yazılan kodlar sizinle paylaşılır. Bot, Göktürk Labs VDS sunucusunda izole çalışır; ayrıca sunucu kiralamanız gerekmez." },
+  { q: "Web Yönetim Paneli neleri kapsıyor?", a: "Pro paket kapsamında bot ayarlarını, log kayıtlarını ve rol yönetimini tarayıcı üzerinden PBKDF2 şifreleme ile güvenle yönetebilirsiniz." },
+  { q: "Sunucu verilerim güvende mi?", a: "Göktürk Labs hiçbir sunucu verisini üçüncü taraflarla paylaşmaz veya satmaz. Tüm veriler şifreli depolanır." },
+  { q: "Ödemeyi nasıl yapabilirim?", a: "Ödeme yöntemi Discord DM üzerinden geliştiriciyle birlikte netleştirilir. Genellikle havale/EFT veya dijital ödeme yöntemleri kabul edilir." },
+  { q: "Başlangıç paketi için 25–30 üye şartı nasıl doğrulanıyor?", a: "Discord sunucunuzun üye sayısını birlikte kontrol ederiz. Üye sayısı 25'in altındaysa temel modülleri kurabilir, 25–30 üyeye ulaştığınızda ücretsiz pakete geçiş yapılır. Ayrıca sunucunuzda bir duyuru kanalı bulunması ve kurulum ile önemli güncellemelerin bu kanalda duyurulması zorunludur." },
+  { q: "Birden fazla sunucu için aynı botu kullanabilir miyim?", a: "Her sunucu ayrı bir izole bot servisi alır; ancak 2–3 sunucuda tolerans gösterilmektedir. Bununla birlikte, lisans sistemi nedeniyle yetki verebilmemiz için ek sunucuları beyan etmeniz ve guild ID iletmeniz gerekmektedir. Daha fazla sunucu için indirimli çoklu sunucu teklifleri konusunda Discord DM'den iletişime geçebilirsiniz." },
 ];
 
-const extraSystems: Array<{
-  id: string;
-  category: string;
-  title: string;
-  detail: string;
-  command: string;
-  specs: string[];
-  icon: any;
-  emoji: string;
-  coverGradient: string;
-  coverImage?: string;
-  badge?: string;
-  statusText: string;
-}> = [
-  // 1. KADEME: TEMEL GÜVENLİK, DENETİM & KORUMA (Sunucunun Temel Direği)
-  { 
-    id: "defense",
-    category: "SECURITY",
-    title: "Güvenlik & Moderasyon", 
-    detail: "Spam, reklam, küfür ve zararlı linklere karşı 7/24 aktif koruma filtresi. Anti-raid ve karantina kalkanı.",
-    command: "/defense mod [katı|orta] | /karantina",
-    specs: ["Discord AutoMod v2", "Anti-Raid Kalkanı"],
-    icon: ShieldCheck,
-    emoji: "🛡️",
-    coverGradient: "from-red-950 via-slate-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=700&q=80",
-    statusText: "Tam Kalkan"
-  },
-  {
-    id: "audit-log",
-    category: "LOGGING & AUDIT",
-    title: "Log Tutma",
-    detail: "Sunucudaki tüm hareketleri eksiksiz kaydeder. Silinen ve düzenlenen mesajların yanı sıra silinen resim, gif ve görsel dosyaları da anında log kanalına iletir.",
-    command: "/log kanal-ayarla [kanal] | /log filtre",
-    specs: ["Resimli & Görsel Log Kaydı", "Düzenlenen & Silinen Mesajlar"],
-    icon: Eye,
-    emoji: "📜",
-    coverGradient: "from-rose-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=700&q=80",
-    badge: "TAM DENETİM",
-    statusText: "7/24 Canlı Kayıt"
-  },
-  { 
-    id: "backup",
-    category: "MANAGEMENT",
-    title: "Otomatik Sunucu Mimarisi & Yedek", 
-    detail: "Tek komutla profesyonel kanal, kategori ve rol yapısı şablonlaması. Emojili ve izinleri hazır kurulum.",
-    command: "/backup al | /sablon kur [kod]",
-    specs: ["JSON Şifreli Tam Yedek", "17 Kanal Kurumsal Şablon"],
-    icon: Layers3, 
-    emoji: "🛠️",
-    coverGradient: "from-amber-950 via-stone-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Korumalı Veri"
-  },
+const MARQUEE1 = ["Güvenlik & Moderasyon","Log Tutma","Butonlu Ticket","Yetkili Başvuru","Seviye & XP","Karşılama Sistemi","HD Müzik","Çekiliş Motoru","Gemini AI","YouTube Bildirim","Davet Takip","Ses Sayaçları"];
+const MARQUEE2 = ["DISCORD.JS v14","TYPESCRIPT","NODE.JS v20","PM2 CLUSTER","SQLITE","AES-256","PBKDF2","VDS 7/24","GOOGLE GEMINI","CANVAS 2D","RSS ENGINE","WEBHOOK API"];
 
-  // 2. KADEME: ONBOARDING, KAYIT & GİRİŞ AKIŞI (Üyenin İlk Karşılaştığı Alan)
-  {
-    id: "register",
-    category: "ONBOARDING",
-    title: "Butonlu Kayıt & Doğrulama Sistemi",
-    detail: "Sunucuya katılan yeni üyeleri kayıtsız rolüyle karşılar; tek tıkla buton veya modal form üzerinden anında kayıt edip sunucuya dahil eder.",
-    command: "/kayit panel-kur | /kayit log-ayarla",
-    specs: ["Tek Tık Butonlu Doğrulama", "Kayıtsız / Üye Rol Ayrımı"],
-    icon: UserCheck,
-    emoji: "📋",
-    coverGradient: "from-violet-950 via-purple-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1555421689-491a97ff2040?auto=format&fit=crop&w=700&q=80",
-    badge: "YENİ SİSTEM",
-    statusText: "Anında Aktivasyon"
-  },
-  { 
-    id: "welcome",
-    category: "ONBOARDING",
-    title: "Karşılama & Uğurlama", 
-    detail: "Dinamik görsel afişler, avatar render ve özelleştirilebilir hoş geldin mesajı otomasyonu. Üye katıldığında anında rol atar.",
-    command: "/welcome set [kanal] [afis_modu]",
-    specs: ["Canvas 2D Avatar", "Otomatik Karşılama Rolü"],
-    icon: MessageCircle,
-    emoji: "🖼️",
-    coverGradient: "from-purple-900 via-indigo-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=700&q=80",
-    statusText: "Aktif Entegrasyon"
-  },
-  { 
-    id: "autorole",
-    category: "AUTOMATION",
-    title: "Otomatik Rol Yönetimi", 
-    detail: "Yeni katılan üye ve botlara anlık yetki ve rol tanımlaması. Menülü veya butonlu rol dağıtımı.",
-    command: "/rolmenu olustur [mesaj_id]",
-    specs: ["0.1s Gecikmesiz Atama", "Seçimli Buton Menüleri"],
-    icon: Settings2,
-    emoji: "🎴",
-    coverGradient: "from-blue-950 via-indigo-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=700&q=80",
-    statusText: "Yüksek Hızlı"
-  },
-
-  // 3. KADEME: YÖNETİM, BİLET, BAŞVURU & İSTATİSTİK (Sunucu Operasyonları)
-  { 
-    id: "ticket",
-    category: "SUPPORT",
-    title: "Destek & Talep (Ticket)", 
-    detail: "Buton tabanlı özel destek kanalları ve log transkript altyapısı. Departmanlara göre ayrılmış hızlı bilet masası.",
-    command: "/ticket panel kur [kategori]",
-    specs: ["Çoklu Departman Seçimi", "Şifreli HTML Transkript"],
-    icon: Headphones, 
-    emoji: "🎫",
-    coverGradient: "from-zinc-900 via-slate-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Kurumsal Altyapı"
-  },
-  {
-    id: "recruitment",
-    category: "RECRUITMENT",
-    title: "Yetkili Başvuru & Mülakat Motoru",
-    detail: "Aday formlarını modal arayüzle toplar; onaylandığında otomatik özel sesli/yazılı mülakat odası açar.",
-    command: "/basvuru panel-kur | /mulakat baslat",
-    specs: ["Modal Başvuru Formu", "Geçici Özel Mülakat Odası"],
-    icon: UserCheck,
-    emoji: "👤",
-    coverGradient: "from-indigo-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Otomatik Akış"
-  },
-  {
-    id: "stats-voice",
-    category: "ANALYTICS",
-    title: "Canlı Kilitli Ses Sayaçları (10 Kanal)",
-    detail: "📈 İSTATİSTİK kategorisi altında kilitli ses kanallarında Toplam Üye, Üyeler, Botlar, Çevrimiçi, Sestekiler, Boost, Seviye, Roller ve Kanalları canlı günceller.",
-    command: "/sayac-kur | /sayac-guncelle | /sayac-sil",
-    specs: ["10 Kilitli Ses Sayacı", "Otomatik 10 Dk & Katılma Senkronu"],
-    icon: BarChart3,
-    emoji: "📈",
-    coverGradient: "from-cyan-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=700&q=80",
-    badge: "GELİŞMİŞ SAYAÇ",
-    statusText: "Sürekli Canlı"
-  },
-
-  // 4. KADEME: KURUMSAL WEB & GELİŞMİŞ ALTYAPI (Panel & Özel Ses)
-  {
-    id: "web-panel",
-    category: "MANAGEMENT",
-    title: "Şifreli Web Yönetim Paneli",
-    detail: "Tarayıcı üzerinden Discord sunucunuzun tüm bot ayarlarını, loglarını ve rollerini güvenle yönetin.",
-    command: "/panel giris-linki | /panel yetki",
-    specs: ["PBKDF2 256-Bit Kriptolama", "HIBP Şifre Sızıntı Kalkanı"],
-    icon: Lock,
-    emoji: "🔒",
-    coverGradient: "from-purple-950 via-zinc-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=700&q=80",
-    badge: "PRO WEB PANEL",
-    statusText: "Tam Şifreli"
-  },
-  { 
-    id: "invite",
-    category: "TELEMETRY",
-    title: "Davet Takip Sistemi", 
-    detail: "Gelişmiş davet analitiği, sahte üye filtresi ve otomatik sayaç sistemi. Ayrılanları ve gelenleri kaydeder.",
-    command: "/invites [kullanici] | /vanity stats",
-    specs: ["Sahte Hesap (Fake) Tespiti", "Canlı Log Kanalı"],
-    icon: ArrowUpRight,
-    emoji: "📩",
-    coverGradient: "from-emerald-900 via-teal-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=700&q=80",
-    statusText: "Gerçek Zamanlı"
-  },
-  { 
-    id: "voice",
-    category: "AUDIO",
-    title: "Özel Ses Odaları & HD Müzik", 
-    detail: "Odaya girince otomatik kilitli özel oda kurma ve Spotify/YouTube destekli 128 kbps kristal netliğinde ses iletimi.",
-    command: "/ses oda-kilitle | /play [parca]",
-    specs: ["Tıkla-Oluşsun Oda", "128 kbps Ultra HD Müzik"],
-    icon: Music, 
-    emoji: "🎵",
-    coverGradient: "from-pink-950 via-purple-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1511379938547-c1f69419868d?auto=format&fit=crop&w=700&q=80",
-    statusText: "Düşük Gecikme"
-  },
-  {
-    id: "youtube-alert",
-    category: "MEDIA & BROADCAST",
-    title: "YouTube Video & Canlı Bildirim Sistemi",
-    detail: "YouTube kanallarınızı (@kullaniciadi, kanal linki veya ID ile) bağlayın; yeni video ve canlı yayınlar paylaşıldığı anda şık embed, doğrudan izleme butonu ve özel rol etiketiyle anında sunucunuza duyurulsun.",
-    command: "/youtube ekle [kanal] [discord_kanal] | /youtube liste",
-    specs: ["Sıfır Gecikme RSS Motoru", "Özel Rol Etiketi & Web Panel Entegre"],
-    icon: Youtube,
-    emoji: "📺",
-    coverGradient: "from-red-950 via-zinc-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=700&q=80",
-    badge: "YENİ SİSTEM",
-    statusText: "Canlı Entegrasyon"
-  },
-
-  // 5. KADEME: TOPLULUK ETKİLEŞİMİ, AKTİVİTE & ÖDÜLLER (Sosyal Katman)
-  { 
-    id: "level",
-    category: "ENGAGEMENT",
-    title: "Seviye & XP Sistemi", 
-    detail: "Aktiviteye dayalı seviye atlama, kişiselleştirilebilir rank kartı ve liderlik tablosu.",
-    command: "/rank [kullanici] | /top10",
-    specs: ["Ses & Metin Çift XP", "Özel SVG Rank Kartı"],
-    icon: Zap,
-    emoji: "📊",
-    coverGradient: "from-cyan-900 via-blue-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=700&q=80",
-    statusText: "Canlı Hesaplama"
-  },
-  { 
-    id: "giveaway",
-    category: "EVENTS",
-    title: "Çekiliş Sistemi", 
-    detail: "Zaman ayarlı, kriter destekli ve otomatize edilmiş çekiliş motoru. Rol şartı ve yedek talihli seçer.",
-    command: "/cekilis baslat [sure] [odul] [kazanan]",
-    specs: ["Kriptografik RNG Seçim", "Rol & Katılım Şartı"],
-    icon: Sparkles,
-    emoji: "🎉",
-    coverGradient: "from-amber-900 via-yellow-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=700&q=80",
-    statusText: "Otomasyon"
-  },
-  { 
-    id: "entertainment",
-    category: "COMMUNITY",
-    title: "Eğlence Modülleri", 
-    detail: "Topluluk etkileşimini artıran interaktif komut setleri, mini oyunlar ve kullanıcı eğlence araçları.",
-    command: "/eglence zar-at | /eglence duello",
-    specs: ["İnteraktif Oyun Menüsü", "Şans ve Zar Komutları"],
-    icon: Coins,
-    emoji: "🎲",
-    coverGradient: "from-fuchsia-900 via-purple-950 to-black",
-    coverImage: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=700&q=80",
-    statusText: "Aktif Modül"
-  },
-
-  // 6. KADEME: YAPAY ZEKA & GELECEK VİZYONU SİSTEMLERİ
-  { 
-    id: "ai",
-    category: "INTELLIGENCE",
-    title: "Gemini AI Entegrasyonu", 
-    detail: "Üyelerin sorularına yanıt veren akıllı yapay zeka asistanı. Çok katmanlı Google Gemini altyapısıyla sunucu kurallarını öğrenip 7/24 rehberlik ve sohbet desteği sağlar.",
-    command: "/ai sor [soru] | /ai rehber",
-    specs: ["Google Gemini 2.5 Flash", "Çok Katmanlı API", "Sunucu Hafızası"],
-    icon: Bot, 
-    emoji: "🤖",
-    coverGradient: "from-indigo-950 via-purple-900 to-black",
-    coverImage: "https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&w=700&q=80",
-    statusText: "Aktif Modül"
-  },
-  { 
-    id: "minecraft",
-    category: "MINECRAFT",
-    title: "Minecraft Sunucu Sistemleri", 
-    detail: "Minecraft sunucunuzu Discord ile canlı entegre edin. Gerçek zamanlı konsol logları, Discord üzerinden oyun içi sunucu yönetimi, komut gönderme ve oyuncu takibi.",
-    command: "/mc komut [komut] | /mc log | /mc oyuncular",
-    specs: ["Canlı Konsol Logları", "Discord'dan Sunucu Yönetimi", "Oyuncu & Durum Takibi"],
-    icon: Server, 
-    emoji: "⛏️",
-    coverGradient: "from-emerald-950 via-green-950 to-black",
-    coverImage: "/minecraft-server-banner.jpg",
-    badge: "YAKINDA",
-    statusText: "Geliştirme Aşamasında"
-  }
+const NAV = [
+  { label: "Hizmetler", href: "#hizmetler" },
+  { label: "Modüller", href: "#moduller" },
+  { label: "Nasıl Çalışır?", href: "#nasil" },
+  { label: "Paketler", href: "#paketler" },
+  { label: "Hakkımızda", href: "#hakkimizda" },
+  { label: "SSS", href: "#sss" },
 ];
 
-
-
-function BotIcon({ className }: { className?: string }) {
+/* ─── DISCORD ICON ─── */
+function Di({ size = 18, color = "currentColor" }: { size?: number; color?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M12 8V4H8" />
-      <rect width="16" height="12" x="4" y="8" rx="2" />
-      <path d="M2 14h2" />
-      <path d="M20 14h2" />
-      <path d="M15 13v2" />
-      <path d="M9 13v2" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={color} fillRule="evenodd">
+      <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.043.033.054a19.9 19.9 0 0 0 5.993 3.03.077.077 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
     </svg>
   );
 }
 
-function DiscordMark({ className = "h-4 w-4" }: { className?: string }) {
+/* ─── LABEL ─── */
+function Label({ text, color = P }: { text: string; color?: string }) {
   return (
-    <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-      <path d="M19.54 5.47A16.86 16.86 0 0 0 15.44 4l-.5 1.02a15.6 15.6 0 0 0-5.88 0L8.56 4a16.91 16.91 0 0 0-4.1 1.47C1.86 9.38 1.15 13.2 1.5 16.96A16.93 16.93 0 0 0 6.54 19l1.22-1.67a10.28 10.28 0 0 1-1.9-.92l.46-.35a11.98 11.98 0 0 0 11.36 0l.47.35a10.2 10.2 0 0 1-1.9.92L17.46 19a16.94 16.94 0 0 0 5.04-2.04c.4-4.36-.68-8.15-2.96-11.49ZM8.7 14.7c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2.01.99 2 2.2c0 1.21-.89 2.2-2 2.2Zm6.6 0c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2.01.99 2 2.2c0 1.21-.89 2.2-2 2.2Z" />
-    </svg>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", marginBottom: "1.5rem", background: `${color}12`, border: `1px solid ${color}28`, borderRadius: 99, padding: "0.3rem 0.8rem 0.3rem 0.5rem" }}>
+      <span style={{ width: 6, height: 6, background: color, display: "inline-block", borderRadius: "50%", boxShadow: `0 0 6px ${color}` }} />
+      <span style={{ fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.12em", color: color, textTransform: "uppercase" }}>{text}</span>
+    </div>
   );
 }
 
+/* ─── MARQUEE ROW ─── */
+function MarqueeRow({ items, reverse = false }: { items: string[]; reverse?: boolean }) {
+  const doubled = [...items, ...items];
+  return (
+    <div style={{ overflow: "hidden", maskImage: "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)", WebkitMaskImage: "linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%)" }}>
+      <div style={{
+        display: "flex", gap: "0", width: "max-content",
+        animation: `marquee${reverse ? "R" : ""} 28s linear infinite`,
+      }}>
+        {doubled.map((item, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 0, padding: "0 2rem", whiteSpace: "nowrap" }}>
+            <span style={{ width: 6, height: 6, background: P, borderRadius: "50%", marginRight: "1.2rem", display: "inline-block", opacity: 0.6 }} />
+            <span style={{ fontSize: "0.82rem", fontWeight: 600, color: SUB, letterSpacing: "0.06em", textTransform: "uppercase" }}>{item}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ─── DISCORD MOCKUP ─── */
+function BotMockup() {
+  const lines = [
+    { type: "cmd", text: "/ticket-ac" },
+    { type: "ok", text: "#ticket-semih kanalı açıldı." },
+    { type: "cmd", text: "/kayıt @semih1231" },
+    { type: "ok", text: "semih1231 Üye rolüyle kayıt edildi." },
+    { type: "cmd", text: "/log-ayar #sunucu-log" },
+    { type: "ok", text: "Log kanalı #sunucu-log olarak ayarlandı." },
+    { type: "sys", text: "── Göktürk Labs VDS ── Uptime: 99.98% ──" },
+  ];
+  return (
+    <div style={{ background: "#0D0E14", border: `1px solid ${BORDER}`, borderRadius: 16, overflow: "hidden", fontFamily: "'JetBrains Mono', 'Geist Mono', monospace", fontSize: "0.82rem" }}>
+      {/* Title bar */}
+      <div style={{ background: "#161820", padding: "0.75rem 1rem", display: "flex", alignItems: "center", gap: "0.5rem", borderBottom: `1px solid ${BORDER}` }}>
+        <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#FF5F57" }} />
+        <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#FEBC2E" }} />
+        <span style={{ width: 10, height: 10, borderRadius: "50%", background: "#28C840" }} />
+        <span style={{ flex: 1, textAlign: "center", color: SUB, fontSize: "0.7rem" }}>Göktürk Labs Bot — #bot-komutlar</span>
+      </div>
+      {/* Lines */}
+      <div style={{ padding: "1rem 1.1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+        {lines.map((l, i) => (
+          <motion.div key={i} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.3 + i * 0.18 }}
+            style={{ display: "flex", alignItems: "flex-start", gap: "0.6rem" }}>
+            {l.type === "cmd" && <span style={{ color: P, flexShrink: 0 }}>›</span>}
+            {l.type === "ok" && <span style={{ color: G, flexShrink: 0 }}>›</span>}
+            {l.type === "sys" && <span style={{ color: MUT, flexShrink: 0 }}>·</span>}
+            <span style={{ color: l.type === "cmd" ? TEXT : l.type === "ok" ? G : MUT, lineHeight: 1.5 }}>{l.text}</span>
+          </motion.div>
+        ))}
+        {/* Blinking cursor */}
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem" }}>
+          <span style={{ color: P }}>›</span>
+          <span style={{ display: "inline-block", width: 8, height: 16, background: P, opacity: 0.8, animation: "blink 1s step-end infinite" }} />
+        </div>
+      </div>
+      {/* Status bar */}
+      <div style={{ background: P, padding: "0.4rem 1rem", display: "flex", alignItems: "center", gap: "1rem" }}>
+        <span style={{ color: "#fff", fontSize: "0.68rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+          <Activity size={11} /> 7/24 CANLI VDS AKTİF
+        </span>
+        <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.68rem", marginLeft: "auto" }}>göktürklabs.net</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─── LOADING SCREEN ─── */
+function LoadingScreen({ onDone }: { onDone: () => void }) {
+  useEffect(() => {
+    const t = setTimeout(onDone, 1900);
+    return () => clearTimeout(t);
+  }, [onDone]);
+  return (
+    <motion.div
+      key="loading"
+      initial={{ opacity: 1 }}
+      exit={{ opacity: 0, scale: 1.04 }}
+      transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+      style={{ position: "fixed", inset: 0, background: BG, zIndex: 9999, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "1.5rem", fontFamily: "'Space Grotesk','Plus Jakarta Sans','Inter',sans-serif" }}>
+      {/* Glow */}
+      <div style={{ position: "absolute", top: "30%", left: "50%", transform: "translate(-50%,-50%)", width: 400, height: 400, background: `radial-gradient(ellipse, ${P}30 0%, transparent 70%)`, pointerEvents: "none" }} />
+      <motion.img src="/gokturk-labs-logo.png" alt="Logo"
+        initial={{ scale: 0.65, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{ type: "spring", stiffness: 90, damping: 18 }}
+        style={{ width: 76, height: 76, position: "relative" }} />
+      <motion.div
+        initial={{ opacity: 0, y: 14 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.28, duration: 0.4 }}
+        style={{ fontWeight: 900, fontSize: "1.7rem", letterSpacing: "-0.03em", position: "relative" }}>
+        Göktürk <span style={{ color: PL }}>Labs</span>
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.42 }}
+        style={{ width: 220, height: 2, background: "rgba(255,255,255,0.08)", borderRadius: 1, overflow: "hidden", position: "relative" }}>
+        <motion.div
+          initial={{ width: "0%" }}
+          animate={{ width: "100%" }}
+          transition={{ duration: 1.55, ease: "easeInOut" }}
+          style={{ height: "100%", background: `linear-gradient(90deg, ${P}, ${PL})` }} />
+      </motion.div>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.55 }}
+        style={{ fontSize: "0.72rem", color: MUT, letterSpacing: "0.1em", fontWeight: 600, textTransform: "uppercase", position: "relative" }}>
+        Discord Bot & Yazılım Atölyesi
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/* ─── HOME ─── */
 export default function Home() {
-  const [activeProductTab, setActiveProductTab] = useState(0);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  // Sipariş Onay & Kopyalama Durumları
-  const [acceptedTerms, setAcceptedTerms] = useState<Record<string, boolean>>({});
-  const [copiedPlan, setCopiedPlan] = useState<string | null>(null);
-
-  // İletişim Formu State'leri
-  const [contactName, setContactName] = useState("");
-  const [contactDiscord, setContactDiscord] = useState("");
-  const [contactTopic, setContactTopic] = useState("Paket Siparişi");
-  const [contactMessage, setContactMessage] = useState("");
-  const [contactSubmitting, setContactSubmitting] = useState(false);
-  const [contactSuccess, setContactSuccess] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [tos, setTos] = useState<Record<string, boolean>>({});
+  const [copied, setCopied] = useState<string | null>(null);
+  const [pkgTab, setPkgTab] = useState<"all" | "baslangic" | "dengeli" | "gelismis" | "pro">("all");
+  const [selectedPkg, setSelectedPkg] = useState("gelismis");
+  const [formSent, setFormSent] = useState(false);
+  const particles = useMemo(() =>
+    Array.from({ length: 55 }, (_, i) => ({
+      id: i,
+      x: (i * 61.8) % 100,
+      y: (i * 38.2) % 100,
+      size: 1 + (i % 2),
+      dur: 4 + (i % 7),
+      delay: (i % 6) * 0.5,
+      opacity: 0.08 + (i % 4) * 0.05,
+    })),
+  []);
+  const [form, setForm] = useState({ name: "", discord: "", topic: "Paket Siparişi", message: "" });
+  const [footerHover, setFooterHover] = useState(false);
 
   useEffect(() => {
-    document.title = "Göktürk Labs — Güçlü Discord Botları, Web Paneli ve Altyapı Çözümleri";
+    const fn = () => setScrolled(window.scrollY > 24);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
   }, []);
 
-  const getOrderMessage = (plan: PlanItem) => {
-    return plan.price === "₺0"
-      ? `Merhaba, Göktürk Labs ${plan.name} ücretsiz başlangıç paketi için başvurmak istiyorum.`
-      : `Merhaba, Göktürk Labs ${plan.name} (${plan.price}/${plan.period}) paketi için sipariş başlatmak istiyorum.`;
-  };
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
-  const handleCopyPlanText = (plan: PlanItem) => {
-    if (!acceptedTerms[plan.id]) {
-      toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
-      return;
-    }
-    const orderMsg = getOrderMessage(plan);
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(orderMsg).then(() => {
-        setCopiedPlan(plan.id);
-        toast.success(`"${plan.name}" sipariş metni panonuza kopyalandı!`);
-        setTimeout(() => setCopiedPlan(null), 3500);
-      }).catch(() => {
-        toast.error("Panoya kopyalama başarısız oldu.");
-      });
-    }
-  };
+  const copy = useCallback((id: string, text: string) => {
+    navigator.clipboard.writeText(text).then(() => { setCopied(id); setTimeout(() => setCopied(null), 2000); });
+  }, []);
 
-  const handleOpenDiscordDM = (plan: PlanItem) => {
-    if (!acceptedTerms[plan.id]) {
-      toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
-      return;
-    }
-    // Also copy to clipboard seamlessly so it's ready in clipboard when DM opens
-    const orderMsg = getOrderMessage(plan);
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(orderMsg).then(() => {
-        setCopiedPlan(plan.id);
-        setTimeout(() => setCopiedPlan(null), 3500);
-      }).catch(() => {});
-    }
-    toast.success("Sipariş metni kopyalandı ve Discord DM açılıyor!");
-    window.open(DISCORD_ORDER_URL, "_blank", "noopener,noreferrer");
-  };
-
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const submitForm = useCallback((e: React.FormEvent) => {
     e.preventDefault();
-    if (!contactName.trim() || !contactDiscord.trim() || !contactMessage.trim()) {
-      toast.error("Lütfen formdaki tüm zorunlu alanları doldurun.");
-      return;
-    }
+    const msg = `Ad: ${form.name}\nDiscord: ${form.discord}\nKonu: ${form.topic}\n\n${form.message}`;
+    navigator.clipboard.writeText(msg);
+    setFormSent(true);
+    window.open(DM, "_blank");
+  }, [form]);
 
-    setContactSubmitting(true);
-    setTimeout(() => {
-      setContactSubmitting(false);
-      setContactSuccess(true);
-      toast.success("Mesajınız hazırlandı! Discord üzerinden anında bağlanabilirsiniz.");
-    }, 600);
-  };
-
-  const handleCopyContactMessage = () => {
-    const formatted = `[Göktürk Labs İletişim]\nAd: ${contactName}\nDiscord: ${contactDiscord}\nKonu: ${contactTopic}\nMesaj: ${contactMessage}`;
-    if (navigator.clipboard) {
-      navigator.clipboard.writeText(formatted).then(() => {
-        toast.success("İletişim mesajınız panoya kopyalandı! Discord DM kutumuza yapıştırabilirsiniz.");
-      });
-    }
-    window.open(DISCORD_ORDER_URL, "_blank", "noopener,noreferrer");
-  };
+  const featured = PKGS.find(p => p.highlight)!;
 
   return (
-    <div className="min-h-screen bg-[#08080b] text-[#f7f7fb] selection:bg-purple-600/30 selection:text-purple-200">
-      
-      {/* 1. HEADER / NAVBAR */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/[0.08] bg-[#08080b]/85 backdrop-blur-xl transition-all">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <a href="#top" className="flex items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 rounded-lg py-1">
-            <img src={LOGO_URL} alt="Göktürk Labs Logo" className="h-9 w-9 object-contain" />
-            <div className="flex flex-col">
-              <span className="font-display text-base font-bold tracking-tight text-white flex items-center gap-1.5">
-                Göktürk <span className="text-purple-400">Labs</span>
-              </span>
-              <span className="text-[10px] text-zinc-400 font-mono tracking-wider uppercase -mt-0.5">Yazılım Stüdyosu</span>
+    <div style={{ background: BG, color: TEXT, minHeight: "100vh", fontFamily: "'Space Grotesk','Plus Jakarta Sans','Inter',sans-serif", overflowX: "hidden" }}>
+      <AnimatePresence>{!loaded && <LoadingScreen onDone={() => setLoaded(true)} />}</AnimatePresence>
+      <style>{`
+        *{box-sizing:border-box;margin:0;padding:0}
+        html{scroll-behavior:smooth}
+        a{text-decoration:none;color:inherit}
+        input,textarea,select{color-scheme:dark;outline:none}
+        @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+        @keyframes marqueeR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+        @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+        @keyframes float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-18px) scale(1.15)}}
+        @keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+        @keyframes borderSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .mshow{display:none!important}
+        @media(max-width:768px){.mhide{display:none!important}.mshow{display:flex!important}}
+        input:focus,textarea:focus,select:focus{border-color:rgba(124,58,237,0.6)!important;box-shadow:0 0 0 3px rgba(124,58,237,0.13)!important;outline:none!important}
+        .pkg-highlight{position:relative}
+        .pkg-highlight::before{content:"";position:absolute;inset:-1px;border-radius:15px;background:linear-gradient(135deg,rgba(124,58,237,0.5),rgba(167,139,250,0.3));z-index:-1;animation:pulse 2s ease-in-out infinite}
+        .grad-text{background:linear-gradient(135deg,#fff 0%,#C4B5FD 50%,#7C3AED 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+        .grad-text-2{background:linear-gradient(90deg,#A78BFA,#7C3AED,#A78BFA);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s linear infinite}
+        .card-glow{transition:box-shadow .25s,border-color .25s,transform .25s}
+        .card-glow:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(124,58,237,0.18),0 0 0 1px rgba(124,58,237,0.25)!important;border-color:rgba(124,58,237,0.35)!important}
+      `}</style>
+
+      {/* ── NAVBAR ── */}
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        padding: scrolled ? "0.5rem 1.25rem" : "0.9rem 1.25rem",
+        transition: "padding .3s ease",
+      }}>
+        <div style={{
+          maxWidth: 1280, margin: "0 auto",
+          display: "flex", alignItems: "center", justifyContent: "space-between",
+          height: 54,
+          padding: "0 0.9rem 0 1.1rem",
+          background: scrolled ? "rgba(8,9,13,0.92)" : "transparent",
+          backdropFilter: scrolled ? "blur(22px)" : "none",
+          WebkitBackdropFilter: scrolled ? "blur(22px)" : "none",
+          border: `1px solid ${scrolled ? "rgba(255,255,255,0.12)" : "transparent"}`,
+          borderRadius: "1.5rem",
+          boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.35)" : "none",
+          transition: "background .3s ease, border-color .3s ease, box-shadow .3s ease",
+        }}>
+          <a href="#top" style={{ display: "flex", alignItems: "center", gap: "0.65rem", flexShrink: 0 }}>
+            <img src="/gokturk-labs-logo.png" alt="Logo" style={{ width: 34, height: 34 }} />
+            <div>
+              <div style={{ fontWeight: 800, fontSize: "0.97rem", letterSpacing: "-0.01em" }}>Göktürk <span style={{ color: PL }}>Labs</span></div>
+              <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.45)", letterSpacing: "0.07em", fontWeight: 700, whiteSpace: "nowrap" }}>YAZILIM & YÖNETİM</div>
             </div>
           </a>
 
-          {/* Masaüstü Navigasyon */}
-          <nav className="hidden items-center gap-6 text-sm font-medium text-zinc-300 lg:flex" aria-label="Ana Gezinti">
-            <a href="#moduller" className="hover:text-white transition-colors text-purple-300 font-semibold flex items-center gap-1.5">
-              <span>Modüller &amp; Sistemler</span>
-              <span className="text-[10px] bg-purple-500/20 text-purple-300 px-1.5 py-0.2 rounded border border-purple-500/30">16</span>
-            </a>
-            <a href="#nasil" className="hover:text-white transition-colors">Nasıl Çalışır?</a>
-            <a href="#paketler" className="hover:text-white transition-colors">Paketler</a>
-            <a href="#hakkimizda" className="hover:text-white transition-colors">Hakkımızda</a>
-            <a href="#sss" className="hover:text-white transition-colors">SSS</a>
-            <a href="#iletisim" className="hover:text-white transition-colors">İletişim</a>
-          </nav>
-
-          {/* Masaüstü Butonlar */}
-          <div className="hidden items-center gap-3 sm:flex">
-            <div className="hidden xl:flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-3 py-1 text-xs font-mono text-emerald-400">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>Canlı VDS Aktif</span>
-            </div>
-            <a 
-              href={COMMUNITY_URL} 
-              target="_blank" 
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2 text-xs font-semibold text-zinc-200 transition-all hover:bg-white/[0.08] hover:text-white"
-            >
-              <DiscordMark className="h-4 w-4 text-[#5865F2]" />
-              <span>Topluluk</span>
-            </a>
-            <a 
-              href="#paketler"
-              className="inline-flex items-center gap-1.5 rounded-xl bg-purple-600 px-4 py-2 text-xs font-semibold text-white shadow-md shadow-purple-600/20 transition-all hover:bg-purple-500 active:scale-95"
-            >
-              <span>Paket Seç</span>
-              <ArrowRight className="h-3.5 w-3.5" />
-            </a>
+          <div className="mhide" style={{ display: "flex", alignItems: "center", gap: "0.05rem" }}>
+            {NAV.map(n => (
+              <a key={n.href} href={n.href}
+                style={{ padding: "0.42rem 0.78rem", borderRadius: 8, fontSize: "0.84rem", fontWeight: 500, color: SUB, background: "transparent", transition: "color .15s, background .15s" }}
+                onMouseEnter={e => { e.currentTarget.style.color = TEXT; e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
+                onMouseLeave={e => { e.currentTarget.style.color = SUB; e.currentTarget.style.background = "transparent"; }}>
+                {n.label}
+              </a>
+            ))}
           </div>
 
-          {/* Mobil Menü Butonu */}
-          <div className="flex items-center gap-2 lg:hidden">
-            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <button 
-                  type="button" 
-                  aria-label="Menüyü aç" 
-                  className="rounded-xl border border-white/10 bg-white/[0.05] p-2 text-zinc-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-purple-500"
-                >
-                  <Menu className="h-5 w-5" />
-                </button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-[85vw] max-w-sm bg-[#0c0c12] border-white/10 p-6 flex flex-col justify-between">
-                <SheetHeader className="text-left">
-                  <SheetTitle className="flex items-center gap-3">
-                    <img src={LOGO_URL} alt="Logo" className="h-8 w-8 object-contain" />
-                    <span className="font-display text-base font-bold text-white">Göktürk <span className="text-purple-400">Labs</span></span>
-                  </SheetTitle>
-                </SheetHeader>
-
-                <div className="my-8 flex flex-col gap-4 text-base font-medium text-zinc-300">
-                  <a href="#moduller" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1 text-purple-300 font-semibold flex items-center justify-between">
-                    <span>Modüller ({extraSystems.length} Özel Sistem)</span>
-                    <span className="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded">{extraSystems.length}</span>
-                  </a>
-                  <a href="#nasil" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Nasıl Çalışır?</a>
-                  <a href="#paketler" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Paketler &amp; Fiyatlar</a>
-                  <a href="#hakkimizda" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Hakkımızda</a>
-                  <a href="#sss" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">Sık Sorulan Sorular</a>
-                  <a href="#iletisim" onClick={() => setMobileMenuOpen(false)} className="hover:text-purple-400 transition-colors py-1">İletişim</a>
-                </div>
-
-                <div className="space-y-3 pt-6 border-t border-white/10">
-                  <div className="flex items-center gap-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-3 py-2 text-xs font-mono text-emerald-400">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>7/24 Kesintisiz VDS Çevrimiçi</span>
-                  </div>
-                  <a 
-                    href={COMMUNITY_URL}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex w-full items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.05] py-2.5 text-sm font-semibold text-white"
-                  >
-                    <DiscordMark className="h-4 w-4 text-[#5865F2]" />
-                    <span>Discord Topluluğuna Katıl</span>
-                  </a>
-                  <a 
-                    href="#paketler"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex w-full items-center justify-center gap-2 rounded-xl bg-purple-600 py-2.5 text-sm font-semibold text-white shadow-lg shadow-purple-600/25"
-                  >
-                    <span>Hemen Paket Seç</span>
-                    <ArrowRight className="h-4 w-4" />
-                  </a>
-                </div>
-              </SheetContent>
-            </Sheet>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
+            <a href={DC} target="_blank" rel="noopener noreferrer" className="mhide"
+              style={{ display: "flex", alignItems: "center", gap: "0.35rem", padding: "0.42rem 0.78rem", borderRadius: 8, background: "transparent", color: SUB, fontSize: "0.84rem", fontWeight: 500, transition: "color .15s, background .15s" }}
+              onMouseEnter={e => { e.currentTarget.style.color = TEXT; e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
+              onMouseLeave={e => { e.currentTarget.style.color = SUB; e.currentTarget.style.background = "transparent"; }}>
+              <Di size={15} /> Topluluk
+            </a>
+            <a href="#paketler" style={{ background: P, color: "#fff", borderRadius: 9, padding: "0.5rem 1.05rem", fontSize: "0.84rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.35rem", boxShadow: `0 0 20px ${P}55, 0 4px 16px ${P}44`, transition: "box-shadow .15s, transform .15s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 32px ${P}80, 0 6px 20px ${P}60`; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${P}55, 0 4px 16px ${P}44`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+              Paket Seç <ArrowRight size={13} />
+            </a>
+            <button className="mshow" onClick={() => setMobileOpen(!mobileOpen)}
+              style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${BORDER}`, borderRadius: 8, color: TEXT, cursor: "pointer", padding: "0.4rem 0.5rem", display: "flex" }}>
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
           </div>
         </div>
-      </header>
-
-      <main id="top">
-        
-        {/* 2. HERO SECTION */}
-        <section className="relative overflow-hidden pt-12 pb-20 sm:pt-20 sm:pb-28 border-b border-white/[0.06]">
-          {/* Performans Dostu Three.js 3D Sahnesi (Zero-Lag, Capped Pixel Ratio) */}
-          <StudioHero3D />
-
-          {/* Arka Plan Yumuşak Işıklar */}
-          <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/3 h-[500px] w-[800px] rounded-full bg-purple-600/10 blur-[130px]" aria-hidden="true" />
-          <div className="pointer-events-none absolute right-0 top-1/2 h-[350px] w-[500px] rounded-full bg-cyan-600/10 blur-[120px]" aria-hidden="true" />
-
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="mx-auto max-w-3xl text-center">
-              
-              {/* Kicker Rozeti */}
-              <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-xs font-mono text-purple-300">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-ping" />
-                <span>GÖKTÜRK LABS · BAĞIMSIZ GELİŞTİRİCİ ATÖLYESİ</span>
-              </div>
-
-              {/* H1 Başlık */}
-              <h1 className="mt-6 font-display text-4xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl leading-[1.08]">
-                Sunucunuz İçin Özel <span className="bg-gradient-to-r from-purple-300 via-purple-400 to-indigo-300 bg-clip-text text-transparent">Discord Botları</span> ve Yönetim Altyapısı
-              </h1>
-
-              {/* Alt Metin */}
-              <p className="mt-6 text-base text-zinc-300 sm:text-lg leading-relaxed">
-                Yıllardır Discord topluluklarının içinde kod yazıyorum. Kendi VDS sunucumuzda 7/24 kesintisiz çalışan, resimli log tutan, bilet ve mülakat odalarını otomatik yöneten botunuzu birkaç saat içinde yayına alalım.
-              </p>
-
-              {/* Aksiyon Butonları */}
-              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-                <a 
-                  href="#paketler"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-6 py-3.5 text-sm font-semibold text-white shadow-xl shadow-purple-600/25 transition-all hover:bg-purple-500 hover:-translate-y-0.5 active:scale-95"
-                >
-                  <span>Paketleri ve Fiyatları Gör</span>
-                  <ArrowRight className="h-4 w-4" />
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div initial={{ opacity: 0, y: -8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+              style={{ background: S1, borderTop: `1px solid ${BORDER}`, padding: "0.5rem 1.25rem 1rem" }}>
+              {NAV.map(n => (
+                <a key={n.href} href={n.href} onClick={() => setMobileOpen(false)}
+                  style={{ display: "block", padding: "0.75rem 0.25rem", fontSize: "0.95rem", fontWeight: 500, borderBottom: `1px solid ${BORDER}`, color: SUB }}>
+                  {n.label}
                 </a>
-                <a 
-                  href="#moduller"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-6 py-3.5 text-sm font-semibold text-zinc-200 transition-all hover:bg-white/[0.08] hover:text-white"
-                >
-                  <Boxes className="h-4 w-4 text-purple-400" />
-                  <span>Sistem ve Modülleri İncele</span>
-                </a>
-              </div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </nav>
 
-              {/* Hızlı Güven Sinyalleri */}
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs text-zinc-400 font-medium">
-                <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-purple-400" /> Şişirilmiş / Sahte Veri Yok</span>
-                <span className="flex items-center gap-1.5"><Server className="h-4 w-4 text-emerald-400" /> 7/24 VDS Kesintisiz Çalışma</span>
-                <span className="flex items-center gap-1.5"><Headphones className="h-4 w-4 text-cyan-400" /> Doğrudan Geliştirici Desteği</span>
-              </div>
+      {/* ── HERO ── */}
+      <section id="top" style={{ minHeight: "100vh", display: "flex", alignItems: "center", padding: "8rem 1.5rem 6rem", position: "relative", overflow: "hidden" }}>
+        {/* Grid pattern */}
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none", maskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 40%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 80% 70% at 50% 0%, black 40%, transparent 100%)" }} />
+        {/* Primary glow — large top-center */}
+        <div style={{ position: "absolute", top: "-5%", left: "50%", transform: "translateX(-50%)", width: "90vw", height: "70vh", background: `radial-gradient(ellipse 70% 60% at 50% 0%, ${P}50 0%, ${P}18 40%, transparent 70%)`, pointerEvents: "none" }} />
+        {/* Secondary smaller bright spot */}
+        <div style={{ position: "absolute", top: "15%", left: "50%", transform: "translateX(-50%)", width: "40vw", height: "30vh", background: `radial-gradient(ellipse, ${PL}18 0%, transparent 70%)`, pointerEvents: "none" }} />
+        {/* Particles */}
+        <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none" }}>
+          {particles.map(p => (
+            <div key={p.id} style={{
+              position: "absolute", left: `${p.x}%`, top: `${p.y}%`,
+              width: p.size, height: p.size, borderRadius: "50%",
+              background: `rgba(167,139,250,${p.opacity})`,
+              animation: `float ${p.dur}s ease-in-out ${p.delay}s infinite`,
+            }} />
+          ))}
+        </div>
+
+        <div style={{ maxWidth: 900, margin: "0 auto", width: "100%", textAlign: "center" }}>
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.55 }}>
+            {/* Badge */}
+            <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: `${P}15`, border: `1px solid ${P}35`, borderRadius: 99, padding: "0.35rem 1rem", marginBottom: "2rem", fontSize: "0.75rem", fontWeight: 700, letterSpacing: "0.1em", color: PL, textTransform: "uppercase" }}>
+              <span style={{ width: 6, height: 6, background: G, borderRadius: "50%", boxShadow: `0 0 8px ${G}`, animation: "pulse 2s ease-in-out infinite", display: "inline-block" }} />
+              7/24 Aktif · Göktürk Labs
             </div>
 
-          </div>
-        </section>
+            <h1 style={{ fontSize: "clamp(3.2rem,7vw,6.5rem)", fontWeight: 900, lineHeight: 0.95, letterSpacing: "-0.045em", marginBottom: "2rem" }}>
+              <span style={{ display: "block", color: TEXT }}>Sunucunuz İçin</span>
+              <span className="grad-text" style={{ display: "block" }}>Özel Discord</span>
+              <span style={{ display: "block", color: TEXT }}>Botları & Altyapı</span>
+            </h1>
 
-        {/* 3. GELİŞMİŞ MODÜLLER & SİSTEMLER VİTRİNİ */}
-        <section id="moduller" className="extra-systems-section relative overflow-hidden border-b border-white/[0.06] bg-[#09090d] py-20">
-          {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar Çift Katmanlı Orbitler) */}
-          <div className="ambient-orbit ambient-orbit-right top-[12%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right-inner top-[16%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right top-[65%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 pb-6 border-b border-white/[0.08]">
-              <div>
-                <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest flex items-center gap-2">
-                  <Boxes className="h-4 w-4" /> BOT SİSTEMLERİ &amp; EKLENTİLER
-                </span>
-                <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Sunucunuzu Güçlendiren Modüller
-                </h2>
-              </div>
-              <p className="max-w-md text-sm text-zinc-400 leading-relaxed">
-                İhtiyacınıza uygun modülü seçerek projenize entegre edebilirsiniz.
-              </p>
-            </div>
+            <p style={{ fontSize: "1.1rem", color: SUB, lineHeight: 1.8, marginBottom: "2.75rem", maxWidth: 560, margin: "0 auto 2.75rem" }}>
+              Kendi VDS sunucumuzda 7/24 kesintisiz çalışan, resimli log tutan, bilet ve mülakat odalarını otomatik yöneten botunuzu birkaç saat içinde yayına alalım.
+            </p>
 
-
-            {/* ParsBot Birebir Kart Yapısı: Sadece Üst Görsel + Emoji + Başlık + Temiz Açıklama */}
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {extraSystems.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <div 
-                    key={item.id}
-                    className="group rounded-2xl border border-white/10 bg-[#0e0e14] hover:border-purple-500/40 hover:bg-[#12121c] transition-all duration-300 overflow-hidden flex flex-col shadow-xl shadow-black/40"
-                  >
-                    {/* Üst Görsel / Banner Alanı */}
-                    <div className="relative w-full h-44 overflow-hidden bg-zinc-950">
-                      <div className={`absolute inset-0 bg-gradient-to-br ${item.coverGradient}`} />
-                      {item.coverImage && (
-                        <img 
-                          src={item.coverImage} 
-                          alt={item.title} 
-                          loading="lazy"
-                          onError={(e) => { e.currentTarget.style.display = 'none'; }}
-                          className="relative w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-[0.88] group-hover:brightness-100" 
-                        />
-                      )}
-
-                      {/* Görsel üzerinde yumuşak karartma katmanı */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0d0d14] via-black/20 to-transparent pointer-events-none" />
-
-                      {/* Sol Üst Kategori Etiketi */}
-                      <div className="absolute top-3 left-3 z-10">
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[9px] font-mono font-semibold tracking-wider uppercase backdrop-blur-md bg-black/60 border border-white/10 text-zinc-300">
-                          <Icon className="h-3 w-3 text-purple-400" />
-                          <span>{item.category}</span>
-                        </span>
-                      </div>
-
-                      {/* Sağ Üst Özel Rozet (YAKINDA veya GÖRSEL LOG) */}
-                      {item.badge && (
-                        <div className="absolute top-3 right-3 z-10">
-                          <span className={`px-2.5 py-0.8 rounded-full text-[9px] font-sans font-bold tracking-widest uppercase backdrop-blur-md border shadow-lg ${
-                            item.badge === "YAKINDA"
-                              ? "bg-purple-600/80 text-purple-100 border-purple-400/50 shadow-purple-600/20"
-                              : "bg-emerald-600/80 text-emerald-100 border-emerald-400/50 shadow-emerald-600/20"
-                          }`}>
-                            {item.badge}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Alt Bilgi & İçerik Alanı (Emojisiz, Kurumsal & Modern Tasarım) */}
-                    <div className="p-5 flex-1 flex flex-col justify-between bg-gradient-to-b from-[#0d0d14] to-[#0a0a0f]">
-                      <div>
-                        <div className="flex items-center justify-between gap-2 mb-2">
-                          <h3 className="font-display text-[15px] font-bold text-white group-hover:text-purple-300 transition-colors tracking-tight">
-                            {item.title}
-                          </h3>
-                        </div>
-
-                        <p className="text-xs text-zinc-400 leading-relaxed">
-                          {item.detail}
-                        </p>
-                      </div>
-
-                      {/* İnce Mühendislik Etiketleri */}
-                      {item.specs && item.specs.length > 0 && (
-                        <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center gap-1.5 flex-wrap">
-                          {item.specs.map((sp, sIdx) => (
-                            <span 
-                              key={sIdx}
-                              className="text-[10px] font-mono text-zinc-400 bg-white/[0.03] border border-white/[0.06] rounded-md px-2 py-0.5"
-                            >
-                              {sp}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Özel Modül Çağrısı */}
-            <div className="mt-12 rounded-2xl border border-white/10 bg-gradient-to-r from-purple-950/40 via-[#101017] to-indigo-950/40 p-6 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <div className="space-y-1 text-center sm:text-left">
-                <strong className="text-white font-display text-base block">Sunucunuza özel spesifik bir mimari veya bot mu lazım?</strong>
-                <span className="text-xs text-zinc-400 block">Kendi slash komutlarınızı, harici API entegrasyonlarınızı (Webhooks, MongoDB, Rest API) sıfırdan TypeScript ile kodluyoruz.</span>
-              </div>
-              <a 
-                href={DISCORD_ORDER_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="shrink-0 inline-flex items-center gap-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold px-5 py-3 shadow-lg shadow-purple-600/20 transition-all"
-              >
-                <MessageSquare className="h-4 w-4" />
-                <span>Özel Modül İste</span>
-                <ArrowUpRight className="h-3.5 w-3.5" />
+            <div style={{ display: "flex", gap: "0.85rem", flexWrap: "wrap", justifyContent: "center", marginBottom: "2.75rem" }}>
+              <a href="#paketler" style={{ background: P, color: "#fff", borderRadius: 12, padding: "1rem 2.2rem", fontSize: "1.05rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.5rem", boxShadow: `0 0 50px ${P}65, 0 8px 32px ${P}45`, transition: "box-shadow .2s, transform .2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 70px ${P}85, 0 12px 40px ${P}65`; (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 50px ${P}65, 0 8px 32px ${P}45`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
+                Paketleri Gör <ArrowRight size={17} />
+              </a>
+              <a href="#moduller" style={{ background: "rgba(255,255,255,0.05)", color: TEXT, border: `1px solid rgba(255,255,255,0.14)`, borderRadius: 12, padding: "1rem 2.2rem", fontSize: "1.05rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.5rem", backdropFilter: "blur(12px)", transition: "border-color .2s, background .2s" }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.28)`; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.09)"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.14)`; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.05)"; }}>
+                <Zap size={15} /> Modülleri İncele
               </a>
             </div>
 
-          </div>
-        </section>
-
-        {/* 4. NASIL ÇALIŞIR? (GELİŞTİRME & KURULUM SÜRECİ) */}
-        <section id="nasil" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
-          {/* Sağ Kenar Atmosferik Elips */}
-          <div className="ambient-orbit ambient-orbit-right top-[25%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-2xl mx-auto">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">İŞLEYİŞ &amp; ÇALIŞMA BİÇİMİ</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Bürokrasi Yok, Doğrudan Geliştirici Masası
-              </h2>
-              <p className="mt-3 text-sm text-zinc-400">
-                Ticket botlarının otomatik cevaplarıyla değil, doğrudan botunuzu yazan ve derleyen kişiyle Discord DM üzerinden konuşursunuz.
-              </p>
-            </div>
-
-            <div className="mt-14 grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d12] p-6 space-y-4 hover:border-purple-500/40 transition-colors">
-                <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
-                  01
+            <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", justifyContent: "center" }}>
+              {[
+                { Icon: Ban, text: "Sahte Veri Yok", color: G },
+                { Icon: Server, text: "7/24 VDS", color: PL },
+                { Icon: Headphones, text: "Doğrudan Geliştirici", color: A },
+              ].map(({ Icon, text, color }) => (
+                <div key={text} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: TEXT, fontWeight: 600, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 99, padding: "0.42rem 0.9rem" }}>
+                  <Icon size={13} color={color} /> {text}
                 </div>
-                <h3 className="font-display text-lg font-bold text-white">İhtiyaçları Konuşuyoruz</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  Sunucunda ne eksik? Resimli log mu lazım, mülakat motoru mu, yoksa özel bir komut mu? Bütçene ve sunucu kitlene göre en mantıklı paketi ve modülleri seçiyoruz.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d12] p-6 space-y-4 hover:border-purple-500/40 transition-colors">
-                <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
-                  02
-                </div>
-                <h3 className="font-display text-lg font-bold text-white">VDS Ortamında Derleme &amp; Test</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  Botu Debian 12 sunucumuzda izole bir servis olarak kuruyoruz. Sunucu logoların, yetki kademelerin ve hoş geldin afişlerin test edilip onayına sunuluyor.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-[#0d0d12] p-6 space-y-4 hover:border-purple-500/40 transition-colors">
-                <div className="h-10 w-10 rounded-xl bg-purple-600/10 border border-purple-500/20 text-purple-400 flex items-center justify-center font-bold text-sm font-mono">
-                  03
-                </div>
-                <h3 className="font-display text-lg font-bold text-white">Yetki Teslimi &amp; Sürekli Destek</h3>
-                <p className="text-xs text-zinc-400 leading-relaxed">
-                  Botunu sunucuna davet ediyoruz, gerekiyorsa web yönetim paneli girişini iletiyoruz. Herhangi bir sorunda veya yeni modül eklemek istediğinde Discord'dan bir mesaj uzağındayım.
-                </p>
-              </div>
+              ))}
             </div>
-          </div>
-        </section>
+          </motion.div>
 
-        {/* 5. PAKETLER & FİYATLANDIRMA */}
-        <section id="paketler" className="relative overflow-hidden py-20 border-b border-white/[0.06] bg-[#09090d]">
-          {/* Kenar Atmosferik Elipsler (Sağ ve Sol Kenar) */}
-          <div className="ambient-orbit ambient-orbit-left top-[35%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right top-[15%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right-inner top-[20%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-8 xl:px-10 relative z-10">
-            <div className="max-w-2xl">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">ŞEFFAF FİYATLANDIRMA</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Sunucunuza Uygun Çalışma Seviyesini Seçin
-              </h2>
-              <p className="mt-3 text-sm text-zinc-400 leading-relaxed">
-                Tüm paketlerimiz 7/24 VDS barındırma dahil sunulur; sunucu faturası veya teknik bakım derdiniz olmaz.
-              </p>
+          {/* Bot Mockup centered below */}
+          <motion.div initial={{ opacity: 0, y: 32 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.35 }}
+            style={{ marginTop: "4rem", maxWidth: 680, margin: "4rem auto 0", position: "relative" }}>
+            <div style={{ position: "absolute", inset: "-20px", background: `radial-gradient(ellipse, ${P}25 0%, transparent 70%)`, pointerEvents: "none", borderRadius: 24 }} />
+            <div style={{ position: "relative", border: `1px solid ${P}30`, borderRadius: 20, overflow: "hidden", boxShadow: `0 0 80px ${P}20` }}>
+              <BotMockup />
             </div>
+          </motion.div>
+        </div>
+      </section>
 
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 xl:gap-5">
-              {plans.map((p) => {
-                const isVip = p.badgeType === "vip";
-                const isPopular = p.badgeType === "popular";
-                const isFree = p.badgeType === "free";
+      {/* ── STATS ── */}
+      <div style={{ padding: "3rem 1.5rem", borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "repeat(4,1fr)", gap: "0.5rem" }}>
+          {[
+            { n: "18+", l: "Bot Modülü", c: PL },
+            { n: "7/24", l: "VDS Uptime", c: G },
+            { n: "₺50", l: "Başlangıç Fiyatı", c: A },
+            { n: "100%", l: "Müşteri Memnuniyeti", c: "#38BDF8" },
+          ].map((s, i) => (
+            <motion.div key={s.l} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ ...SPRING_C, delay: i * 0.08 }}
+              style={{ textAlign: "center", padding: "1.75rem 1rem", background: CARD, border: `1px solid ${BORDER}`, borderRadius: 16 }}>
+              <div style={{ fontSize: "clamp(2rem,4vw,2.8rem)", fontWeight: 900, letterSpacing: "-0.04em", color: s.c, lineHeight: 1 }}>{s.n}</div>
+              <div style={{ fontSize: "0.78rem", color: SUB, fontWeight: 600, marginTop: "0.4rem", letterSpacing: "0.04em" }}>{s.l}</div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
 
-                return (
-                  <div 
-                    key={p.id}
-                    className={`rounded-2xl border p-6 flex flex-col justify-between transition-all duration-200 relative ${
-                      isVip
-                        ? "border-amber-500/40 bg-gradient-to-b from-amber-500/[0.08] to-[#121218] shadow-xl shadow-amber-500/10"
-                        : isPopular
-                        ? "border-purple-500/50 bg-gradient-to-b from-purple-500/[0.08] to-[#121218] shadow-xl shadow-purple-500/10"
-                        : "border-white/10 bg-[#0e0e14] hover:border-white/20"
-                    }`}
-                  >
-                    <div>
-                      {/* Rozet */}
-                      {p.badge && (
-                        <div className="mb-3">
-                          <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider inline-flex items-center gap-1 ${
-                            isVip
-                              ? "bg-amber-400/20 text-amber-300 border border-amber-400/30"
-                              : isPopular
-                              ? "bg-purple-500/20 text-purple-300 border border-purple-500/30"
-                              : "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                          }`}>
-                            {isVip && <Crown className="h-3 w-3" />}
-                            {isPopular && <Flame className="h-3 w-3" />}
-                            <span>{p.badge}</span>
-                          </span>
-                        </div>
-                      )}
+      {/* ── MARQUEE ── */}
+      <div style={{ background: S1, borderTop: `1px solid ${BORDER}`, borderBottom: `1px solid ${BORDER}`, padding: "1.25rem 0", display: "flex", flexDirection: "column", gap: "0.9rem", overflow: "hidden" }}>
+        <div style={{ fontSize: "0.7rem", fontWeight: 700, letterSpacing: "0.1em", color: P, display: "flex", alignItems: "center", gap: "0.5rem", padding: "0 1.5rem", marginBottom: "0.25rem" }}>
+          <span style={{ width: 8, height: 8, background: P, borderRadius: 2 }} />
+          TÜM SİSTEMLER TEK BOTTAN
+        </div>
+        <MarqueeRow items={MARQUEE1} />
+        <MarqueeRow items={MARQUEE2} reverse />
+      </div>
 
-                      <h3 className="font-display text-lg font-bold text-white">{p.name}</h3>
-                      <p className="text-xs text-zinc-400 mt-1 min-h-[36px]">{p.description}</p>
+      {/* ── SERVICES (ek 4) ── */}
+      <section id="hizmetler" style={{ padding: "9rem 1.5rem" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <Label text="HİZMET KATEGORİLERİ" />
+          <motion.div initial={{ opacity: 0, y: 64, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={SPRING_S}
+            style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "2rem", marginBottom: "3.5rem", alignItems: "end" }}>
+            <h2 style={{ fontSize: "clamp(2.5rem,5vw,3.8rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05 }}>
+              Ne istersen,<br /><span className="grad-text">tek atölyeden</span><br />tam kontrol.
+            </h2>
+            <p style={{ color: SUB, lineHeight: 1.8, fontSize: "0.95rem" }}>
+              Discord botu, web yönetim paneli, 7/24 VDS barındırma ve özel yazılım çözümlerinin tamamı aynı geliştirici tarafından, aynı çatı altında sunulur.
+            </p>
+          </motion.div>
 
-                      <div className="mt-4 flex items-baseline gap-1.5 pb-4 border-b border-white/[0.06]">
-                        <span className="font-display text-3xl font-extrabold text-white">{p.price}</span>
-                        <span className="text-xs text-zinc-400 font-mono">/ {p.period}</span>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(270px,1fr))", gap: "1rem" }}>
+            {[
+              { id: "bot", icon: MessageCircle, name: "Discord Bot Geliştirme", category: "TEMEL HİZMET", desc: "TypeScript tabanlı, PM2 cluster altında çalışan Discord.js v14 botu. Kayıt, moderasyon, ticket ve daha fazlası.", feats: ["Kayıt, moderasyon, ticket sistemleri","Canvas 2D, Ses odaları, XP sistemi","Özel komutlar ve modüller"], price: "50₺", period: "aylık başlangıç", color: P, badge: "EN POPÜLER" },
+              { id: "panel", icon: Lock, name: "Web Yönetim Paneli", category: "PRO ÖZELLİK", desc: "PBKDF2 256-bit şifrelemeli, HIBP korumalı, tarayıcıdan bot ayarlarını yönetebileceğin güvenli panel.", feats: ["HIBP şifre sızıntı koruması","Rol ve kanal yönetimi paneli","Log kayıtlarına tarayıcıdan erişim"], price: "350₺", period: "aylık (Pro pakette)", color: A, badge: "PRO" },
+              { id: "vds", icon: Server, name: "7/24 VDS Barındırma", category: "ALTYAPI", desc: "Botun Göktürk Labs VDS sunucusunda izole servis olarak, PM2 cluster ile kesintisiz çalışır.", feats: ["PM2 cluster + otomatik yeniden başlatma","Türkiye lokasyonlu düşük gecikme","Uptime monitoring ve alert sistemi"], price: "Dahil", period: "tüm paketlerde", color: G, badge: "DAHİL" },
+              { id: "ozel", icon: Brain, name: "Özel Yazılım & Otomasyon", category: "CUSTOM", desc: "Standart modüllerin dışında, sunucuna tamamen özel yazılmış sistemler ve Gemini AI entegrasyonları.", feats: ["Terzi usulü Discord entegrasyonları","Gemini AI destekli sohbet asistanı","Minecraft panel, webhook ve API köprüleri"], price: "150₺", period: "aylık başlangıç", color: "#38BDF8", badge: "CUSTOM" },
+            ].map((svc, i) => {
+              const SvcIcon = svc.icon;
+              return (
+                <motion.div key={svc.id} initial={{ opacity: 0, y: 42, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ ...SPRING_C, delay: i * 0.07 }}
+                  className="card-glow"
+                  style={{ ...GLASS, border: `1px solid rgba(255,255,255,0.09)`, borderRadius: 20, padding: "1.75rem", position: "relative", overflow: "hidden", cursor: "default" }}>
+                  <div style={{ position: "absolute", top: 16, right: 16, background: `${svc.color}22`, color: svc.color, border: `1px solid ${svc.color}44`, borderRadius: 6, fontSize: "0.6rem", fontWeight: 800, padding: "0.2rem 0.5rem", letterSpacing: "0.08em" }}>{svc.badge}</div>
+                  <div style={{ background: `${svc.color}18`, borderRadius: 12, padding: "0.75rem", display: "inline-flex", marginBottom: "1.1rem" }}>
+                    <SvcIcon size={22} color={svc.color} />
+                  </div>
+                  <div style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.1em", color: svc.color, marginBottom: "0.4rem" }}>{svc.category}</div>
+                  <h3 style={{ fontSize: "1.05rem", fontWeight: 800, marginBottom: "0.6rem" }}>{svc.name}</h3>
+                  <p style={{ color: SUB, fontSize: "0.78rem", lineHeight: 1.65, marginBottom: "1.1rem" }}>{svc.desc}</p>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginBottom: "1.5rem" }}>
+                    {svc.feats.map(f => (
+                      <div key={f} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.74rem", color: SUB }}>
+                        <Check size={11} color={G} /> {f}
                       </div>
+                    ))}
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", borderTop: `1px solid rgba(255,255,255,0.06)`, paddingTop: "1rem" }}>
+                    <div>
+                      <div style={{ fontSize: "1.4rem", fontWeight: 900, color: svc.color, lineHeight: 1 }}>{svc.price}</div>
+                      <div style={{ fontSize: "0.65rem", color: MUT, marginTop: "0.15rem" }}>{svc.period}</div>
+                    </div>
+                    <a href="#paketler" style={{ background: `${svc.color}22`, color: svc.color, border: `1px solid ${svc.color}44`, borderRadius: 9, padding: "0.5rem 0.9rem", fontSize: "0.78rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                      Paket Seç <ArrowRight size={12} />
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
-                      <div className="mt-4 space-y-2.5 text-xs text-zinc-300">
-                        {p.features.map((f, fi) => (
-                          <div key={fi} className="flex items-start gap-2">
-                            <Check className="h-3.5 w-3.5 text-purple-400 shrink-0 mt-0.5" />
-                            <span className="leading-snug">{f}</span>
+      {/* ── MODULES ── */}
+      <section id="moduller" style={{ padding: "9rem 1.5rem" }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <Label text="BOT SİSTEMLERİ & EKLENTİLER" />
+          <motion.div initial={{ opacity: 0, y: 64, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={SPRING_S}
+            style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "2rem", marginBottom: "3.5rem", alignItems: "end" }}>
+            <h2 style={{ fontSize: "clamp(2.5rem,5vw,3.8rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05 }}>
+              <TextEffect per="word" preset="fade-in-blur" onScroll as="span" style={{ display: "block" }}>
+                Sunucunuzu
+              </TextEffect>
+              <TextEffect per="word" preset="fade-in-blur" onScroll delay={0.08} as="span" style={{ display: "block", background: "linear-gradient(135deg,#fff 0%,#C4B5FD 50%,#7C3AED 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                Güçlendiren
+              </TextEffect>
+              <TextEffect per="word" preset="fade-in-blur" onScroll delay={0.16} as="span" style={{ display: "block" }}>
+                Modüller
+              </TextEffect>
+            </h2>
+            <div>
+              <p style={{ color: SUB, lineHeight: 1.75, fontSize: "0.9rem" }}>İhtiyacınıza uygun modülü seçerek projenize entegre edebilirsiniz. Her modül bağımsız çalışır, istediğiniz kombinasyonu oluşturabilirsiniz.</p>
+              <a href={DM} target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", marginTop: "1.25rem", background: CARD, border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 1.1rem", fontSize: "0.84rem", fontWeight: 600, color: TEXT }}>
+                <Di size={15} color={PL} /> Özel Modül İste
+              </a>
+            </div>
+          </motion.div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(265px,1fr))", gap: "0.85rem" }}>
+            {MODS.map((mod, i) => {
+              const Icon = mod.icon;
+              return (
+                <motion.div key={mod.name}
+                  initial={{ opacity: 0, y: 42, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true }} transition={{ ...SPRING_C, delay: i * 0.05 }}
+                  whileHover={{ y: -3, boxShadow: `0 10px 32px rgba(124,58,237,0.15)`, borderColor: `${P}44` }}
+                  style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 14, padding: "1.15rem", position: "relative", overflow: "hidden" }}>
+                  {/* Renkli üst aksan çizgisi */}
+                  <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: mod.isSoon ? `${A}80` : mod.isNew ? `${G}80` : mod.badge ? `${P}80` : `${P}40`, borderRadius: "14px 14px 0 0" }} />
+                  {mod.isSoon && <div style={{ position: "absolute", top: 10, right: 10, background: `${A}22`, color: A, border: `1px solid ${A}44`, borderRadius: 6, fontSize: "0.62rem", fontWeight: 700, padding: "0.18rem 0.42rem" }}>YAKINDA</div>}
+                  {mod.isNew && <div style={{ position: "absolute", top: 10, right: 10, background: `${G}18`, color: G, border: `1px solid ${G}33`, borderRadius: 6, fontSize: "0.62rem", fontWeight: 700, padding: "0.18rem 0.42rem" }}>YENİ</div>}
+                  {mod.badge && <div style={{ position: "absolute", top: 10, right: 10, background: `${P}22`, color: PL, border: `1px solid ${P}44`, borderRadius: 6, fontSize: "0.62rem", fontWeight: 700, padding: "0.18rem 0.42rem" }}>{mod.badge}</div>}
+                  <div style={{ fontSize: "0.63rem", fontWeight: 700, letterSpacing: "0.08em", color: `${P}99`, marginBottom: "0.65rem", textTransform: "uppercase", marginTop: "0.3rem" }}>{mod.tag}</div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.55rem" }}>
+                    <div style={{ background: `linear-gradient(135deg, ${P}28, ${P}10)`, border: `1px solid ${P}30`, borderRadius: 10, padding: "0.45rem", display: "flex", flexShrink: 0 }}>
+                      <Icon size={16} color={PL} />
+                    </div>
+                    <span style={{ fontWeight: 700, fontSize: "0.9rem", lineHeight: 1.3 }}>{mod.name}</span>
+                  </div>
+                  <p style={{ color: SUB, fontSize: "0.77rem", lineHeight: 1.6, marginBottom: "0.75rem" }}>{mod.desc}</p>
+                  {mod.feats.map(f => (
+                    <div key={f} style={{ display: "flex", alignItems: "center", gap: "0.38rem", fontSize: "0.72rem", color: "rgba(148,163,184,0.75)", marginBottom: "0.28rem" }}>
+                      <Check size={10} color={G} /> {f}
+                    </div>
+                  ))}
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ── */}
+      <section id="nasil" style={{ padding: "9rem 1.5rem", background: S1, borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Label text="İŞLEYİŞ & ÇALIŞMA BİÇİMİ" />
+          <motion.div initial={{ opacity: 0, y: 64, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={SPRING_S}
+            style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "1.5rem" : "4rem", alignItems: "start", marginBottom: "3.5rem" }}>
+            <div>
+              <h2 style={{ fontSize: "clamp(2.5rem,5vw,3.8rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05 }}>
+                Bürokrasi Yok,<br /><span className="grad-text">Doğrudan</span><br />Geliştirici Masası
+              </h2>
+            </div>
+            <p style={{ color: SUB, lineHeight: 1.75, fontSize: "0.9rem", paddingTop: "0.5rem" }}>
+              Ticket botlarının otomatik cevaplarıyla değil, doğrudan botunuzu yazan ve derleyen kişiyle Discord DM'den çalışıyoruz. Üç adımda botunuz yayında.
+            </p>
+          </motion.div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "1.25rem" }}>
+            {[
+              { n: "01", t: "İhtiyaçları Konuşuyoruz", d: "Sunucunda ne eksik? Resimli log mu, mülakat motoru mu, özel komut mu? Bütçe ve sunucu büyüklüğüne göre en uygun mimariyi birlikte belirleriz." },
+              { n: "02", t: "VDS Ortamında Derleme & Test", d: "Botu Göktürk Labs VDS sunucusunda izole servis olarak kuruyoruz. Sunucu logolarınla, yetki kademelerin ve gerçek Discord API'siyle test ediyoruz." },
+              { n: "03", t: "Yetki Teslimi & Sürekli Destek", d: "Botunu sunucuna davet ediyoruz, gerekirse web panel girişini iletiyoruz. Herhangi bir sorun veya güncelleme talebinde doğrudan geliştirici masası seninle." },
+            ].map((s, i) => (
+              <motion.div key={s.n} initial={{ opacity: 0, y: 42, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 52, damping: 22, delay: i * 0.15 }}
+                style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 16, padding: "1.6rem" }}>
+                <div className="grad-text" style={{ fontSize: "3rem", fontWeight: 900, marginBottom: "0.9rem", lineHeight: 1, opacity: 0.7 }}>{s.n}</div>
+                <h3 style={{ fontWeight: 800, fontSize: "1rem", marginBottom: "0.6rem" }}>{s.t}</h3>
+                <p style={{ color: SUB, fontSize: "0.83rem", lineHeight: 1.65 }}>{s.d}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── PACKAGES ── */}
+      <section id="paketler" style={{ padding: "9rem 1.5rem", borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto" }}>
+          <Label text="ŞEFFAF FİYATLANDIRMA" />
+          <motion.div initial={{ opacity: 0, y: 64, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={SPRING_S}
+            style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "2rem", marginBottom: "3.5rem", alignItems: "end" }}>
+            <h2 style={{ fontSize: "clamp(2.5rem,5vw,3.8rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05 }}>
+              Her ihtiyaca ve<br />bütçeye uygun,<br /><span className="grad-text">şeffaf paketler.</span>
+            </h2>
+            <p style={{ color: SUB, lineHeight: 1.75, fontSize: "0.9rem" }}>
+              Tüm paketlerimiz 7/24 VDS barındırma dahil sunulur. Gizli ücret yok, port parası yok, kilit yok. Ödemeler Discord DM üzerinden geliştiriciyle birlikte netleştirilir.
+            </p>
+          </motion.div>
+
+          {/* Sol detay + Sağ seçici */}
+          {(() => {
+            const sp = PKGS.find(p => p.id === selectedPkg)!;
+            return (
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 0.7fr", gap: "1.25rem", alignItems: "start" }}>
+                {/* Sol: seçili paketin büyük detay kartı */}
+                <AnimatePresence mode="wait">
+                  <motion.div key={selectedPkg}
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
+                    transition={{ type: "spring", stiffness: 52, damping: 22 }}
+                    style={{ background: `${sp.color}10`, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: `2px solid ${sp.color}44`, borderRadius: 20, padding: "2rem", position: "relative" }}>
+                    {sp.badge && (
+                      <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", background: sp.color, color: "#fff", fontSize: "0.65rem", fontWeight: 800, padding: "0.22rem 1.1rem", borderRadius: "0 0 9px 9px", letterSpacing: "0.06em", whiteSpace: "nowrap" }}>
+                        {sp.badge}
+                      </div>
+                    )}
+                    <div style={{ marginTop: "0.75rem" }}>
+                      <div style={{ fontSize: "0.68rem", color: sp.color, fontWeight: 700, letterSpacing: "0.09em", textTransform: "uppercase", marginBottom: "0.5rem", display: "flex", alignItems: "center", gap: "0.35rem" }}>
+                        {React.createElement(sp.icon, { size: 13 })} PAKETİ SEÇTİN
+                      </div>
+                      <h3 style={{ fontSize: "1.75rem", fontWeight: 900, letterSpacing: "-0.02em", marginBottom: "0.4rem" }}>{sp.name}</h3>
+                      <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.65, marginBottom: "1.5rem" }}>{sp.desc}</p>
+                      <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem", marginBottom: "1.75rem" }}>
+                        <span style={{ fontSize: "3rem", fontWeight: 900, color: sp.color, lineHeight: 1 }}>₺{sp.price}</span>
+                        <span style={{ color: SUB, fontSize: "0.9rem" }}>/ {sp.period}</span>
+                      </div>
+                      <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.75rem" }}>
+                        {sp.feats.map(f => (
+                          <div key={f} style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", fontSize: "0.85rem", color: SUB }}>
+                            <Check size={14} color={sp.color} style={{ flexShrink: 0, marginTop: "0.1rem" }} /> {f}
                           </div>
                         ))}
                       </div>
-
-                      {p.notice && (
-                        <div className="mt-4 p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-[11px] text-amber-300 leading-snug">
-                          {p.notice}
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Sipariş & Yasal Onay Kutusu */}
-                    <div className="mt-6 pt-4 border-t border-white/[0.06] space-y-3">
-                      <div className="space-y-1.5 text-[11px] text-zinc-400">
-                        <label className="flex items-start gap-2 cursor-pointer select-none">
-                          <input 
-                            type="checkbox" 
-                            checked={!!acceptedTerms[p.id]} 
-                            onChange={(e) => setAcceptedTerms({ ...acceptedTerms, [p.id]: e.target.checked })}
-                            className="mt-0.5 rounded bg-zinc-900 border-white/20 text-purple-600 focus:ring-0 h-3.5 w-3.5"
-                          />
-                          <span>
-                            <a href="/hizmet-sartlari" target="_blank" className="underline text-purple-300 hover:text-white">Hizmet Şartları</a> ve <a href="/gizlilik-politikasi" target="_blank" className="underline text-purple-300 hover:text-white">Gizlilik Politikası</a>'nı okudum ve onaylıyorum.
-                          </span>
-                        </label>
-                      </div>
-
-                      <div className="flex flex-col gap-2 pt-1">
-                        {/* 1. Buton: Doğrudan Discord DM Aç (Native Link + Kopyalama) */}
-                        <a
-                          href={DISCORD_ORDER_URL}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => {
-                            if (!acceptedTerms[p.id]) {
-                              e.preventDefault();
-                              toast.error("Lütfen önce Hizmet Şartları ve Gizlilik bildirimini onaylayın.");
-                              return;
-                            }
-                            handleCopyPlanText(p);
-                          }}
-                          className={`w-full inline-flex items-center justify-center gap-2 rounded-xl py-2.5 text-xs font-semibold transition-all active:scale-95 cursor-pointer ${
-                            isVip
-                              ? "bg-amber-600 hover:bg-amber-500 text-white shadow-lg shadow-amber-600/25"
-                              : isPopular
-                              ? "bg-purple-600 hover:bg-purple-500 text-white shadow-lg shadow-purple-600/25"
-                              : "bg-[#5865F2] hover:bg-[#4752c4] text-white shadow-lg shadow-[#5865F2]/20"
-                          }`}
-                        >
-                          <DiscordMark className="h-4 w-4" />
-                          <span>Discord DM'den İletişime Geç</span>
-                          <ArrowUpRight className="h-3.5 w-3.5 opacity-80" />
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", cursor: "pointer", marginBottom: "1rem", fontSize: "0.74rem", color: SUB, lineHeight: 1.5 }}>
+                        <input type="checkbox" checked={!!tos[sp.id]} onChange={e => setTos(prev => ({ ...prev, [sp.id]: e.target.checked }))} style={{ marginTop: "0.15rem", accentColor: sp.color }} />
+                        <span><a href="/hizmet-sartlari" style={{ color: sp.color }}>Hizmet Şartları</a> ve <a href="/gizlilik-politikasi" style={{ color: sp.color }}>Gizlilik Politikası</a>'nı okudum.</span>
+                      </label>
+                      <div style={{ display: "flex", gap: "0.6rem" }}>
+                        <a href={DM} target="_blank" rel="noopener noreferrer"
+                          style={{ flex: 1, background: tos[sp.id] ? sp.color : CARD, border: `1px solid ${tos[sp.id] ? sp.color : BORDER}`, color: "#fff", borderRadius: 12, padding: "0.88rem", fontSize: "0.88rem", fontWeight: 700, textAlign: "center", transition: "background .2s" }}>
+                          Discord DM'den İletişime Geç
                         </a>
-
-                        {/* 2. Buton: Hazır Sipariş Metnini Kopyala */}
-                        <button
-                          type="button"
-                          onClick={() => handleCopyPlanText(p)}
-                          className="w-full inline-flex items-center justify-center gap-2 rounded-xl py-2 px-3 text-xs font-medium border border-white/10 bg-white/[0.04] hover:bg-white/[0.08] text-zinc-300 hover:text-white transition-all active:scale-95 cursor-pointer"
-                        >
-                          {copiedPlan === p.id ? (
-                            <>
-                              <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
-                              <span className="text-emerald-400 font-semibold">Sipariş Metni Kopyalandı!</span>
-                            </>
-                          ) : (
-                            <>
-                              <Copy className="h-3.5 w-3.5 text-purple-400" />
-                              <span>Sipariş Metnini Kopyala</span>
-                            </>
-                          )}
+                        <button onClick={() => copy(sp.id, sp.copyText)}
+                          style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 12, padding: "0.88rem 1rem", cursor: "pointer", color: copied === sp.id ? G : SUB, display: "flex", alignItems: "center" }}>
+                          {copied === sp.id ? <Check size={16} /> : <Copy size={16} />}
                         </button>
                       </div>
-
-                      {copiedPlan === p.id && (
-                        <p className="text-[10px] text-emerald-400 font-mono text-center flex items-center justify-center gap-1 mt-1">
-                          <CheckCircle2 className="h-3 w-3" /> Metin panoya alındı, Discord DM'ye yapıştırabilirsiniz.
-                        </p>
-                      )}
                     </div>
+                  </motion.div>
+                </AnimatePresence>
 
-                  </div>
-                );
-              })}
-            </div>
-
-            <p className="mt-8 text-center text-xs text-zinc-400">
-              💡 Ödemeler ve özel kapsam Discord DM üzerinden geliştiriciyle birlikte netleştirilir. Web sitemiz üzerinden kredi kartı veya ödeme bilgisi toplanmaz.
-            </p>
-          </div>
-        </section>
-
-        {/* 6. HAKKIMIZDA BÖLÜMÜ */}
-        <section id="hakkimizda" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
-          {/* Sağ Kenar Çift Katmanlı Atmosferik Elipsler */}
-          <div className="ambient-orbit ambient-orbit-right top-[18%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right-inner top-[24%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="space-y-6">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">HAKKIMIZDA</span>
-              <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Şeffaf, Bağımsız ve Topluluk Odaklı Yazılım Geliştirme
-              </h2>
-              <p className="text-sm sm:text-base text-zinc-300 leading-relaxed">
-                Göktürk Labs; geliştirici <strong className="text-purple-300">semihr66</strong> tarafından temelleri atılan, Discord sunucularına profesyonel yazılım, yönetim ve telemetri altyapısı sunan bağımsız bir girişimdir.
-              </p>
-              <p className="text-sm text-zinc-400 leading-relaxed">
-                Piyasadaki şişirilmiş fiyatlar, karmaşık yabancı arayüzler ve veri gizliliğini ihlal eden bot sistemlerine karşı; Türk Discord topluluklarına hızlı, güvenilir ve 7/24 kesintisiz çalışan yerli bir alternatif inşa ediyoruz.
-              </p>
-
-              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <span className="text-purple-400 font-bold block text-sm">Açık İletişim</span>
-                  <span className="text-zinc-400 mt-1 block">Yapay zeka robotları yerine doğrudan geliştirici ile 1-1 muhatapsınız.</span>
-                </div>
-                <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <span className="text-emerald-400 font-bold block text-sm">Sıfır Telemetri Satışı</span>
-                  <span className="text-zinc-400 mt-1 block">Sunucunuzun özel verileri veya mesajları asla satılmaz ya da paylaşılmaz.</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 7. İLETİŞİM BÖLÜMÜ (CANLI VE ÇALIŞAN FORM) */}
-        <section id="iletisim" className="relative overflow-hidden py-20 border-b border-white/[0.06] bg-[#09090d]">
-          {/* Sağ ve Sol Kenar Atmosferik Elipsler */}
-          <div className="ambient-orbit ambient-orbit-left top-[30%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right top-[20%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right-inner top-[25%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-              
-              <div className="lg:col-span-5 space-y-5">
-                <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">İLETİŞİM &amp; TALEP</span>
-                <h2 className="font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                  Doğrudan İletişime Geçin
-                </h2>
-                <p className="text-sm text-zinc-300 leading-relaxed">
-                  İster paket siparişi, ister sunucunuza özel bot projesi, ister teknik bir soru... Bize formu doldurarak veya doğrudan Discord DM üzerinden ulaşabilirsiniz.
-                </p>
-
-                <div className="space-y-3 pt-3">
-                  <a 
-                    href={DISCORD_ORDER_URL} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="flex items-center gap-3 p-3.5 rounded-xl border border-white/10 bg-[#0e0e14] hover:border-purple-500/50 hover:bg-[#12121a] transition-all group"
-                  >
-                    <div className="h-9 w-9 rounded-lg bg-[#5865F2]/10 border border-[#5865F2]/20 text-[#5865F2] flex items-center justify-center">
-                      <DiscordMark className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <strong className="text-xs font-semibold text-white block group-hover:text-purple-300 transition-colors">Doğrudan Discord DM</strong>
-                      <span className="text-[11px] text-zinc-400 font-mono">semih1231 (937079326149595147)</span>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 ml-auto text-zinc-500 group-hover:text-white transition-colors" />
-                  </a>
-
-                  <a 
-                    href={COMMUNITY_URL} 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="flex items-center gap-3 p-3.5 rounded-xl border border-white/10 bg-[#0e0e14] hover:border-purple-500/50 hover:bg-[#12121a] transition-all group"
-                  >
-                    <div className="h-9 w-9 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center">
-                      <MessageSquare className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <strong className="text-xs font-semibold text-white block group-hover:text-purple-300 transition-colors">Göktürk Labs Topluluk Sunucusu</strong>
-                      <span className="text-[11px] text-zinc-400 font-mono">discord.gg/Y5CTNskKCG</span>
-                    </div>
-                    <ArrowUpRight className="h-4 w-4 ml-auto text-zinc-500 group-hover:text-white transition-colors" />
-                  </a>
-                </div>
-              </div>
-
-              {/* İnteraktif İletişim Formu */}
-              <div className="lg:col-span-7 rounded-2xl border border-white/10 bg-[#0e0e14] p-6 sm:p-8">
-                {contactSuccess ? (
-                  <div className="space-y-4 text-center py-8">
-                    <div className="h-12 w-12 rounded-full bg-emerald-500/20 border border-emerald-500/40 text-emerald-400 flex items-center justify-center mx-auto">
-                      <CheckCircle2 className="h-6 w-6" />
-                    </div>
-                    <h3 className="font-display text-xl font-bold text-white">Talebiniz Hazırlandı!</h3>
-                    <p className="text-xs text-zinc-300 max-w-md mx-auto leading-relaxed">
-                      Bilgileriniz başarıyla derlendi. Geliştiriciye hemen iletmek için mesajınızı kopyalayabilir veya doğrudan Discord DM penceresini açabilirsiniz.
-                    </p>
-                    <div className="pt-3 flex flex-col sm:flex-row items-center justify-center gap-3">
-                      <button
-                        type="button"
-                        onClick={handleCopyContactMessage}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 px-5 py-2.5 text-xs font-semibold text-white shadow-lg shadow-purple-600/20"
-                      >
-                        <Copy className="h-4 w-4" />
-                        <span>Kopyala &amp; Discord DM'de Aç</span>
+                {/* Sağ: plan seçici */}
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem", position: isMobile ? "static" : "sticky", top: "6rem" }}>
+                  {PKGS.map(pkg => {
+                    const PkgIcon = pkg.icon;
+                    const isActive = selectedPkg === pkg.id;
+                    const isHighlight = pkg.highlight;
+                    return (
+                      <button key={pkg.id} onClick={() => setSelectedPkg(pkg.id)}
+                        className={isHighlight && !isActive ? "pkg-highlight" : ""}
+                        style={{
+                          background: isActive ? `${pkg.color}18` : isHighlight ? `${pkg.color}08` : "rgba(255,255,255,0.03)",
+                          backdropFilter: "blur(16px)", WebkitBackdropFilter: "blur(16px)",
+                          border: `1px solid ${isActive ? pkg.color + "66" : isHighlight ? pkg.color + "30" : "rgba(255,255,255,0.08)"}`,
+                          borderRadius: 14, padding: "0.9rem 1rem", cursor: "pointer", textAlign: "left",
+                          transition: "all 0.2s ease", width: "100%",
+                          boxShadow: isHighlight && !isActive ? `0 0 20px ${pkg.color}18` : "none",
+                        }}>
+                        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                          <div style={{ background: `${pkg.color}1A`, borderRadius: 9, padding: "0.45rem", display: "flex", flexShrink: 0 }}>
+                            <PkgIcon size={16} color={pkg.color} />
+                          </div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontSize: "0.6rem", color: pkg.highlight ? A : pkg.color, fontWeight: 800, letterSpacing: "0.07em", display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                              {pkg.highlight && <Star size={9} color={A} />}{pkg.badge}
+                            </div>
+                            <div style={{ fontWeight: 800, fontSize: "0.88rem", color: TEXT, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{pkg.name}</div>
+                          </div>
+                          <div style={{ textAlign: "right", flexShrink: 0 }}>
+                            <div style={{ fontSize: "1.15rem", fontWeight: 900, color: isActive ? pkg.color : SUB, lineHeight: 1 }}>₺{pkg.price}</div>
+                            <div style={{ fontSize: "0.6rem", color: MUT }}>{pkg.period}</div>
+                          </div>
+                        </div>
+                        {isActive && (
+                          <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.25 }}
+                            style={{ height: 2, background: pkg.color, borderRadius: 1, marginTop: "0.65rem", transformOrigin: "left" }} />
+                        )}
                       </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setContactSuccess(false);
-                          setContactName("");
-                          setContactDiscord("");
-                          setContactMessage("");
-                        }}
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/[0.04] px-5 py-2.5 text-xs font-semibold text-zinc-300 hover:text-white"
-                      >
-                        <span>Yeni Form Doldur</span>
-                      </button>
-                    </div>
-                  </div>
-                ) : (
-                  <form onSubmit={handleContactSubmit} className="space-y-4 text-xs">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label htmlFor="contact-name" className="block font-medium text-zinc-300 mb-1.5">
-                          Adınız / Takma Adınız <span className="text-purple-400">*</span>
-                        </label>
-                        <input
-                          id="contact-name"
-                          type="text"
-                          required
-                          value={contactName}
-                          onChange={(e) => setContactName(e.target.value)}
-                          placeholder="Örn: Ahmet veya Rex"
-                          className="w-full rounded-xl border border-white/10 bg-black/40 px-3.5 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 font-sans"
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="contact-discord" className="block font-medium text-zinc-300 mb-1.5">
-                          Discord Kullanıcı Adınız <span className="text-purple-400">*</span>
-                        </label>
-                        <input
-                          id="contact-discord"
-                          type="text"
-                          required
-                          value={contactDiscord}
-                          onChange={(e) => setContactDiscord(e.target.value)}
-                          placeholder="Örn: ahmet123 veya ahmet#0001"
-                          className="w-full rounded-xl border border-white/10 bg-black/40 px-3.5 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 font-mono"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label htmlFor="contact-topic" className="block font-medium text-zinc-300 mb-1.5">
-                        İletişim / Talep Konusu
-                      </label>
-                      <select
-                        id="contact-topic"
-                        value={contactTopic}
-                        onChange={(e) => setContactTopic(e.target.value)}
-                        className="w-full rounded-xl border border-white/10 bg-black/40 px-3.5 py-2.5 text-white focus:outline-none focus:border-purple-500 font-sans"
-                      >
-                        <option value="Paket Siparişi">Paket Siparişi (Dengeli / Gelişmiş / Pro)</option>
-                        <option value="Ücretsiz Başlangıç Paketi">Ücretsiz Başlangıç Paketi Talebi</option>
-                        <option value="Özel Bot Geliştirme">Sunucuma Özel Bot Geliştirme</option>
-                        <option value="Teknik Destek">Teknik Destek &amp; Soru</option>
-                        <option value="Öneri / Geri Bildirim">Öneri veya Geri Bildirim</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label htmlFor="contact-message" className="block font-medium text-zinc-300 mb-1.5">
-                        Mesajınız &amp; İstekleriniz <span className="text-purple-400">*</span>
-                      </label>
-                      <textarea
-                        id="contact-message"
-                        required
-                        rows={4}
-                        value={contactMessage}
-                        onChange={(e) => setContactMessage(e.target.value)}
-                        placeholder="Botunuzdan beklentileriniz, sunucunuzun içeriği veya aklınıza takılan sorular..."
-                        className="w-full rounded-xl border border-white/10 bg-black/40 p-3.5 text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500 leading-relaxed font-sans"
-                      />
-                    </div>
-
-                    <button
-                      type="submit"
-                      disabled={contactSubmitting}
-                      className="w-full inline-flex items-center justify-center gap-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-semibold py-3 transition-all active:scale-95 shadow-lg shadow-purple-600/20 disabled:opacity-50"
-                    >
-                      {contactSubmitting ? (
-                        <>
-                          <span className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                          <span>Mesajınız Hazırlanıyor...</span>
-                        </>
-                      ) : (
-                        <>
-                          <Send className="h-4 w-4" />
-                          <span>Talebi Oluştur &amp; İletişime Geç</span>
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
+                    );
+                  })}
+                  <p style={{ color: MUT, fontSize: "0.71rem", lineHeight: 1.6, paddingTop: "0.4rem", display: "flex", alignItems: "flex-start", gap: "0.3rem" }}>
+                    <Lightbulb size={12} style={{ flexShrink: 0, marginTop: "0.1rem" }} /> Ödemeler Discord DM üzerinden geliştiriciyle netleştirilir.
+                  </p>
+                </div>
               </div>
+            );
+          })()}
+        </div>
+      </section>
 
+      {/* ── ABOUT (ek 5+6) — MangooHost stili ── */}
+      <section id="hakkimizda" style={{ padding: "10rem 1.5rem", background: S1, borderTop: `1px solid ${BORDER}`, position: "relative", overflow: "hidden" }}>
+        {/* About section bg glow */}
+        <div style={{ position: "absolute", top: "30%", right: "-10%", width: "50vw", height: "50vh", background: `radial-gradient(ellipse, ${P}10 0%, transparent 65%)`, pointerEvents: "none" }} />
+        <div style={{ maxWidth: 1100, margin: "0 auto", position: "relative" }}>
+
+          {/* Merkezi büyük başlık */}
+          <motion.h2 initial={{ opacity: 0, y: 48 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 38, damping: 18, mass: 1.3 }}
+            style={{ fontSize: "clamp(2.5rem,6vw,5rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1.05, textAlign: "center", maxWidth: 900, margin: "0 auto 3.5rem" }}>
+            Discord topluluklarının içinden;<br />
+            <span className="grad-text">şeffaf, gerçek</span> ve dürüst bir atölye.
+          </motion.h2>
+
+          {/* Yatay çizgi */}
+          <div style={{ height: 1, background: BORDER, marginBottom: "3.5rem" }} />
+
+          {/* Sol hikaye kartı + Sağ büyük beyazlaşan metin */}
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "0.75fr 1.25fr", gap: isMobile ? "2rem" : "4rem", alignItems: "start", marginBottom: "3.5rem" }}>
+
+            {/* Sol */}
+            <div>
+              <div style={{ background: `${P}18`, borderRadius: 12, padding: "0.9rem", display: "inline-flex", marginBottom: "1.25rem" }}>
+                <Activity size={22} color={PL} />
+              </div>
+              <h3 style={{ fontSize: "1.05rem", fontWeight: 800, lineHeight: 1.4, marginBottom: "0.9rem" }}>
+                Bizim Hikayemiz: Discord Topluluklarının Çilesini Bitirmek İçin Yola Çıktık
+              </h3>
+              <div style={{ display: "inline-flex", alignItems: "center", gap: "0.4rem", background: "rgba(255,255,255,0.06)", border: `1px solid ${BORDER}`, borderRadius: 7, padding: "0.3rem 0.75rem", fontSize: "0.72rem", color: SUB, fontWeight: 600 }}>
+                Göktürk Labs — Türkiye
+              </div>
+            </div>
+
+            {/* Sağ — scroll ile beyazlaşan büyük paragraflar */}
+            <div>
+              <motion.p
+                initial={{ color: "rgba(255,255,255,0.12)" }}
+                whileInView={{ color: "rgba(255,255,255,0.95)" }}
+                transition={{ duration: 1.1, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.25 }}
+                style={{ fontSize: "clamp(1.1rem,2vw,1.45rem)", fontWeight: 700, lineHeight: 1.65, marginBottom: "1.5rem" }}>
+                Yıllardır Discord topluluklarının içinde kod yazıyorum. Piyasada sunulan "bot hizmetleri"ne baktığımda gördüklerim şunlardı: şişirilmiş fiyatlar, yapay zeka botlarından oluşan müşteri desteği ve sahte istatistikler üzerine kurulu tanıtımlar.
+              </motion.p>
+              <motion.p
+                initial={{ color: "rgba(255,255,255,0.08)" }}
+                whileInView={{ color: "rgba(255,255,255,0.55)" }}
+                transition={{ duration: 1.2, delay: 0.2, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.1 }}
+                style={{ fontSize: "clamp(1rem,1.8vw,1.25rem)", fontWeight: 600, lineHeight: 1.7, marginBottom: "1.5rem" }}>
+                Karmaşık yabancı arayüzlere, gizli port paralarına ve 1000₺ üzeri fiyat etiketlerine gerek yok diyerek Göktürk Labs'ı kurdum. Sana doğrudan geliştirici olarak, gerçekten test edilmiş sistemlerle hizmet veriyorum.
+              </motion.p>
+              <motion.p
+                initial={{ color: "rgba(255,255,255,0.05)" }}
+                whileInView={{ color: "rgba(255,255,255,0.4)" }}
+                transition={{ duration: 1.3, delay: 0.4, ease: "easeOut" }}
+                viewport={{ once: false, amount: 0.05 }}
+                style={{ fontSize: "clamp(0.95rem,1.6vw,1.1rem)", fontWeight: 500, lineHeight: 1.75 }}>
+                Göktürk Labs;{" "}
+                <a href="https://github.com/semihr66" target="_blank" rel="noopener noreferrer" style={{ color: PL, fontWeight: 700 }}>semihr66</a>{" "}
+                tarafından işletilen bağımsız bir yazılım atölyesidir. Birden fazla katman yok, aracı yok — sadece geliştirici ve sen.
+              </motion.p>
             </div>
           </div>
-        </section>
 
-        {/* 8. SSS (SIKÇA SORULAN SORULAR) */}
-        <section id="sss" className="relative overflow-hidden py-20 border-b border-white/[0.06]">
-          {/* Sağ ve Sol Kenar Atmosferik Elipsler */}
-          <div className="ambient-orbit ambient-orbit-right top-[20%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-right-inner top-[26%]" aria-hidden="true" />
-          <div className="ambient-orbit ambient-orbit-left top-[35%]" aria-hidden="true" />
-          
-          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div className="text-center max-w-xl mx-auto">
-              <span className="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">SSS</span>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                Aklınıza Takılan Sorular
-              </h2>
-              <p className="mt-3 text-sm text-zinc-400">
-                Merak ettiğiniz temel konuları sizin için derledik. Farklı bir sorunuz varsa doğrudan Discord'dan yanıtlamaktan memnuniyet duyarız.
-              </p>
+          {/* Piyasa karşılaştırması */}
+          <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 38, damping: 18, mass: 1.3 }}>
+            <div style={{ ...GLASS_P, border: `1px solid ${P}22`, borderRadius: 20, padding: "2rem" }}>
+              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: MUT, letterSpacing: "0.14em", marginBottom: "1.75rem", textAlign: "center", textTransform: "uppercase" }}>
+                Piyasa Karşılaştırması — Neden Göktürk Labs?
+              </div>
+              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1.25rem" }}>
+                <div>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 800, color: "#ef4444", marginBottom: "0.9rem", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <X size={14} /> Piyasa Geneli
+                  </div>
+                  {[
+                    { v: "400–1500₺/ay", l: "Bot hosting fiyatları" },
+                    { v: "Yapay zeka bot cevapları", l: "Müşteri desteği" },
+                    { v: "Gizli port & slot parası", l: "Ekstra ücretler" },
+                    { v: "Kaynak kodu paylaşılmıyor", l: "Şeffaflık" },
+                    { v: "Sahte demo istatistikleri", l: "Proje kanıtı" },
+                  ].map(r => (
+                    <div key={r.l} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0.75rem", borderRadius: 9, background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.12)", marginBottom: "0.5rem" }}>
+                      <span style={{ fontSize: "0.73rem", color: SUB }}>{r.l}</span>
+                      <span style={{ fontSize: "0.73rem", color: "#ef4444", fontWeight: 700, textDecoration: "line-through" }}>{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.78rem", fontWeight: 800, color: G, marginBottom: "0.9rem", display: "flex", alignItems: "center", gap: "0.45rem" }}>
+                    <Check size={14} /> Göktürk Labs
+                  </div>
+                  {[
+                    { v: "50–350₺/ay", l: "Bot hosting fiyatları" },
+                    { v: "Doğrudan geliştirici", l: "Müşteri desteği" },
+                    { v: "Hiç yok — tamamen dahil", l: "Ekstra ücretler" },
+                    { v: "Gelişmiş + Pro'da tam paylaşım", l: "Şeffaflık" },
+                    { v: "Gerçek aktif çalışan sistemler", l: "Proje kanıtı" },
+                  ].map(r => (
+                    <div key={r.l} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0.75rem", borderRadius: 9, background: `${G}0A`, border: `1px solid ${G}22`, marginBottom: "0.5rem" }}>
+                      <span style={{ fontSize: "0.73rem", color: SUB }}>{r.l}</span>
+                      <span style={{ fontSize: "0.73rem", color: G, fontWeight: 700 }}>{r.v}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+                <a href="#paketler" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", background: P, color: "#fff", borderRadius: 10, padding: "0.72rem 1.5rem", fontSize: "0.88rem", fontWeight: 700 }}>
+                  Şeffaf Paketleri Gör <ArrowRight size={15} />
+                </a>
+              </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
 
-            <div className="mt-12">
-              <Accordion type="single" collapsible className="space-y-3">
-                {faqs.map((f, i) => (
-                  <AccordionItem 
-                    key={i} 
-                    value={`faq-${i}`}
-                    className="rounded-xl border border-white/10 bg-[#0d0d12] px-4 py-1"
-                  >
-                    <AccordionTrigger className="text-left font-display font-semibold text-sm text-white hover:text-purple-300 hover:no-underline">
-                      {f.q}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-xs text-zinc-400 leading-relaxed pt-1 pb-3">
-                      {f.a}
-                    </AccordionContent>
-                  </AccordionItem>
+      {/* ── CONTACT ── */}
+      <section id="iletisim" style={{ padding: "9rem 1.5rem", borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+          <Label text="İLETİŞİM & TALEP" />
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: isMobile ? "2rem" : "4rem", alignItems: "start" }}>
+            <div>
+              <h2 style={{ fontSize: "clamp(2.5rem,5vw,3.8rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
+                Doğrudan<br /><span className="grad-text">İletişime Geçin</span>
+              </h2>
+              <p style={{ color: SUB, lineHeight: 1.75, fontSize: "0.9rem", marginBottom: "2rem" }}>
+                İster paket siparişi, ister özel bot projesi, ister teknik soru... Formu doldurun veya Discord'dan yazın.
+              </p>
+              <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
+                {[
+                  { Icon: Ban, text: "Sahte Veri Yok", color: G },
+                  { Icon: Server, text: "7/24 VDS", color: PL },
+                  { Icon: Headphones, text: "Doğrudan Geliştirici", color: A },
+                ].map(({ Icon, text, color }) => (
+                  <div key={text} style={{ display: "flex", alignItems: "center", gap: "0.45rem", fontSize: "0.78rem", color: TEXT, fontWeight: 600, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: 9, padding: "0.38rem 0.7rem" }}>
+                    <Icon size={12} color={color} /> {text}
+                  </div>
                 ))}
-              </Accordion>
+              </div>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.7rem" }}>
+                {[
+                  { href: DM, t: "Doğrudan Discord DM", s: "semih1231 (937079326149595147)" },
+                  { href: DC, t: "Göktürk Labs Topluluğu", s: "discord.gg/Y5CTNskKCG" },
+                ].map(lnk => (
+                  <a key={lnk.href} href={lnk.href} target="_blank" rel="noopener noreferrer"
+                    style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 13, padding: "1rem 1.1rem", display: "flex", alignItems: "center", gap: "0.85rem" }}>
+                    <div style={{ background: "rgba(88,101,242,.2)", borderRadius: 9, padding: "0.6rem", display: "flex", flexShrink: 0 }}>
+                      <Di size={20} color="#7289DA" />
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: "0.88rem" }}>{lnk.t}</div>
+                      <div style={{ color: SUB, fontSize: "0.75rem", marginTop: "0.1rem" }}>{lnk.s}</div>
+                    </div>
+                    <ExternalLink size={13} color={MUT} style={{ marginLeft: "auto" }} />
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            <AnimatePresence mode="wait">
+              {formSent ? (
+                <motion.div key="success"
+                  initial={{ opacity: 0, scale: 0.95, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }}
+                  transition={SPRING_C}
+                  style={{ background: `${G}10`, border: `1px solid ${G}44`, borderRadius: 18, padding: "2.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", textAlign: "center" }}>
+                  <div style={{ background: `${G}20`, border: `1px solid ${G}44`, borderRadius: "50%", padding: "1.1rem", display: "flex" }}>
+                    <Check size={32} color={G} />
+                  </div>
+                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800 }}>Talep İletildi!</h3>
+                  <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.65, maxWidth: 320 }}>
+                    Mesajınız panoya kopyalandı ve Discord DM açıldı. Lütfen kopyalanan metni Discord'da yapıştırın.
+                  </p>
+                  <button onClick={() => setFormSent(false)}
+                    style={{ background: CARD, border: `1px solid ${BORDER}`, color: SUB, borderRadius: 10, padding: "0.6rem 1.2rem", fontSize: "0.84rem", fontWeight: 600, cursor: "pointer", marginTop: "0.5rem" }}>
+                    Yeni Talep Gönder
+                  </button>
+                </motion.div>
+              ) : (
+                <motion.form key="form" onSubmit={submitForm}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
+                  style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 18, padding: "1.6rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {[
+                    { label: "Adınız / Takma Adınız", key: "name", ph: "Örn: Emir" },
+                    { label: "Discord Kullanıcı Adınız", key: "discord", ph: "Örn: emir123" },
+                  ].map(f => (
+                    <div key={f.key}>
+                      <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>{f.label}</label>
+                      <input type="text" placeholder={f.ph}
+                        value={form[f.key as "name" | "discord"]}
+                        onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
+                        style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", transition: "border-color .2s, box-shadow .2s" }} />
+                    </div>
+                  ))}
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>Konu</label>
+                    <select value={form.topic} onChange={e => setForm(p => ({ ...p, topic: e.target.value }))}
+                      style={{ width: "100%", background: S1, border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", transition: "border-color .2s, box-shadow .2s" }}>
+                      <option>Paket Siparişi (Dengeli / Gelişmiş / Pro)</option>
+                      <option>Ücretsiz Başlangıç Paketi Talebi</option>
+                      <option>Sunucuma Özel Bot Geliştirme</option>
+                      <option>Teknik Destek & Soru</option>
+                      <option>Öneri veya Geri Bildirim</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>
+                      Mesajınız{form.message.length > 0 && <span style={{ color: form.message.length > 500 ? "#ef4444" : MUT, marginLeft: "0.5rem" }}>{form.message.length}/500</span>}
+                    </label>
+                    <textarea placeholder="Botunuzdan beklentileriniz, sunucu büyüklüğü, tercih ettiğiniz paket..." value={form.message}
+                      onChange={e => setForm(p => ({ ...p, message: e.target.value }))} rows={4}
+                      maxLength={500}
+                      style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", resize: "vertical", transition: "border-color .2s, box-shadow .2s" }} />
+                  </div>
+                  <motion.button type="submit"
+                    whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
+                    style={{ background: P, color: "#fff", border: "none", borderRadius: 11, padding: "0.84rem", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.45rem", boxShadow: `0 6px 24px ${P}44` }}>
+                    <MessageCircle size={15} /> Talebi Oluştur & Panoya Kopyala
+                  </motion.button>
+                  <p style={{ fontSize: "0.72rem", color: MUT, textAlign: "center", lineHeight: 1.5 }}>
+                    Form metni panoya kopyalanır, Discord DM açılır. Metni orada yapıştırın.
+                  </p>
+                </motion.form>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FAQ ── */}
+      <section id="sss" style={{ padding: "9rem 1.5rem", background: S1, borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1100, margin: "0 auto", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1.4fr", gap: isMobile ? "2rem" : "4rem", alignItems: "start" }}>
+          <motion.div initial={{ opacity: 0, x: isMobile ? 0 : -64 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={SPRING_S}
+            style={{ position: isMobile ? "static" : "sticky", top: "6rem" }}>
+            <Label text="SSS" />
+            <h2 style={{ fontSize: "clamp(2.2rem,4.5vw,3.5rem)", fontWeight: 900, letterSpacing: "-0.035em", lineHeight: 1.05, marginBottom: "1.5rem" }}>
+              Aklına takılan<br />tüm sorular,<br /><span className="grad-text">şeffaf ve net</span><br />cevaplarla burada.
+            </h2>
+            <p style={{ color: SUB, fontSize: "0.88rem", lineHeight: 1.7, marginBottom: "1.25rem" }}>
+              Farklı bir sorunuz varsa doğrudan Discord'dan yazabilirsiniz.
+            </p>
+            <div style={{ display: "flex", gap: "0.45rem", flexWrap: "wrap", marginBottom: "1.25rem" }}>
+              {[
+                { Icon: Ban, text: "Sahte Veri Yok", color: G },
+                { Icon: Server, text: "7/24 VDS", color: PL },
+                { Icon: Headphones, text: "Doğrudan Geliştirici", color: A },
+              ].map(({ Icon, text, color }) => (
+                <div key={text} style={{ display: "flex", alignItems: "center", gap: "0.4rem", fontSize: "0.74rem", color: TEXT, fontWeight: 600, background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.32rem 0.65rem" }}>
+                  <Icon size={11} color={color} /> {text}
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}>
+              <a href={DC} target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", background: P, color: "#fff", borderRadius: 10, padding: "0.7rem 1.1rem", fontSize: "0.85rem", fontWeight: 700 }}>
+                <Di size={16} color="#fff" /> Discord'a Katıl
+              </a>
+              <a href={DM} target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", background: CARD, border: `1px solid ${BORDER}`, color: TEXT, borderRadius: 10, padding: "0.7rem 1.1rem", fontSize: "0.85rem", fontWeight: 600 }}>
+                <MessageCircle size={15} /> Bize Ulaşın
+              </a>
+            </div>
+          </motion.div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
+            {FAQS.map((faq, i) => (
+              <div key={i} style={{ background: CARD, border: `1px solid ${openFaq === i ? `${P}55` : BORDER}`, borderRadius: 12, overflow: "hidden", transition: "border-color .2s" }}>
+                <button onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                  style={{ width: "100%", background: "none", border: "none", padding: "1.1rem 1.25rem", display: "flex", alignItems: "center", justifyContent: "space-between", cursor: "pointer", color: TEXT, fontSize: "0.9rem", fontWeight: 600, textAlign: "left", gap: "1rem" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+                    <span style={{ color: MUT, fontSize: "0.72rem", fontWeight: 700, minWidth: "1.5rem" }}>0{i + 1}</span>
+                    {faq.q}
+                  </span>
+                  <motion.span animate={{ rotate: openFaq === i ? 45 : 0 }} transition={{ duration: 0.18 }} style={{ display: "flex", flexShrink: 0 }}>
+                    <Plus size={18} color={openFaq === i ? PL : MUT} />
+                  </motion.span>
+                </button>
+                <AnimatePresence initial={false}>
+                  {openFaq === i && (
+                    <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.2 }}>
+                      <div style={{ padding: "0 1.25rem 1.1rem", color: SUB, fontSize: "0.85rem", lineHeight: 1.75 }}>{faq.a}</div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── CTA BLOCK ── */}
+      <section style={{ padding: "8rem 1.5rem", borderTop: `1px solid ${BORDER}`, position: "relative", overflow: "hidden", textAlign: "center" }}>
+        <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", width: "80vw", height: "60vh", background: `radial-gradient(ellipse, ${P}35 0%, ${P}10 40%, transparent 70%)`, pointerEvents: "none" }} />
+        <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none", maskImage: "radial-gradient(ellipse 60% 80% at 50% 50%, black 30%, transparent 100%)", WebkitMaskImage: "radial-gradient(ellipse 60% 80% at 50% 50%, black 30%, transparent 100%)" }} />
+        <motion.div initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={SPRING_S} style={{ position: "relative", maxWidth: 760, margin: "0 auto" }}>
+          <div style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: `${P}15`, border: `1px solid ${P}35`, borderRadius: 99, padding: "0.35rem 1rem", marginBottom: "2rem", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.12em", color: PL, textTransform: "uppercase" }}>
+            <Zap size={11} color={PL} /> Hemen Başla
+          </div>
+          <h2 style={{ fontSize: "clamp(2.8rem,6vw,5rem)", fontWeight: 900, letterSpacing: "-0.045em", lineHeight: 1.0, marginBottom: "1.5rem" }}>
+            <span style={{ color: TEXT }}>Botunuzu</span>{" "}
+            <span className="grad-text">Bugün</span>{" "}
+            <span style={{ color: TEXT }}>Yayına Alalım</span>
+          </h2>
+          <p style={{ fontSize: "1.1rem", color: SUB, lineHeight: 1.75, marginBottom: "2.75rem", maxWidth: 520, margin: "0 auto 2.75rem" }}>
+            İhtiyacını anlat, birlikte en uygun paketi belirleyelim. 24 saat içinde botun VDS'te çalışır durumda.
+          </p>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <a href={DM} target="_blank" rel="noopener noreferrer"
+              style={{ background: P, color: "#fff", borderRadius: 12, padding: "1rem 2.4rem", fontSize: "1.05rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.55rem", boxShadow: `0 0 60px ${P}70, 0 10px 40px ${P}50`, transition: "box-shadow .2s, transform .2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(-2px)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 0 80px ${P}90, 0 14px 50px ${P}70`; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; (e.currentTarget as HTMLElement).style.boxShadow = `0 0 60px ${P}70, 0 10px 40px ${P}50`; }}>
+              <Di size={18} color="#fff" /> Discord'dan Yaz
+            </a>
+            <a href="#paketler"
+              style={{ background: "rgba(255,255,255,0.06)", color: TEXT, border: `1px solid rgba(255,255,255,0.14)`, borderRadius: 12, padding: "1rem 2.4rem", fontSize: "1.05rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.55rem", backdropFilter: "blur(12px)", transition: "border-color .2s, background .2s" }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.28)`; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.1)"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = `rgba(255,255,255,0.14)`; (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"; }}>
+              Fiyatları Gör <ArrowRight size={16} />
+            </a>
+          </div>
+        </motion.div>
+      </section>
+
+      {/* ── FOOTER ── */}
+      <footer style={{ background: "#000000", borderTop: `1px solid ${BORDER}` }}>
+        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "3.5rem 1.5rem 2rem" }}>
+          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "2fr 1fr 1fr 1fr 1fr", gap: "2rem", marginBottom: "3rem" }}>
+            <div>
+              <a href="#top" style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem" }}>
+                <img src="/gokturk-labs-logo.png" alt="Logo" style={{ width: 28, height: 28 }} />
+                <span style={{ fontWeight: 800, fontSize: "0.95rem" }}>Göktürk <span style={{ color: PL }}>Labs</span></span>
+              </a>
+              <p style={{ color: MUT, fontSize: "0.78rem", lineHeight: 1.65, maxWidth: 220 }}>
+                Discord sunucuları için geliştirilmiş, performanslı ve bağımsız bot altyapısı.
+              </p>
+              <a href={DC} target="_blank" rel="noopener noreferrer"
+                style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: MUT, fontSize: "0.77rem", marginTop: "0.85rem", transition: "color .15s" }}
+                onMouseEnter={e => (e.currentTarget.style.color = TEXT)} onMouseLeave={e => (e.currentTarget.style.color = MUT)}>
+                <Di size={13} color="currentColor" /> Discord Topluluğu
+              </a>
+            </div>
+            {[
+              { title: "HIZLI LİNKLER", links: [["Ana Sayfa","#top"],["Modüller","#moduller"],["Nasıl Çalışır?","#nasil"],["Paketler","#paketler"]] },
+              { title: "HİZMETLER", links: [["Discord Bot Hosting","#paketler"],["Özel Bot Geliştirme","#iletisim"],["Web Yönetim Paneli","#moduller"],["Yetkili Başvuru","#moduller"]] },
+              { title: "PLATFORM", links: [["Hakkımızda","#hakkimizda"],["İletişim","#iletisim"],["SSS","#sss"],["Topluluk",DC]] },
+              { title: "YASAL", links: [["Gizlilik Politikası","/gizlilik-politikasi"],["Hizmet Şartları","/hizmet-sartlari"],["Sitemap","/sitemap.xml"]] },
+            ].map(col => (
+              <div key={col.title}>
+                <div style={{ fontSize: "0.67rem", fontWeight: 800, letterSpacing: "0.1em", color: SUB, marginBottom: "0.85rem" }}>{col.title}</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.42rem" }}>
+                  {col.links.map(([label, href]) => (
+                    <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                      style={{ color: MUT, fontSize: "0.78rem", transition: "color .15s" }}
+                      onMouseEnter={e => (e.currentTarget.style.color = TEXT)} onMouseLeave={e => (e.currentTarget.style.color = MUT)}>
+                      {label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem", textAlign: "center" }}>
+            <div style={{ color: MUT, fontSize: "0.73rem" }}>
+              © 2026 Göktürk Labs. Tüm hakları saklıdır. —{" "}
+              <a href="https://github.com/semihr66" target="_blank" rel="noopener noreferrer" style={{ color: PL }}>semihr66</a>
+              {" "}· Bağımsız Discord Bot & Web Sistemleri
+            </div>
+            <div style={{ color: MUT, fontSize: "0.72rem" }}>
+              <span style={{ fontStyle: "italic", color: "rgba(255,255,255,0.35)" }}>Mustafa Kemal Atatürk</span>{" "}
+              <span style={{ opacity: 0.38 }}>(1881–193∞) · Saygı ve minnetle...</span>
             </div>
           </div>
-        </section>
+        </div>
 
-      </main>
-
-      {/* 9. REUSABLE STUDIO FOOTER */}
-      <Footer />
-
+        {/* Big brand text — MangooHost-inspired pixel dot effect */}
+        <div
+          style={{ borderTop: `1px solid ${BORDER}`, padding: "2.5rem 1.5rem 2rem", overflow: "hidden", cursor: "default" }}
+          onMouseEnter={() => setFooterHover(true)}
+          onMouseLeave={() => setFooterHover(false)}
+        >
+          <div style={{
+            maxWidth: 1280, margin: "0 auto",
+            display: "flex", alignItems: "center",
+            gap: "clamp(0.75rem, 3vw, 2.5rem)",
+            filter: footerHover ? "brightness(1) drop-shadow(0 0 48px rgba(124,58,237,0.45))" : "brightness(0.38)",
+            transition: "filter 0.5s cubic-bezier(0.23,1,0.32,1)",
+            userSelect: "none",
+          }}>
+            {/* Logo */}
+            <img
+              src="/gokturk-labs-logo.png"
+              alt=""
+              aria-hidden
+              style={{ width: "clamp(2.8rem,6vw,6rem)", height: "clamp(2.8rem,6vw,6rem)", flexShrink: 0 }}
+            />
+            {/* Pixel-dot giant text */}
+            <div style={{ fontSize: "clamp(2.8rem,11vw,10rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1, whiteSpace: "nowrap" }}>
+              <span style={{
+                backgroundImage: "radial-gradient(circle, #ffffff 1.8px, transparent 1.8px)",
+                backgroundSize: "11px 11px",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}>GÖKTÜRK</span>
+              <span style={{
+                backgroundImage: `radial-gradient(circle, ${PL} 1.8px, transparent 1.8px)`,
+                backgroundSize: "11px 11px",
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}>LABS</span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
