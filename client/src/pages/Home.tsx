@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from "react";
 import { TextEffect } from "../components/core/text-effect";
+import { PACKAGE_ICONS, usePackages, type SitePackage } from "../lib/supportflow";
+import Footer from "../components/Footer";
 import { motion, AnimatePresence, useInView } from "framer-motion";
 import {
   Shield, FileText, Server, UserCheck, Bell, Users,
@@ -64,24 +66,12 @@ const MODS: Mod[] = [
   { tag: "MINECRAFT", name: "Minecraft Sunucu Sistemleri", icon: Pickaxe, isSoon: true, desc: "Discord ile entegre Minecraft yönetimi — gerçek zamanlı konsol, oyuncu takibi.", feats: ["Canlı Konsol Logları","Discord'dan Yönetim"] },
 ];
 
-const PKGS: Pkg[] = [
-  { id: "baslangic", icon: Gift, badge: "Ücretsiz", name: "Başlangıç (Topluluk)", price: "0", period: "ömür boyu", color: G,
-    desc: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
-    feats: ["En az 25–30 üye şartı","Duyuru kanalında duyurma zorunluluğu","Temel komutlar & karşılama","3 + 1 modül hakkı","7/24 Göktürk Labs VDS","'By Göktürk Labs' ibaresi zorunlu"],
-    copyText: "Merhaba, Göktürk Labs Başlangıç (Ücretsiz) paketini talep etmek istiyorum." },
-  { id: "dengeli", icon: Zap, badge: "Fiyat / Performans", name: "Dengeli", price: "50", period: "aylık", color: "#38BDF8",
-    desc: "Gelişmiş moderasyon, loglama ve 5 modül kapasitesiyle sunucunuzun güvenliği tam kontrol.",
-    feats: ["Başlangıç paketindeki özellikler","5 modül tanımlama hakkı","Gelişmiş moderasyon & log","Bot ismi & logo özelleştirme","7/24 Kesintisiz VDS","'Powered by' bağlantısı"],
-    copyText: "Merhaba, Göktürk Labs Dengeli (₺50/ay) paketini satın almak istiyorum." },
-  { id: "gelismis", icon: Flame, badge: "En Çok Tercih Edilen", name: "Gelişmiş (Custom)", price: "150", period: "aylık", color: P, highlight: true,
-    desc: "Özel ticket motoru, sunucuya özel komutlar ve 7/24 izole VDS barındırma.",
-    feats: ["Dengeli paketindeki özellikler","Sınırsız modül hakkı","Butonlu & kategorili ticket sistemi","Sunucuya özel terzi usulü komutlar","Özel bot kodu müşteriyle paylaşılır","'Powered by' ibaresi kaldırılabilir"],
-    copyText: "Merhaba, Göktürk Labs Gelişmiş/Custom (₺150/ay) paketini satın almak istiyorum." },
-  { id: "pro", icon: Crown, badge: "Kurumsal Seviye", name: "Pro (Enterprise)", price: "350", period: "aylık", color: A,
-    desc: "Şifreli Web Panel, Yetkili Mülakat Masası, HIBP kalkanı ve VIP öncelikli destek.",
-    feats: ["Şifreli Web Yönetim Paneli (PBKDF2 + HIBP)","Yetkili Başvuru & Mülakat Motoru","Sınırsız modül + yüksek VDS kaynağı","Gelişmiş paketindeki tüm sistemler","Birebir VIP teknik destek","Tüm marka ibareleri kaldırılabilir"],
-    copyText: "Merhaba, Göktürk Labs Pro/Enterprise (₺350/ay) paketini satın almak istiyorum." },
-];
+/* Paketler yönetici panelinden (/yonetim) düzenlenir; SupportFlow API'sinden okunur.
+   API'ye ulaşılamazsa lib/supportflow.ts içindeki DEFAULT_PACKAGES gösterilir. */
+const toPkg = (p: SitePackage): Pkg => ({
+  id: p.key, icon: PACKAGE_ICONS[p.icon] ?? Star, name: p.name, desc: p.description, price: p.price, period: p.period,
+  color: p.color, feats: p.features, copyText: p.orderText, highlight: p.highlight, badge: p.badge ?? undefined,
+});
 
 const FAQS = [
   { q: "Abonelik ve 7/24 barındırma nasıl işliyor?", a: "Aylık ödeme karşılığında botunuz Göktürk Labs VDS sunucusunda kesintisiz çalıştırılır. Abonelik süresi dolduğunda bota erişim durdurulur, önceki veriler silinmez." },
@@ -250,10 +240,10 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [tos, setTos] = useState<Record<string, boolean>>({});
+  const [tosWarn, setTosWarn] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [pkgTab, setPkgTab] = useState<"all" | "baslangic" | "dengeli" | "gelismis" | "pro">("all");
   const [selectedPkg, setSelectedPkg] = useState("gelismis");
-  const [formSent, setFormSent] = useState(false);
   const particles = useMemo(() =>
     Array.from({ length: 55 }, (_, i) => ({
       id: i,
@@ -265,8 +255,6 @@ export default function Home() {
       opacity: 0.08 + (i % 4) * 0.05,
     })),
   []);
-  const [form, setForm] = useState({ name: "", discord: "", topic: "Paket Siparişi", message: "" });
-  const [footerHover, setFooterHover] = useState(false);
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 24);
@@ -285,15 +273,9 @@ export default function Home() {
     navigator.clipboard.writeText(text).then(() => { setCopied(id); setTimeout(() => setCopied(null), 2000); });
   }, []);
 
-  const submitForm = useCallback((e: React.FormEvent) => {
-    e.preventDefault();
-    const msg = `Ad: ${form.name}\nDiscord: ${form.discord}\nKonu: ${form.topic}\n\n${form.message}`;
-    navigator.clipboard.writeText(msg);
-    setFormSent(true);
-    window.open(DM, "_blank");
-  }, [form]);
-
-  const featured = PKGS.find(p => p.highlight)!;
+  const sitePackages = usePackages();
+  const PKGS = useMemo(() => sitePackages.map(toPkg), [sitePackages]);
+  const featured = PKGS.find(p => p.highlight) ?? PKGS[0]!;
 
   return (
     <div style={{ background: BG, color: TEXT, minHeight: "100vh", fontFamily: "'Space Grotesk','Plus Jakarta Sans','Inter',sans-serif", overflowX: "hidden" }}>
@@ -311,6 +293,7 @@ export default function Home() {
         @keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
         @keyframes borderSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
         @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+        .mhide{display:flex;align-items:center}
         .mshow{display:none!important}
         @media(max-width:768px){.mhide{display:none!important}.mshow{display:flex!important}}
         input:focus,textarea:focus,select:focus{border-color:rgba(124,58,237,0.6)!important;box-shadow:0 0 0 3px rgba(124,58,237,0.13)!important;outline:none!important}
@@ -331,7 +314,7 @@ export default function Home() {
         <div style={{
           maxWidth: 1280, margin: "0 auto",
           display: "flex", alignItems: "center", justifyContent: "space-between",
-          height: 54,
+          minHeight: 54,
           padding: "0 0.9rem 0 1.1rem",
           background: scrolled ? "rgba(8,9,13,0.92)" : "transparent",
           backdropFilter: scrolled ? "blur(22px)" : "none",
@@ -349,7 +332,7 @@ export default function Home() {
             </div>
           </a>
 
-          <div className="mhide" style={{ display: "flex", alignItems: "center", gap: "0.05rem" }}>
+          <div className="mhide" style={{ gap: "0.05rem" }}>
             {NAV.map(n => (
               <a key={n.href} href={n.href}
                 style={{ padding: "0.42rem 0.78rem", borderRadius: 8, fontSize: "0.84rem", fontWeight: 500, color: SUB, background: "transparent", transition: "color .15s, background .15s" }}
@@ -362,18 +345,18 @@ export default function Home() {
 
           <div style={{ display: "flex", alignItems: "center", gap: "0.55rem" }}>
             <a href={DC} target="_blank" rel="noopener noreferrer" className="mhide"
-              style={{ display: "flex", alignItems: "center", gap: "0.35rem", padding: "0.42rem 0.78rem", borderRadius: 8, background: "transparent", color: SUB, fontSize: "0.84rem", fontWeight: 500, transition: "color .15s, background .15s" }}
+              style={{ gap: "0.35rem", padding: "0.42rem 0.78rem", borderRadius: 8, background: "transparent", color: SUB, fontSize: "0.84rem", fontWeight: 500, transition: "color .15s, background .15s" }}
               onMouseEnter={e => { e.currentTarget.style.color = TEXT; e.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
               onMouseLeave={e => { e.currentTarget.style.color = SUB; e.currentTarget.style.background = "transparent"; }}>
               <Di size={15} /> Topluluk
             </a>
-            <a href="#paketler" style={{ background: P, color: "#fff", borderRadius: 9, padding: "0.5rem 1.05rem", fontSize: "0.84rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.35rem", boxShadow: `0 0 20px ${P}55, 0 4px 16px ${P}44`, transition: "box-shadow .15s, transform .15s" }}
+            <a href="#paketler" className="mhide" style={{ background: P, color: "#fff", borderRadius: 9, padding: "0.5rem 1.05rem", fontSize: "0.84rem", fontWeight: 700, gap: "0.35rem", boxShadow: `0 0 20px ${P}55, 0 4px 16px ${P}44`, transition: "box-shadow .15s, transform .15s" }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 32px ${P}80, 0 6px 20px ${P}60`; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.boxShadow = `0 0 20px ${P}55, 0 4px 16px ${P}44`; (e.currentTarget as HTMLElement).style.transform = "translateY(0)"; }}>
               Paket Seç <ArrowRight size={13} />
             </a>
             <button className="mshow" onClick={() => setMobileOpen(!mobileOpen)}
-              style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${BORDER}`, borderRadius: 8, color: TEXT, cursor: "pointer", padding: "0.4rem 0.5rem", display: "flex" }}>
+              style={{ background: "rgba(255,255,255,0.06)", border: `1px solid ${BORDER}`, borderRadius: 8, color: TEXT, cursor: "pointer", padding: "0.4rem 0.5rem" }}>
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
@@ -388,6 +371,10 @@ export default function Home() {
                   {n.label}
                 </a>
               ))}
+              <a href="#paketler" onClick={() => setMobileOpen(false)}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem", marginTop: "0.75rem", background: P, color: "#fff", borderRadius: 10, padding: "0.8rem", fontSize: "0.95rem", fontWeight: 700, boxShadow: `0 0 20px ${P}55` }}>
+                Paket Seç <ArrowRight size={15} />
+              </a>
             </motion.div>
           )}
         </AnimatePresence>
@@ -661,12 +648,12 @@ export default function Home() {
 
           {/* Sol detay + Sağ seçici */}
           {(() => {
-            const sp = PKGS.find(p => p.id === selectedPkg)!;
+            const sp = PKGS.find(p => p.id === selectedPkg) ?? featured;
             return (
               <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1.3fr 0.7fr", gap: "1.25rem", alignItems: "start" }}>
                 {/* Sol: seçili paketin büyük detay kartı */}
                 <AnimatePresence mode="wait">
-                  <motion.div key={selectedPkg}
+                  <motion.div key={sp.id}
                     initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}
                     transition={{ type: "spring", stiffness: 52, damping: 22 }}
                     style={{ background: `${sp.color}10`, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)", border: `2px solid ${sp.color}44`, borderRadius: 20, padding: "2rem", position: "relative" }}>
@@ -692,13 +679,19 @@ export default function Home() {
                           </div>
                         ))}
                       </div>
-                      <label style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", cursor: "pointer", marginBottom: "1rem", fontSize: "0.74rem", color: SUB, lineHeight: 1.5 }}>
-                        <input type="checkbox" checked={!!tos[sp.id]} onChange={e => setTos(prev => ({ ...prev, [sp.id]: e.target.checked }))} style={{ marginTop: "0.15rem", accentColor: sp.color }} />
+                      <label style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem", cursor: "pointer", marginBottom: tosWarn === sp.id ? "0.4rem" : "1rem", fontSize: "0.74rem", color: SUB, lineHeight: 1.5 }}>
+                        <input type="checkbox" checked={!!tos[sp.id]} onChange={e => { setTos(prev => ({ ...prev, [sp.id]: e.target.checked })); if (e.target.checked) setTosWarn(null); }} style={{ marginTop: "0.15rem", accentColor: sp.color, outline: tosWarn === sp.id ? "2px solid #ef4444" : "none", outlineOffset: 2 }} />
                         <span><a href="/hizmet-sartlari" style={{ color: sp.color }}>Hizmet Şartları</a> ve <a href="/gizlilik-politikasi" style={{ color: sp.color }}>Gizlilik Politikası</a>'nı okudum.</span>
                       </label>
+                      {tosWarn === sp.id && (
+                        <div role="alert" style={{ fontSize: "0.74rem", color: "#f87171", marginBottom: "0.9rem" }}>
+                          Devam etmek için önce şartları okuyup kutuyu işaretlemelisin.
+                        </div>
+                      )}
                       <div style={{ display: "flex", gap: "0.6rem" }}>
-                        <a href={DM} target="_blank" rel="noopener noreferrer"
-                          style={{ flex: 1, background: tos[sp.id] ? sp.color : CARD, border: `1px solid ${tos[sp.id] ? sp.color : BORDER}`, color: "#fff", borderRadius: 12, padding: "0.88rem", fontSize: "0.88rem", fontWeight: 700, textAlign: "center", transition: "background .2s" }}>
+                        <a href={DM} target="_blank" rel="noopener noreferrer" aria-disabled={!tos[sp.id]}
+                          onClick={e => { if (!tos[sp.id]) { e.preventDefault(); setTosWarn(sp.id); } }}
+                          style={{ flex: 1, background: tos[sp.id] ? sp.color : CARD, border: `1px solid ${tos[sp.id] ? sp.color : BORDER}`, color: tos[sp.id] ? "#fff" : SUB, borderRadius: 12, padding: "0.88rem", fontSize: "0.88rem", fontWeight: 700, textAlign: "center", transition: "background .2s", cursor: tos[sp.id] ? "pointer" : "not-allowed" }}>
                           Discord DM'den İletişime Geç
                         </a>
                         <button onClick={() => copy(sp.id, sp.copyText)}
@@ -714,7 +707,7 @@ export default function Home() {
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.65rem", position: isMobile ? "static" : "sticky", top: "6rem" }}>
                   {PKGS.map(pkg => {
                     const PkgIcon = pkg.icon;
-                    const isActive = selectedPkg === pkg.id;
+                    const isActive = sp.id === pkg.id;
                     const isHighlight = pkg.highlight;
                     return (
                       <button key={pkg.id} onClick={() => setSelectedPkg(pkg.id)}
@@ -824,47 +817,56 @@ export default function Home() {
 
           {/* Piyasa karşılaştırması */}
           <motion.div initial={{ opacity: 0, y: 40 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 38, damping: 18, mass: 1.3 }}>
-            <div style={{ ...GLASS_P, border: `1px solid ${P}22`, borderRadius: 20, padding: "2rem" }}>
-              <div style={{ fontSize: "0.68rem", fontWeight: 700, color: MUT, letterSpacing: "0.14em", marginBottom: "1.75rem", textAlign: "center", textTransform: "uppercase" }}>
-                Piyasa Karşılaştırması — Neden Göktürk Labs?
+            <div style={{ ...GLASS, border: `1px solid ${BORDER}`, borderRadius: 20, padding: isMobile ? "1.5rem" : "2.25rem" }}>
+              <div style={{ textAlign: "center", marginBottom: "1.75rem" }}>
+                <div style={{ fontSize: "0.68rem", fontWeight: 700, color: PL, letterSpacing: "0.14em", textTransform: "uppercase", marginBottom: "0.5rem" }}>Piyasa karşılaştırması</div>
+                <div style={{ fontSize: "1.35rem", fontWeight: 800, letterSpacing: "-0.02em" }}>Neden Göktürk Labs?</div>
               </div>
-              <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", gap: "1.25rem" }}>
-                <div>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 800, color: "#ef4444", marginBottom: "0.9rem", display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                    <X size={14} /> Piyasa Geneli
-                  </div>
-                  {[
-                    { v: "400–1500₺/ay", l: "Bot hosting fiyatları" },
-                    { v: "Yapay zeka bot cevapları", l: "Müşteri desteği" },
-                    { v: "Gizli port & slot parası", l: "Ekstra ücretler" },
-                    { v: "Kaynak kodu paylaşılmıyor", l: "Şeffaflık" },
-                    { v: "Sahte demo istatistikleri", l: "Proje kanıtı" },
-                  ].map(r => (
-                    <div key={r.l} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0.75rem", borderRadius: 9, background: "rgba(239,68,68,0.06)", border: "1px solid rgba(239,68,68,0.12)", marginBottom: "0.5rem" }}>
-                      <span style={{ fontSize: "0.73rem", color: SUB }}>{r.l}</span>
-                      <span style={{ fontSize: "0.73rem", color: "#ef4444", fontWeight: 700, textDecoration: "line-through" }}>{r.v}</span>
+              {(() => {
+                const rows = [
+                  { l: "Bot hosting fiyatları", m: "400–1500₺/ay", g: "50–350₺/ay" },
+                  { l: "Müşteri desteği", m: "Yapay zeka bot cevapları", g: "Doğrudan geliştirici" },
+                  { l: "Ekstra ücretler", m: "Gizli port & slot parası", g: "Hiç yok — tamamen dahil" },
+                  { l: "Şeffaflık", m: "Kaynak kodu paylaşılmıyor", g: "Gelişmiş + Pro'da tam paylaşım" },
+                  { l: "Proje kanıtı", m: "Sahte demo istatistikleri", g: "Gerçek aktif çalışan sistemler" },
+                ];
+                const cell: React.CSSProperties = { padding: "0.95rem 1.1rem", fontSize: "0.86rem", display: "flex", alignItems: "center", gap: "0.55rem" };
+                const ours = (i: number): React.CSSProperties => ({
+                  ...cell, background: `${P}14`, color: TEXT, fontWeight: 600,
+                  borderLeft: `1px solid ${P}40`, borderRight: `1px solid ${P}40`,
+                  borderTop: `1px solid ${P}22`,
+                  borderBottom: i === rows.length - 1 ? `1px solid ${P}40` : "none",
+                  borderRadius: i === rows.length - 1 ? "0 0 14px 14px" : 0,
+                });
+                if (isMobile) {
+                  return (
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                      {rows.map(r => (
+                        <div key={r.l} style={{ border: `1px solid ${BORDER}`, borderRadius: 14, padding: "0.9rem 1rem", background: CARD }}>
+                          <div style={{ fontSize: "0.7rem", color: MUT, fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: "0.55rem" }}>{r.l}</div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.82rem", color: SUB, marginBottom: "0.35rem" }}><X size={14} color={MUT} /> {r.m}</div>
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.86rem", color: TEXT, fontWeight: 600 }}><Check size={14} color={G} /> {r.g}</div>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
-                <div>
-                  <div style={{ fontSize: "0.78rem", fontWeight: 800, color: G, marginBottom: "0.9rem", display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                    <Check size={14} /> Göktürk Labs
+                  );
+                }
+                return (
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1.15fr 1.15fr" }}>
+                    <div />
+                    <div style={{ ...cell, fontSize: "0.74rem", fontWeight: 700, color: MUT, letterSpacing: "0.06em", textTransform: "uppercase" }}>Piyasa geneli</div>
+                    <div style={{ ...cell, fontSize: "0.74rem", fontWeight: 800, color: PL, letterSpacing: "0.06em", textTransform: "uppercase", background: `${P}26`, border: `1px solid ${P}40`, borderBottom: "none", borderRadius: "14px 14px 0 0" }}>Göktürk Labs</div>
+                    {rows.map((r, i) => (
+                      <React.Fragment key={r.l}>
+                        <div style={{ ...cell, color: SUB, borderTop: `1px solid ${BORDER}` }}>{r.l}</div>
+                        <div style={{ ...cell, color: MUT, borderTop: `1px solid ${BORDER}` }}><X size={15} style={{ flexShrink: 0 }} /> {r.m}</div>
+                        <div style={ours(i)}><Check size={15} color={G} style={{ flexShrink: 0 }} /> {r.g}</div>
+                      </React.Fragment>
+                    ))}
                   </div>
-                  {[
-                    { v: "50–350₺/ay", l: "Bot hosting fiyatları" },
-                    { v: "Doğrudan geliştirici", l: "Müşteri desteği" },
-                    { v: "Hiç yok — tamamen dahil", l: "Ekstra ücretler" },
-                    { v: "Gelişmiş + Pro'da tam paylaşım", l: "Şeffaflık" },
-                    { v: "Gerçek aktif çalışan sistemler", l: "Proje kanıtı" },
-                  ].map(r => (
-                    <div key={r.l} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0.6rem 0.75rem", borderRadius: 9, background: `${G}0A`, border: `1px solid ${G}22`, marginBottom: "0.5rem" }}>
-                      <span style={{ fontSize: "0.73rem", color: SUB }}>{r.l}</span>
-                      <span style={{ fontSize: "0.73rem", color: G, fontWeight: 700 }}>{r.v}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+                );
+              })()}
+              <div style={{ textAlign: "center", marginTop: "1.75rem" }}>
                 <a href="#paketler" style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", background: P, color: "#fff", borderRadius: 10, padding: "0.72rem 1.5rem", fontSize: "0.88rem", fontWeight: 700 }}>
                   Şeffaf Paketleri Gör <ArrowRight size={15} />
                 </a>
@@ -884,7 +886,7 @@ export default function Home() {
                 Doğrudan<br /><span className="grad-text">İletişime Geçin</span>
               </h2>
               <p style={{ color: SUB, lineHeight: 1.75, fontSize: "0.9rem", marginBottom: "2rem" }}>
-                İster paket siparişi, ister özel bot projesi, ister teknik soru... Formu doldurun veya Discord'dan yazın.
+                Botunu aldıysan destek talebini panelden aç, yanıtı oradan takip et. Satın almadan önceki soruların için sağ alttaki butonu kullan ya da Discord'dan yaz.
               </p>
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginBottom: "1.5rem" }}>
                 {[
@@ -917,71 +919,44 @@ export default function Home() {
               </div>
             </div>
 
-            <AnimatePresence mode="wait">
-              {formSent ? (
-                <motion.div key="success"
-                  initial={{ opacity: 0, scale: 0.95, y: 12 }} animate={{ opacity: 1, scale: 1, y: 0 }}
-                  transition={SPRING_C}
-                  style={{ background: `${G}10`, border: `1px solid ${G}44`, borderRadius: 18, padding: "2.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", textAlign: "center" }}>
-                  <div style={{ background: `${G}20`, border: `1px solid ${G}44`, borderRadius: "50%", padding: "1.1rem", display: "flex" }}>
-                    <Check size={32} color={G} />
+            {/* Satış sonrası destek: botu almış müşteriler destek panelinden (SupportFlow portalı) talep açar.
+                Satış öncesi sorular sağ alttaki butondan gelir. */}
+            <motion.div
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={SPRING_C}
+              style={{ background: `${P}0F`, border: `1px solid ${P}40`, borderRadius: 18, padding: "1.8rem", display: "flex", flexDirection: "column", gap: "1rem" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
+                <div style={{ background: `${P}26`, borderRadius: 11, padding: "0.65rem", display: "flex" }}>
+                  <Headphones size={20} color={PL} />
+                </div>
+                <div>
+                  <div style={{ fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.1em", color: PL }}>SATIŞ SONRASI DESTEK</div>
+                  <div style={{ fontSize: "1.2rem", fontWeight: 800, marginTop: "0.15rem" }}>Botun hazır, bir sorun mu var?</div>
+                </div>
+              </div>
+              <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.7 }}>
+                Paket aldıysan destek panelinden talep aç: teknik sorunlar, ayar değişiklikleri, abonelik ve fatura soruları. Talebinin durumunu ve yanıtları panelden takip edersin.
+              </p>
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem" }}>
+                {["Teknik destek & hata bildirimi", "Bot ayarı / modül değişikliği", "Abonelik, ödeme ve iade"].map(t => (
+                  <div key={t} style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.84rem", color: TEXT }}>
+                    <Check size={14} color={G} /> {t}
                   </div>
-                  <h3 style={{ fontSize: "1.2rem", fontWeight: 800 }}>Talep İletildi!</h3>
-                  <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.65, maxWidth: 320 }}>
-                    Mesajınız panoya kopyalandı ve Discord DM açıldı. Lütfen kopyalanan metni Discord'da yapıştırın.
-                  </p>
-                  <button onClick={() => setFormSent(false)}
-                    style={{ background: CARD, border: `1px solid ${BORDER}`, color: SUB, borderRadius: 10, padding: "0.6rem 1.2rem", fontSize: "0.84rem", fontWeight: 600, cursor: "pointer", marginTop: "0.5rem" }}>
-                    Yeni Talep Gönder
-                  </button>
-                </motion.div>
-              ) : (
-                <motion.form key="form" onSubmit={submitForm}
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}
-                  style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 18, padding: "1.6rem", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                  {[
-                    { label: "Adınız / Takma Adınız", key: "name", ph: "Örn: Emir" },
-                    { label: "Discord Kullanıcı Adınız", key: "discord", ph: "Örn: emir123" },
-                  ].map(f => (
-                    <div key={f.key}>
-                      <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>{f.label}</label>
-                      <input type="text" placeholder={f.ph}
-                        value={form[f.key as "name" | "discord"]}
-                        onChange={e => setForm(p => ({ ...p, [f.key]: e.target.value }))}
-                        style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", transition: "border-color .2s, box-shadow .2s" }} />
-                    </div>
-                  ))}
-                  <div>
-                    <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>Konu</label>
-                    <select value={form.topic} onChange={e => setForm(p => ({ ...p, topic: e.target.value }))}
-                      style={{ width: "100%", background: S1, border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", transition: "border-color .2s, box-shadow .2s" }}>
-                      <option>Paket Siparişi (Dengeli / Gelişmiş / Pro)</option>
-                      <option>Ücretsiz Başlangıç Paketi Talebi</option>
-                      <option>Sunucuma Özel Bot Geliştirme</option>
-                      <option>Teknik Destek & Soru</option>
-                      <option>Öneri veya Geri Bildirim</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label style={{ display: "block", fontSize: "0.77rem", color: SUB, marginBottom: "0.3rem", fontWeight: 600 }}>
-                      Mesajınız{form.message.length > 0 && <span style={{ color: form.message.length > 500 ? "#ef4444" : MUT, marginLeft: "0.5rem" }}>{form.message.length}/500</span>}
-                    </label>
-                    <textarea placeholder="Botunuzdan beklentileriniz, sunucu büyüklüğü, tercih ettiğiniz paket..." value={form.message}
-                      onChange={e => setForm(p => ({ ...p, message: e.target.value }))} rows={4}
-                      maxLength={500}
-                      style={{ width: "100%", background: "rgba(255,255,255,.04)", border: `1px solid ${BORDER}`, borderRadius: 10, padding: "0.65rem 0.85rem", color: TEXT, fontSize: "0.85rem", resize: "vertical", transition: "border-color .2s, box-shadow .2s" }} />
-                  </div>
-                  <motion.button type="submit"
-                    whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.98 }}
-                    style={{ background: P, color: "#fff", border: "none", borderRadius: 11, padding: "0.84rem", fontSize: "0.9rem", fontWeight: 700, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: "0.45rem", boxShadow: `0 6px 24px ${P}44` }}>
-                    <MessageCircle size={15} /> Talebi Oluştur & Panoya Kopyala
-                  </motion.button>
-                  <p style={{ fontSize: "0.72rem", color: MUT, textAlign: "center", lineHeight: 1.5 }}>
-                    Form metni panoya kopyalanır, Discord DM açılır. Metni orada yapıştırın.
-                  </p>
-                </motion.form>
-              )}
-            </AnimatePresence>
+                ))}
+              </div>
+              <div style={{ display: "flex", gap: "0.6rem", flexWrap: "wrap", marginTop: "0.4rem" }}>
+                <a href="/destek/yeni"
+                  style={{ flex: "1 1 180px", background: P, color: "#fff", borderRadius: 11, padding: "0.84rem", fontSize: "0.9rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.45rem", boxShadow: `0 6px 24px ${P}44` }}>
+                  <MessageCircle size={15} /> Destek talebi aç
+                </a>
+                <a href="/destek"
+                  style={{ flex: "1 1 160px", background: CARD, border: `1px solid ${BORDER}`, color: TEXT, borderRadius: 11, padding: "0.84rem", fontSize: "0.88rem", fontWeight: 600, display: "flex", alignItems: "center", justifyContent: "center", gap: "0.45rem" }}>
+                  Taleplerim <ArrowRight size={13} />
+                </a>
+              </div>
+              <p style={{ fontSize: "0.72rem", color: MUT, lineHeight: 1.5 }}>
+                Henüz satın almadıysan sağ alttaki <strong style={{ color: SUB }}>Satış öncesi destek</strong> butonunu kullan.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -1080,99 +1055,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ── FOOTER ── */}
-      <footer style={{ background: "#000000", borderTop: `1px solid ${BORDER}` }}>
-        <div style={{ maxWidth: 1280, margin: "0 auto", padding: "3.5rem 1.5rem 2rem" }}>
-          <div style={{ display: "grid", gridTemplateColumns: isMobile ? "1fr 1fr" : "2fr 1fr 1fr 1fr 1fr", gap: "2rem", marginBottom: "3rem" }}>
-            <div>
-              <a href="#top" style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "0.75rem" }}>
-                <img src="/gokturk-labs-logo.png" alt="Logo" style={{ width: 28, height: 28 }} />
-                <span style={{ fontWeight: 800, fontSize: "0.95rem" }}>Göktürk <span style={{ color: PL }}>Labs</span></span>
-              </a>
-              <p style={{ color: MUT, fontSize: "0.78rem", lineHeight: 1.65, maxWidth: 220 }}>
-                Discord sunucuları için geliştirilmiş, performanslı ve bağımsız bot altyapısı.
-              </p>
-              <a href={DC} target="_blank" rel="noopener noreferrer"
-                style={{ display: "inline-flex", alignItems: "center", gap: "0.35rem", color: MUT, fontSize: "0.77rem", marginTop: "0.85rem", transition: "color .15s" }}
-                onMouseEnter={e => (e.currentTarget.style.color = TEXT)} onMouseLeave={e => (e.currentTarget.style.color = MUT)}>
-                <Di size={13} color="currentColor" /> Discord Topluluğu
-              </a>
-            </div>
-            {[
-              { title: "HIZLI LİNKLER", links: [["Ana Sayfa","#top"],["Modüller","#moduller"],["Nasıl Çalışır?","#nasil"],["Paketler","#paketler"]] },
-              { title: "HİZMETLER", links: [["Discord Bot Hosting","#paketler"],["Özel Bot Geliştirme","#iletisim"],["Web Yönetim Paneli","#moduller"],["Yetkili Başvuru","#moduller"]] },
-              { title: "PLATFORM", links: [["Hakkımızda","#hakkimizda"],["İletişim","#iletisim"],["SSS","#sss"],["Topluluk",DC]] },
-              { title: "YASAL", links: [["Gizlilik Politikası","/gizlilik-politikasi"],["Hizmet Şartları","/hizmet-sartlari"],["Sitemap","/sitemap.xml"]] },
-            ].map(col => (
-              <div key={col.title}>
-                <div style={{ fontSize: "0.67rem", fontWeight: 800, letterSpacing: "0.1em", color: SUB, marginBottom: "0.85rem" }}>{col.title}</div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "0.42rem" }}>
-                  {col.links.map(([label, href]) => (
-                    <a key={label} href={href} target={href.startsWith("http") ? "_blank" : undefined} rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      style={{ color: MUT, fontSize: "0.78rem", transition: "color .15s" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = TEXT)} onMouseLeave={e => (e.currentTarget.style.color = MUT)}>
-                      {label}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div style={{ borderTop: `1px solid ${BORDER}`, paddingTop: "1.5rem", display: "flex", flexDirection: "column", alignItems: "center", gap: "0.55rem", textAlign: "center" }}>
-            <div style={{ color: MUT, fontSize: "0.73rem" }}>
-              © 2026 Göktürk Labs. Tüm hakları saklıdır. —{" "}
-              <a href="https://github.com/semihr66" target="_blank" rel="noopener noreferrer" style={{ color: PL }}>semihr66</a>
-              {" "}· Bağımsız Discord Bot & Web Sistemleri
-            </div>
-            <div style={{ color: MUT, fontSize: "0.72rem" }}>
-              <span style={{ fontStyle: "italic", color: "rgba(255,255,255,0.35)" }}>Mustafa Kemal Atatürk</span>{" "}
-              <span style={{ opacity: 0.38 }}>(1881–193∞) · Saygı ve minnetle...</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Big brand text — MangooHost-inspired pixel dot effect */}
-        <div
-          style={{ borderTop: `1px solid ${BORDER}`, padding: "2.5rem 1.5rem 2rem", overflow: "hidden", cursor: "default" }}
-          onMouseEnter={() => setFooterHover(true)}
-          onMouseLeave={() => setFooterHover(false)}
-        >
-          <div style={{
-            maxWidth: 1280, margin: "0 auto",
-            display: "flex", alignItems: "center",
-            gap: "clamp(0.75rem, 3vw, 2.5rem)",
-            filter: footerHover ? "brightness(1) drop-shadow(0 0 48px rgba(124,58,237,0.45))" : "brightness(0.38)",
-            transition: "filter 0.5s cubic-bezier(0.23,1,0.32,1)",
-            userSelect: "none",
-          }}>
-            {/* Logo */}
-            <img
-              src="/gokturk-labs-logo.png"
-              alt=""
-              aria-hidden
-              style={{ width: "clamp(2.8rem,6vw,6rem)", height: "clamp(2.8rem,6vw,6rem)", flexShrink: 0 }}
-            />
-            {/* Pixel-dot giant text */}
-            <div style={{ fontSize: "clamp(2.8rem,11vw,10rem)", fontWeight: 900, letterSpacing: "-0.04em", lineHeight: 1, whiteSpace: "nowrap" }}>
-              <span style={{
-                backgroundImage: "radial-gradient(circle, #ffffff 1.8px, transparent 1.8px)",
-                backgroundSize: "11px 11px",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-              }}>GÖKTÜRK</span>
-              <span style={{
-                backgroundImage: `radial-gradient(circle, ${PL} 1.8px, transparent 1.8px)`,
-                backgroundSize: "11px 11px",
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-              }}>LABS</span>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
