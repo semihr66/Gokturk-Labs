@@ -179,7 +179,7 @@ function BotMockup() {
         <span style={{ color: "#fff", fontSize: "0.68rem", fontWeight: 600, display: "flex", alignItems: "center", gap: "0.35rem" }}>
           <Activity size={11} /> 7/24 CANLI VDS AKTİF
         </span>
-        <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.68rem", marginLeft: "auto" }}>göktürklabs.net</span>
+        <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.68rem", marginLeft: "auto" }}>gokturklabs.tech</span>
       </div>
     </div>
   );
@@ -686,7 +686,7 @@ export default function Home() {
                       <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.65, marginBottom: "1.5rem" }}>{sp.desc}</p>
                       <div style={{ display: "flex", alignItems: "baseline", gap: "0.3rem", marginBottom: "1.75rem" }}>
                         <span style={{ fontSize: "3rem", fontWeight: 900, color: sp.color, lineHeight: 1 }}>₺{sp.price}</span>
-                        <span style={{ color: SUB, fontSize: "0.9rem" }}>/ {sp.period}</span>
+                        {sp.period && Number(sp.price) > 0 && <span style={{ color: SUB, fontSize: "0.9rem" }}>/ {sp.period}</span>}
                       </div>
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.6rem", marginBottom: "1.75rem" }}>
                         {sp.feats.map(f => (
@@ -748,7 +748,7 @@ export default function Home() {
                           </div>
                           <div style={{ textAlign: "right", flexShrink: 0 }}>
                             <div style={{ fontSize: "1.15rem", fontWeight: 900, color: isActive ? pkg.color : SUB, lineHeight: 1 }}>₺{pkg.price}</div>
-                            <div style={{ fontSize: "0.6rem", color: MUT }}>{pkg.period}</div>
+                            {pkg.period && Number(pkg.price) > 0 && <div style={{ fontSize: "0.6rem", color: MUT }}>{pkg.period}</div>}
                           </div>
                         </div>
                         {isActive && (
