@@ -3,7 +3,7 @@
   "outputDirectory": "dist/public",
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/((?!google7a6932071fa389a9\\.html$).*)",
       "has": [
         {
           "type": "host",
