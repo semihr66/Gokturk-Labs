@@ -52,6 +52,10 @@ export default function Footer() {
               style={{ display: "inline-flex", alignItems: "center", gap: "0.45rem", color: SUB, fontSize: "0.9rem", marginTop: "1.25rem", transition: "color .15s", textDecoration: "none" }}>
               <DiscordMark /> Discord Topluluğu
             </a>
+            <a href="mailto:info@gokturklabs.tech" {...hover}
+              style={{ display: "flex", alignItems: "center", gap: "0.45rem", color: SUB, fontSize: "0.9rem", marginTop: "0.6rem", transition: "color .15s", textDecoration: "none" }}>
+              <span aria-hidden="true">✉</span> info@gokturklabs.tech
+            </a>
           </div>
 
           {COLUMNS.map((col) => (

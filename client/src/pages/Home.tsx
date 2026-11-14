@@ -9,7 +9,7 @@ import {
   Star, Gift, Gamepad2, Brain, Pickaxe,
   ChevronDown, Plus, Minus, Check, Copy, ArrowRight,
   ExternalLink, MessageCircle, Menu, X, Zap, Activity,
-  Flame, Crown, Ban, Headphones, Lightbulb,
+  Flame, Crown, Ban, Headphones, Lightbulb, Mail,
 } from "lucide-react";
 
 /* ─── LINKS ─── */
@@ -919,11 +919,12 @@ export default function Home() {
                 {[
                   { href: DM, t: "Doğrudan Discord DM", s: "semih1231 (937079326149595147)" },
                   { href: DC, t: "Göktürk Labs Topluluğu", s: "discord.gg/Y5CTNskKCG" },
+                  { href: "mailto:info@gokturklabs.tech", t: "E-posta", s: "info@gokturklabs.tech", mail: true },
                 ].map(lnk => (
-                  <a key={lnk.href} href={lnk.href} target="_blank" rel="noopener noreferrer"
+                  <a key={lnk.href} href={lnk.href} target={lnk.mail ? undefined : "_blank"} rel="noopener noreferrer"
                     style={{ background: CARD, border: `1px solid ${BORDER}`, borderRadius: 13, padding: "1rem 1.1rem", display: "flex", alignItems: "center", gap: "0.85rem" }}>
-                    <div style={{ background: "rgba(88,101,242,.2)", borderRadius: 9, padding: "0.6rem", display: "flex", flexShrink: 0 }}>
-                      <Di size={20} color="#7289DA" />
+                    <div style={{ background: lnk.mail ? `${P}26` : "rgba(88,101,242,.2)", borderRadius: 9, padding: "0.6rem", display: "flex", flexShrink: 0 }}>
+                      {lnk.mail ? <Mail size={20} color={PL} /> : <Di size={20} color="#7289DA" />}
                     </div>
                     <div>
                       <div style={{ fontWeight: 700, fontSize: "0.88rem" }}>{lnk.t}</div>
