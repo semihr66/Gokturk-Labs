@@ -39,7 +39,7 @@ export type SitePackage = {
 export const DEFAULT_PACKAGES: SitePackage[] = [
   { key: "baslangic", icon: "gift", badge: "Ücretsiz", name: "Başlangıç (Topluluk)", price: "0", period: "ömür boyu", color: "#10B981", highlight: false, isVisible: true,
     description: "Discord topluluğunuza profesyonel bir ilk adım. Temel komutlar ve hazır modüller.",
-    features: ["En az 25–30 üye şartı","Duyuru kanalında duyurma zorunluluğu","Temel komutlar & karşılama","3 + 1 modül hakkı","7/24 Göktürk Labs VDS","'By Göktürk Labs' ibaresi zorunlu"],
+    features: ["En az 30–35 üye şartı","Duyuru kanalında duyurma zorunluluğu","Temel komutlar & karşılama","3 + 1 modül hakkı","7/24 Göktürk Labs VDS","'By Göktürk Labs' ibaresi zorunlu"],
     orderText: "Merhaba, Göktürk Labs Başlangıç (Ücretsiz) paketini talep etmek istiyorum." },
   { key: "dengeli", icon: "zap", badge: "Fiyat / Performans", name: "Dengeli", price: "50", period: "aylık", color: "#38BDF8", highlight: false, isVisible: true,
     description: "Gelişmiş moderasyon, loglama ve 5 modül kapasitesiyle sunucunuzun güvenliği tam kontrol.",

@@ -74,13 +74,15 @@ const toPkg = (p: SitePackage): Pkg => ({
 });
 
 const FAQS = [
+  { q: "Botumu başkası kendi sunucusunda kullanabilir mi?", a: "Hayır. Her bot, sunucunuzun kimliğine bağlı bir lisansla çalışır. Lisansı olmayan bir sunucuya eklenirse sunucu sahibine uyarı gönderir ve birkaç saniye içinde o sunucudan ayrılır. Lisanslar her 30 saniyede bir otomatik olarak denetlenir." },
+  { q: "Bot teslim edilmeden önce test ediliyor mu?", a: "Evet. Botunuzu sizin sunucunuza eklemeden önce kendi test sunucumuzda kurup çalıştırıyoruz. Komutlar, yetkiler ve log kanalları gerçek Discord ortamında denendikten sonra teslim ediliyor." },
   { q: "Abonelik ve 7/24 barındırma nasıl işliyor?", a: "Aylık ödeme karşılığında botunuz Göktürk Labs VDS sunucusunda kesintisiz çalıştırılır. Abonelik süresi dolduğunda bota erişim durdurulur, önceki veriler silinmez." },
   { q: "Sipariş ve kurulum ne kadar sürer?", a: "Çoğu sipariş Discord DM üzerinden 24 saat içinde tamamlanır. Kurumsal veya çok modüllü projeler 2–3 gün alabilir." },
   { q: "Botun kodlarını alabilir miyim?", a: "Gelişmiş (Custom) ve Pro paketlerde özel yazılan kodlar sizinle paylaşılır. Bot, Göktürk Labs VDS sunucusunda izole çalışır; ayrıca sunucu kiralamanız gerekmez." },
   { q: "Web Yönetim Paneli neleri kapsıyor?", a: "Pro paket kapsamında bot ayarlarını, log kayıtlarını ve rol yönetimini tarayıcı üzerinden PBKDF2 şifreleme ile güvenle yönetebilirsiniz." },
   { q: "Sunucu verilerim güvende mi?", a: "Göktürk Labs hiçbir sunucu verisini üçüncü taraflarla paylaşmaz veya satmaz. Tüm veriler şifreli depolanır." },
   { q: "Ödemeyi nasıl yapabilirim?", a: "Ödeme yöntemi Discord DM üzerinden geliştiriciyle birlikte netleştirilir. Genellikle havale/EFT veya dijital ödeme yöntemleri kabul edilir." },
-  { q: "Başlangıç paketi için 25–30 üye şartı nasıl doğrulanıyor?", a: "Discord sunucunuzun üye sayısını birlikte kontrol ederiz. Üye sayısı 25'in altındaysa temel modülleri kurabilir, 25–30 üyeye ulaştığınızda ücretsiz pakete geçiş yapılır. Ayrıca sunucunuzda bir duyuru kanalı bulunması ve kurulum ile önemli güncellemelerin bu kanalda duyurulması zorunludur." },
+  { q: "Başlangıç paketi için 30–35 üye şartı nasıl doğrulanıyor?", a: "Discord sunucunuzun üye sayısını birlikte kontrol ederiz. Üye sayısı 30'un altındaysa temel modülleri kurabilir, 30–35 üyeye ulaştığınızda ücretsiz pakete geçiş yapılır. Ayrıca sunucunuzda bir duyuru kanalı bulunması ve kurulum ile önemli güncellemelerin bu kanalda duyurulması zorunludur." },
   { q: "Birden fazla sunucu için aynı botu kullanabilir miyim?", a: "Her sunucu ayrı bir izole bot servisi alır; ancak 2–3 sunucuda tolerans gösterilmektedir. Bununla birlikte, lisans sistemi nedeniyle yetki verebilmemiz için ek sunucuları beyan etmeniz ve guild ID iletmeniz gerekmektedir. Daha fazla sunucu için indirimli çoklu sunucu teklifleri konusunda Discord DM'den iletişime geçebilirsiniz." },
 ];
 
@@ -618,7 +620,7 @@ export default function Home() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: "1.25rem" }}>
             {[
               { n: "01", t: "İhtiyaçları Konuşuyoruz", d: "Sunucunda ne eksik? Resimli log mu, mülakat motoru mu, özel komut mu? Bütçe ve sunucu büyüklüğüne göre en uygun mimariyi birlikte belirleriz." },
-              { n: "02", t: "VDS Ortamında Derleme & Test", d: "Botu Göktürk Labs VDS sunucusunda izole servis olarak kuruyoruz. Sunucu logolarınla, yetki kademelerin ve gerçek Discord API'siyle test ediyoruz." },
+              { n: "02", t: "Önce Test Sunucusunda Çalışır", d: "Botunu senin sunucuna eklemeden önce kendi test sunucumuzda kuruyoruz. Komutları, yetki kademelerini ve logları gerçek Discord ortamında deniyor, sorunsuz çalıştığından emin olunca teslim ediyoruz." },
               { n: "03", t: "Yetki Teslimi & Sürekli Destek", d: "Botunu sunucuna davet ediyoruz, gerekirse web panel girişini iletiyoruz. Herhangi bir sorun veya güncelleme talebinde doğrudan geliştirici masası seninle." },
             ].map((s, i) => (
               <motion.div key={s.n} initial={{ opacity: 0, y: 42, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 52, damping: 22, delay: i * 0.15 }}
@@ -629,6 +631,20 @@ export default function Home() {
               </motion.div>
             ))}
           </div>
+
+          {/* Lisans koruması */}
+          <motion.div initial={{ opacity: 0, y: 42, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true }} transition={{ type: "spring", stiffness: 52, damping: 22 }}
+            style={{ marginTop: "1.25rem", background: `${P}12`, border: `1px solid ${P}40`, borderRadius: 16, padding: isMobile ? "1.5rem" : "1.75rem 2rem", display: "grid", gridTemplateColumns: isMobile ? "1fr" : "auto 1fr", gap: isMobile ? "1rem" : "1.5rem", alignItems: "center" }}>
+            <div style={{ background: `${P}22`, borderRadius: 14, padding: "0.9rem", display: "inline-flex", width: "fit-content" }}>
+              <Lock size={26} color={PL} />
+            </div>
+            <div>
+              <h3 style={{ fontWeight: 800, fontSize: "1.1rem", marginBottom: "0.5rem" }}>Lisans korumalı: botun sadece senin.</h3>
+              <p style={{ color: SUB, fontSize: "0.86rem", lineHeight: 1.7 }}>
+                Her bot, sunucunun kimliğine bağlı bir lisansla çalışır. Botun lisansı olmayan bir sunucuya eklenirse sunucu sahibine uyarı gönderir ve birkaç saniye içinde kendiliğinden ayrılır. Lisanslar her 30 saniyede bir otomatik denetlenir; botunu senden başkası kendi sunucusuna ekleyip kullanamaz.
+              </p>
+            </div>
+          </motion.div>
         </div>
       </section>
 
