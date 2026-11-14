@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
+Disallow: /yonetim
 
-Sitemap: https://gokturklabs.vercel.app/sitemap.xml
+Sitemap: https://www.gokturklabs.tech/sitemap.xml
