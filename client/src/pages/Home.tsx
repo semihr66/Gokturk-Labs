@@ -63,7 +63,7 @@ const MODS: Mod[] = [
   { tag: "EVENTS", name: "Çekiliş Sistemi", icon: Gift, desc: "Zaman ayarlı, kriter destekli çekiliş motoru. Rol şartı ve yedek talihli seçer.", feats: ["Kriptografik RNG Seçim","Rol & Katılım Şartı"] },
   { tag: "COMMUNITY", name: "Eğlence Modülleri", icon: Gamepad2, desc: "Mini oyunlar, şans komutları ve interaktif araçlarla topluluk etkileşimini artır.", feats: ["İnteraktif Oyun Menüsü","Şans ve Zar Komutları"] },
   { tag: "INTELLIGENCE", name: "Gemini AI Entegrasyonu", icon: Brain, desc: "Çok katmanlı Google Gemini 2.5 Flash ile sunucu hafızalı AI sohbet asistanı.", feats: ["Google Gemini 2.5 Flash","Sunucu Hafızası"] },
-  { tag: "MINECRAFT", name: "Minecraft Sunucu Sistemleri", icon: Pickaxe, isSoon: true, desc: "Discord ile entegre Minecraft yönetimi — gerçek zamanlı konsol, oyuncu takibi.", feats: ["Canlı Konsol Logları","Discord'dan Yönetim"] },
+  { tag: "MINECRAFT", name: "Minecraft Sunucu Sistemleri", icon: Pickaxe, isNew: true, desc: "GokturkLabs.jar plugin ile oyun ⇄ Discord sohbet köprüsü, canlı konsol, TPS/RAM uyarıları ve otomatik güncellenen durum kartı.", feats: ["Sohbet Köprüsü & Canlı Konsol","TPS Uyarısı & Bakım Modu"] },
 ];
 
 /* Paketler yönetici panelinden (/yonetim) düzenlenir; SupportFlow API'sinden okunur.
