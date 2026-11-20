@@ -26,6 +26,8 @@ const termsSections: PolicySection[] = [
   { title: "6. Hizmetin Sonlandırılması", paragraphs: ["Hizmetin bu şartlara veya yürürlükteki mevzuata aykırı şekilde kullanılması durumunda Göktürk Labs hizmeti askıya alabilir veya sonlandırabilir."] },
   { title: "7. Değişiklikler", paragraphs: ["Göktürk Labs, hizmet şartlarını gerektiğinde güncelleyebilir. Güncel metin web sitesinde yayımlandığı tarihten itibaren geçerlidir."] },
   { title: "8. İletişim", paragraphs: ["Sorularınız ve destek talepleriniz için Göktürk Labs'in resmi Discord sunucusundaki destek kanallarını kullanabilirsiniz."] },
+  { title: "9. İletişim ve Saygı", paragraphs: ["Göktürk Labs ile iletişimde kullanıcı ve kullanıcının yetkilileri saygılı bir dil kullanmakla yükümlüdür.", "Göktürk Labs ekibine yönelik aşağıdaki davranışlar bu şartlara aykırılık sayılır:"], bullets: ["Hakaret, küfür veya aşağılama", "Kişinin ailesine veya yakınlarına yönelik sözler", "Tehdit, taciz veya ısrarlı rahatsız etme", "Göktürk Labs adı, markası veya Türk tarihi ile alay etme"] },
+  { title: "9.1. Aykırılığın Sonuçları", paragraphs: ["Bu davranışlar halinde Göktürk Labs ilgili kişiyle iletişimi kesebilir, destek hizmetini durdurabilir ve 6. madde kapsamında hizmeti askıya alabilir veya sonlandırabilir.", "Sunucu sahibi, kendi yetkililerinin Göktürk Labs ile iletişiminden sorumludur."] },
 ];
 
 export default function PolicyPage({ type }: { type: "privacy" | "terms" }) {
@@ -35,7 +37,7 @@ export default function PolicyPage({ type }: { type: "privacy" | "terms" }) {
   const intro = isPrivacy ? "Göktürk Labs, kullanıcıların gizliliğine önem verir ve yalnızca hizmetlerin yürütülmesi için gerekli olan bilgileri kullanır." : "Göktürk Labs hizmetlerini kullanarak aşağıdaki şartları kabul etmiş olursunuz.";
 
   useEffect(() => {
-    document.title = `Göktürk Labs — ${title}`;
+    document.title = `${title} — Göktürk Labs`;
     window.scrollTo({ top: 0, behavior: "smooth" });
   }, [title]);
 
@@ -44,7 +46,7 @@ export default function PolicyPage({ type }: { type: "privacy" | "terms" }) {
     <div className="policy-shell">
       <div className="policy-kicker"><ShieldCheck className="h-4 w-4" /> GÖKTÜRK LABS / POLİTİKALAR</div>
       <h1>{title}</h1>
-      <p className="policy-date">Son Güncelleme: 31 Ağustos 2026</p>
+      <p className="policy-date">Son Güncelleme: {isPrivacy ? "31 Ağustos 2026" : "21 Kasım 2026"}</p>
       <p className="policy-intro">{intro}</p>
       <article className="policy-content">
         {sections.map(section => (

@@ -19,6 +19,10 @@
       "handle": "filesystem"
     },
     {
+      "src": "/(hizmet-sartlari|gizlilik-politikasi)/?",
+      "dest": "/$1.html"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.html"
     }
