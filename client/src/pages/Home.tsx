@@ -80,14 +80,15 @@ const FAQS = [
   { q: "Sipariş ve kurulum ne kadar sürer?", a: "Çoğu sipariş Discord DM üzerinden 24 saat içinde tamamlanır. Kurumsal veya çok modüllü projeler 2–3 gün alabilir." },
   { q: "Botun kodlarını alabilir miyim?", a: "Gelişmiş (Custom) ve Pro paketlerde özel yazılan kodlar sizinle paylaşılır. Bot, Göktürk Labs VDS sunucusunda izole çalışır; ayrıca sunucu kiralamanız gerekmez." },
   { q: "Web Yönetim Paneli neleri kapsıyor?", a: "Pro paket kapsamında bot ayarlarını, log kayıtlarını ve rol yönetimini tarayıcı üzerinden PBKDF2 şifreleme ile güvenle yönetebilirsiniz." },
-  { q: "Sunucu verilerim güvende mi?", a: "Göktürk Labs hiçbir sunucu verisini üçüncü taraflarla paylaşmaz veya satmaz. Tüm veriler şifreli depolanır." },
+  { q: "Sunucu verilerim güvende mi?", a: "Göktürk Labs hiçbir sunucu verisini üçüncü taraflarla paylaşmaz veya satmaz. Tüm veriler şifreli depolanır ve her gece şifreli bulut yedeği alınır." },
+  { q: "Botumun verileri yedekleniyor mu?", a: "Evet. Tüm bot verileri, ayarları ve kayıtları her gece otomatik olarak paketlenir, sunucudan çıkmadan önce şifrelenir ve bulut yedekleme alanına yüklenir. Son 14 günün günlük, son 8 haftanın haftalık yedeği saklanır. Şifreleme anahtarı yalnızca Göktürk Labs'tadır; bulut sağlayıcısı dahil kimse yedeklerin içeriğini okuyamaz. Bir sorun olduğunda botunuz en yakın yedekten geri yüklenir." },
   { q: "Ödemeyi nasıl yapabilirim?", a: "Ödeme yöntemi Discord DM üzerinden geliştiriciyle birlikte netleştirilir. Genellikle havale/EFT veya dijital ödeme yöntemleri kabul edilir." },
   { q: "Başlangıç paketi için 30–35 üye şartı nasıl doğrulanıyor?", a: "Discord sunucunuzun üye sayısını birlikte kontrol ederiz. Üye sayısı 30'un altındaysa temel modülleri kurabilir, 30–35 üyeye ulaştığınızda ücretsiz pakete geçiş yapılır. Ayrıca sunucunuzda bir duyuru kanalı bulunması ve kurulum ile önemli güncellemelerin bu kanalda duyurulması zorunludur." },
   { q: "Birden fazla sunucu için aynı botu kullanabilir miyim?", a: "Her sunucu ayrı bir izole bot servisi alır; ancak 2–3 sunucuda tolerans gösterilmektedir. Bununla birlikte, lisans sistemi nedeniyle yetki verebilmemiz için ek sunucuları beyan etmeniz ve guild ID iletmeniz gerekmektedir. Daha fazla sunucu için indirimli çoklu sunucu teklifleri konusunda Discord DM'den iletişime geçebilirsiniz." },
 ];
 
 const MARQUEE1 = ["Güvenlik & Moderasyon","Log Tutma","Butonlu Ticket","Yetkili Başvuru","Seviye & XP","Karşılama Sistemi","HD Müzik","Çekiliş Motoru","Gemini AI","YouTube Bildirim","Davet Takip","Ses Sayaçları"];
-const MARQUEE2 = ["DISCORD.JS v14","TYPESCRIPT","NODE.JS v20","PM2 CLUSTER","SQLITE","AES-256","PBKDF2","VDS 7/24","GOOGLE GEMINI","CANVAS 2D","RSS ENGINE","WEBHOOK API"];
+const MARQUEE2 = ["DISCORD.JS v14","TYPESCRIPT","NODE.JS v20","PM2 CLUSTER","SQLITE","AES-256","PBKDF2","VDS 7/24","ŞİFRELİ BULUT YEDEK","GOOGLE GEMINI","CANVAS 2D","RSS ENGINE","WEBHOOK API"];
 
 const NAV = [
   { label: "Hizmetler", href: "#hizmetler" },
@@ -503,7 +504,7 @@ export default function Home() {
             {[
               { id: "bot", icon: MessageCircle, name: "Discord Bot Geliştirme", category: "TEMEL HİZMET", desc: "TypeScript tabanlı, PM2 cluster altında çalışan Discord.js v14 botu. Kayıt, moderasyon, ticket ve daha fazlası.", feats: ["Kayıt, moderasyon, ticket sistemleri","Canvas 2D, Ses odaları, XP sistemi","Özel komutlar ve modüller"], price: "50₺", period: "aylık başlangıç", color: P, badge: "EN POPÜLER" },
               { id: "panel", icon: Lock, name: "Web Yönetim Paneli", category: "PRO ÖZELLİK", desc: "PBKDF2 256-bit şifrelemeli, HIBP korumalı, tarayıcıdan bot ayarlarını yönetebileceğin güvenli panel.", feats: ["HIBP şifre sızıntı koruması","Rol ve kanal yönetimi paneli","Log kayıtlarına tarayıcıdan erişim"], price: "350₺", period: "aylık (Pro pakette)", color: A, badge: "PRO" },
-              { id: "vds", icon: Server, name: "7/24 VDS Barındırma", category: "ALTYAPI", desc: "Botun Göktürk Labs VDS sunucusunda izole servis olarak, PM2 cluster ile kesintisiz çalışır.", feats: ["PM2 cluster + otomatik yeniden başlatma","Türkiye lokasyonlu düşük gecikme","Uptime monitoring ve alert sistemi"], price: "Dahil", period: "tüm paketlerde", color: G, badge: "DAHİL" },
+              { id: "vds", icon: Server, name: "7/24 VDS Barındırma", category: "ALTYAPI", desc: "Botun Göktürk Labs VDS sunucusunda izole servis olarak, PM2 cluster ile kesintisiz çalışır. Verilerin her gece şifrelenip bulut yedeğe alınır.", feats: ["PM2 cluster + otomatik yeniden başlatma","Her gece şifreli bulut yedekleme","Uptime monitoring ve alert sistemi"], price: "Dahil", period: "tüm paketlerde", color: G, badge: "DAHİL" },
               { id: "ozel", icon: Brain, name: "Özel Yazılım & Otomasyon", category: "CUSTOM", desc: "Standart modüllerin dışında, sunucuna tamamen özel yazılmış sistemler ve Gemini AI entegrasyonları.", feats: ["Terzi usulü Discord entegrasyonları","Gemini AI destekli sohbet asistanı","Minecraft panel, webhook ve API köprüleri"], price: "150₺", period: "aylık başlangıç", color: "#38BDF8", badge: "CUSTOM" },
             ].map((svc, i) => {
               const SvcIcon = svc.icon;
